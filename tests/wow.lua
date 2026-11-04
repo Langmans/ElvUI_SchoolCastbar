@@ -262,6 +262,19 @@ function NewClient(opts)
             end,
         }
     else
+        -- Classic Era has a C_SpellBook of its own, without the skill lines (in-game dump,
+        -- 2026-11-04), and no spellbook enums.
+        C_SpellBook = {
+            IsSpellKnown = function()
+                return false
+            end,
+            IsSpellInSpellBook = function()
+                return false
+            end,
+        }
+        if Enum then
+            Enum.SpellBookItemType, Enum.SpellBookSpellBank = nil, nil
+        end
         BOOKTYPE_SPELL = "spell"
         function GetNumSpellTabs()
             return 1

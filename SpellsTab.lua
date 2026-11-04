@@ -46,28 +46,16 @@ local function ListSpellbookSpell(id)
     if info and (info.castTime > 0 or (ns.data and ns.data[id])) then List(info.name, id) end
 end
 
----Lists the player's spellbook: by skill line on retail and WoW: Forever (C_SpellBook), by tab on
----the classic clients.
+---Lists the player's spellbook, by skill line (on the classic clients by spell tab: Compat.lua).
 local function ListSpellbook()
-    if C_SpellBook then
-        for line = 1, C_SpellBook.GetNumSpellBookSkillLines() do
-            local info = C_SpellBook.GetSpellBookSkillLineInfo(line)
+    local book = ns.C.SpellBook
+    for line = 1, book.GetNumSpellBookSkillLines() do
+        local info = book.GetSpellBookSkillLineInfo(line) ---@type SchoolCastbarSkillLine?
+        if info then
             for slot = info.itemIndexOffset + 1, info.itemIndexOffset + info.numSpellBookItems do
-                local item = C_SpellBook.GetSpellBookItemInfo(slot, Enum.SpellBookSpellBank.Player)
-                if item and item.itemType == Enum.SpellBookItemType.Spell then ListSpellbookSpell(item.spellID) end
+                local item = book.GetSpellBookItemInfo(slot) ---@type SchoolCastbarBookItem?
+                if item and item.itemType == ns.C.SpellBookItemType.Spell then ListSpellbookSpell(item.spellID) end
             end
-        end
-        return
-    end
-    -- The classic clients' spellbook, which retail and WoW: Forever left for C_SpellBook (above).
-    ---@diagnostic disable-next-line: wrong-flavor-api
-    for index = 1, GetNumSpellTabs() do
-        ---@diagnostic disable-next-line: wrong-flavor-api
-        local _, _, offset, count = GetSpellTabInfo(index)
-        for slot = offset + 1, offset + count do
-            ---@diagnostic disable-next-line: wrong-flavor-api
-            local kind, id = GetSpellBookItemInfo(slot, BOOKTYPE_SPELL)
-            if kind == "SPELL" then ListSpellbookSpell(id) end
         end
     end
 end

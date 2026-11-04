@@ -96,6 +96,7 @@ ElvUI = nil
 ---@class SchoolCastbarNamespace
 ---@field data? table<number, number> the client's spell table: school mask by spell ID (Data\)
 ---@field Schools SchoolCastbarSchools
+---@field C SchoolCastbarCompat the client's API under the plugin's name (Compat.lua)
 ---@field units table<string, string>
 ---@field unitOrder string[]
 ---@field seen table<string, number|false>
@@ -125,6 +126,17 @@ ElvUI = nil
 
 ---@class DebugLogApi
 ---@field DebugLog fun(tab: string, fmt: string, ...: any) adds string.format(fmt, ...) to the tab, made on first use
+
+---A spellbook skill line (classic: spell tab), as far as the plugin reads it: its first slot less
+---one, and its number of slots.
+---@class SchoolCastbarSkillLine
+---@field itemIndexOffset number
+---@field numSpellBookItems number
+
+---What sits in a spellbook slot: its kind (SpellBookItemType) and, for a spell, its spell ID.
+---@class SchoolCastbarBookItem
+---@field itemType number
+---@field spellID? number
 
 ---The saved variables: the player's choices and what the combat log named, by spell name.
 ---@class SchoolCastbarSaved

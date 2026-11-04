@@ -10,6 +10,7 @@
 ## IconTexture: Interface\Icons\Spell_Fire_FlameBolt
 
 Locales\enUS.lua
+Compat.lua
 Data\ClassicEra.lua
 Data\BurningCrusade.lua
 Data\Wrath.lua

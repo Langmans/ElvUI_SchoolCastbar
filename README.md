@@ -86,9 +86,12 @@ loads late) is coloured as soon as it arrives.
   table built once, so the list is built again (and
   `E.Libs.AceConfigRegistry:NotifyChange("ElvUI")` redraws it) when a spell comes
   in, the spellbook changes (`SPELLS_CHANGED`) or a choice changes; while ElvUI's
-  window is shut, only when it opens next (a hook on `E:ToggleOptions`). The
-  spellbook comes from `C_SpellBook` on retail and WoW: Forever, from
-  `GetSpellTabInfo` / `GetSpellBookItemInfo` on the classic clients.
+  window is shut, only when it opens next (a hook on `E:ToggleOptions`).
+- `Compat.lua` (`ns.C`) gives the spellbook one API on every client: `C_SpellBook`'s
+  skill lines where the client has them (retail, WoW: Forever), else the spell tabs
+  (`GetSpellTabInfo`, `GetSpellBookItemInfo`). Classic Era has a `C_SpellBook`
+  without the skill lines, so the plugin asks per function. Nothing is written into
+  the game's own `C_` tables.
 
 ## Development
 
