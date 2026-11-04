@@ -33,9 +33,14 @@ No call in the game returns a spell's school. The plugin tries, in this order:
    school there, and the plugin keeps what it saw between sessions. This covers
    NPCs' spells and anything the table lacks. Retail and WoW: Forever give addons no
    combat log.
-4. **The spell's description**: the client's own school names in it ("Fire damage",
-   "Frostfire damage"), in the client's language. A switch on the General tab
-   turns this off.
+4. **The spell's description**: the first school it deals damage in ("Fire damage",
+   "Frostfire damage"): the school and damage as whole words with any space between,
+   in the client's own words for both, in any capitals (Lua lowers only the letters
+   A to Z, so Cyrillic and the like still match their exact case). A school named
+   for anything else ("Fire resistance", "Bonfire") does not count. In a language
+   that joins the two into one word ("Frostschaden") or puts the school after damage
+   ("dégâts de feu"), the first school's name at the start of a word counts. A
+   switch on the General tab turns this off.
 
 A cast whose school arrives later (the combat log line, or a description the client
 loads late) is coloured as soon as it arrives.
@@ -61,6 +66,14 @@ loads late) is coloured as soon as it arrives.
   colour is used alone.
 - `Schools.lua` finds a spell's school mask (`Enum.Damageclass`, with the values
   built in for a client without the enum) and splits it into schools.
+- `Debug.lua` is the only file that talks to the debug addons: with
+  [OAP Debug](https://www.curseforge.com/wow/addons/oap-debug) (`/oapd`) installed
+  the plugin registers with it (its Lua errors filed under its name) and sends log
+  lines and counts; with _DebugLog (`DLAPI`) the same lines go to its own tab. What
+  it sends: each spell whose school comes from its description, so a spell missing
+  from the spell data (`tooltip:`), with the description itself at the detailed
+  level. How much goes is `schoolCastbar.oapDebug`: `errors`, `normal`, `metrics`
+  (the default) or `detailed`, on the General tab.
 - `Options.lua` adds the page to ElvUI's options (`E.Options.args.ElvUI_SchoolCastbar`).
   The settings live in ElvUI's profile (`E.db.schoolCastbar`); your choices per
   spell and what the combat log named are account-wide (`ElvUI_SchoolCastbarDB`).

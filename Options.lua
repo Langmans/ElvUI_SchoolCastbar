@@ -32,6 +32,43 @@ local function Toggle(order, key)
     return { type = "toggle", order = order, name = L[key], desc = rawget(L, key .. "_DESC") }
 end
 
+---How much goes to the debug addons (Debug.lua), as a box at the bottom of the General tab.
+---@return table
+local function DebugBox()
+    local values = {}
+    for _, level in ipairs(ns.debugLevels) do
+        values[level] = L["DEBUG_" .. level]
+    end
+    return {
+        type = "group",
+        inline = true,
+        order = 100,
+        name = L.DEBUG,
+        args = {
+            level = {
+                type = "select",
+                order = 1,
+                name = L.DEBUG_LEVEL,
+                ---@return string
+                desc = function()
+                    return ns.HasDebugAddon() and L.DEBUG_DESC or L.DEBUG_DESC .. " " .. L.DEBUG_MISSING
+                end,
+                values = values,
+                sorting = ns.debugLevels,
+                ---@return string
+                get = function()
+                    return ns.db().oapDebug
+                end,
+                ---@param _ string[]
+                ---@param level string
+                set = function(_, level)
+                    ns.db().oapDebug = level
+                end,
+            },
+        },
+    }
+end
+
 ---@return table
 local function GeneralTab()
     local db = ns.db
@@ -44,6 +81,7 @@ local function GeneralTab()
     for order, unit in ipairs(ns.unitOrder) do
         args[unit] = Toggle(order, unit)
     end
+    args.debug = DebugBox()
     return {
         type = "group",
         order = 1,

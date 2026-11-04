@@ -4,6 +4,7 @@
 ## Author: Langmans
 ## Version: @project-version@
 ## RequiredDeps: ElvUI
+## OptionalDeps: OAPDebug, _DebugLog
 ## SavedVariables: ElvUI_SchoolCastbarDB
 ## X-License: MIT
 ## IconTexture: Interface\Icons\Spell_Fire_FlameBolt
@@ -18,4 +19,5 @@ Data\Forever.lua
 Schools.lua
 Paint.lua
 Castbar.lua
+Debug.lua
 Options.lua

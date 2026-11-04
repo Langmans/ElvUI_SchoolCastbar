@@ -21,6 +21,17 @@ L.GRADIENT_DESC = "Fade from one school's colour to the next for a spell of seve
 L.TOOLTIP = "Read the description"
 L.TOOLTIP_DESC = "Take the school from the school names in the spell's description when nothing else gives it."
 
+-- The General tab's box for the debug addons (OAP Debug, _DebugLog), the setting every OAP addon
+-- has: how much the plugin sends to them.
+L.DEBUG = "OAP Debug"
+L.DEBUG_LEVEL = "Send to OAP Debug"
+L.DEBUG_DESC = "How much goes to OAP Debug's and _DebugLog's window: each spell whose school comes from its description, so missing from the spell data (metrics: counts)."
+L.DEBUG_MISSING = "Not installed: nothing is sent."
+L.DEBUG_errors = "Errors only"
+L.DEBUG_normal = "Normal"
+L.DEBUG_metrics = "Normal and metrics"
+L.DEBUG_detailed = "Detailed"
+
 -- The Colours tab: a colour per school, and putting them back.
 L.COLORS = "Colours"
 L.RESET = "Default colours"

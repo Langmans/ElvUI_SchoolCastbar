@@ -11,6 +11,10 @@
 ---@field noFocus boolean? no focus frame at login (ElvUI's focus frame turned off)
 ---@field descriptions table<number, string>? spell descriptions by spell ID
 ---@field noOptions boolean? ElvUI_Options not loaded
+---@field locale string? the client's language, default "enUS"; "deDE" words damage "Schaden"
+---@field oapDebug boolean? OAP Debug installed: its calls go to client.debugCalls
+---@field debugLog boolean? _DebugLog installed (DLAPI): its lines go to client.debugCalls too
+---@field debugLevel string? the plugin's OAP Debug setting in the profile
 
 -- What ElvUI colours a cast with, unless the plugin does: its cast colour and its fail colour.
 ELVUI_COLOR = { 0.31, 0.41, 0.53 }
@@ -33,6 +37,7 @@ local SCHOOL_NAMES = {
     [16] = "Frost",
     [32] = "Shadow",
     [64] = "Arcane",
+    [5] = "Flamestrike",
     [20] = "Frostfire",
     [36] = "Shadowflame",
     [24] = "Froststorm",
@@ -178,6 +183,13 @@ function NewClient(opts)
         return v == SECRET
     end
 
+    -- The client's language and its word for damage (GlobalStrings' DAMAGE).
+    local locale = opts.locale or "enUS"
+    function GetLocale()
+        return locale
+    end
+    DAMAGE = ({ deDE = "Schaden", frFR = "Dégâts", ruRU = "Урон" })[locale] or "Damage"
+
     -- WoW's bit library, for the 7-bit school masks.
     bit = {
         band = function(a, b)
@@ -200,6 +212,10 @@ function NewClient(opts)
 
     C_Spell = {
         GetSchoolString = function(mask)
+            -- A French and a Russian client name Fire in their language; the tests need no other
+            -- of their names.
+            if mask == 4 and locale == "frFR" then return "Feu" end
+            if mask == 4 and locale == "ruRU" then return "огня" end
             return SCHOOL_NAMES[mask]
         end,
         GetSpellDescription = function(id)
@@ -359,9 +375,30 @@ function NewClient(opts)
         assert(loadfile(file))("ElvUI_SchoolCastbar", client.ns)
     end
 
+    -- The debug addons, loaded before the plugin (its OptionalDeps): every call recorded as
+    -- { name, ... } in client.debugCalls.
+    client.debugCalls = {}
+    local function recorder(name)
+        return function(...)
+            client.debugCalls[#client.debugCalls + 1] = { name, ... }
+        end
+    end
+    OAPDebug = opts.oapDebug and { Register = recorder("Register"), Log = recorder("Log"), Count = recorder("Count") }
+        or nil
+    DLAPI = opts.debugLog and { DebugLog = recorder("DebugLog") } or nil
+    ---The debug calls of one kind, without their name.
+    function client:debug(name)
+        local found = {}
+        for _, call in ipairs(self.debugCalls) do
+            if call[1] == name then found[#found + 1] = { unpack(call, 2) } end
+        end
+        return found
+    end
+
     -- Login: ElvUI reads the profile (defaults included), builds its unit frames, then
     -- initialises the plugin's module.
     E.db = copy(P)
+    if opts.debugLevel then E.db.schoolCastbar.oapDebug = opts.debugLevel end
     client:BuildFrame("player")
     client:BuildFrame("target")
     if not opts.noFocus then client:BuildFrame("focus") end

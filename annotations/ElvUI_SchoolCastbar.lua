@@ -72,6 +72,7 @@ ElvUI = nil
 ---@field units table<string, boolean> by unitframeType
 ---@field gradient boolean
 ---@field tooltip boolean
+---@field oapDebug string how much goes to the debug addons: "errors", "normal", "metrics", "detailed"
 ---@field colors table<string, SchoolCastbarColor> by school name
 
 ---The plugin's module: an ElvUI module with AceHook and AceEvent mixed in.
@@ -96,6 +97,24 @@ ElvUI = nil
 ---@field Clear fun(bar: SchoolCastbarBar)
 ---@field RepaintAll fun()
 ---@field InsertOptions fun()
+---@field debugLevels string[]
+---@field ConnectDebug fun()
+---@field HasDebugAddon fun(): boolean
+---@field Log fun(kind: "error"|"warn"|"info"|"debug", msg: string, ...: string|number)
+---@field Count fun(name: string)
+
+-- OAP Debug's global table, as far as the plugin calls it (Debug.lua). Every call catches its own
+-- errors. From its in-game Developer usage page.
+
+---@class OAPDebugApi
+---@field Register fun(name: string, opts: { title: string?, folder: string?, icon: (string|number)? }): string
+---@field Log fun(source: string, msg: string, level: "error"|"warn"|"info"|"debug", ...: any)
+---@field Count fun(source: string, name: string, n: number?)
+
+-- _DebugLog's global table (DLAPI), as far as the plugin calls it (Debug.lua).
+
+---@class DebugLogApi
+---@field DebugLog fun(tab: string, fmt: string, ...: any) adds string.format(fmt, ...) to the tab, made on first use
 
 ---The saved variables: the player's choices and what the combat log named, by spell name.
 ---@class SchoolCastbarSaved

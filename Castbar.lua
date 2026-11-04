@@ -114,6 +114,7 @@ end
 
 function M:Initialize()
     S.Load()
+    ns.ConnectDebug()
     LibStub("LibElvUIPlugin-1.0"):RegisterPlugin(addon, ns.InsertOptions)
     self:SecureHook(UF, "Configure_Castbar", "Attach")
     for _, frame in ipairs(E.oUF.objects) do

@@ -10,3 +10,7 @@
   every client; from the combat log on the classic clients; from the spell's
   description.
 - The schools of any spell to be chosen by hand.
+- The description read for the first "<school> damage", also in languages that
+  write it as one word.
+- OAP Debug and _DebugLog: each spell whose school comes from its description is
+  logged, so missing spell data shows.
