@@ -14,7 +14,7 @@ UA="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/130 Safa
 PRODUCTS=("${@:-wow_classic_era wow_anniversary wow_classic_titan wow_classic wow wowf}")
 # SpecializationSpells and the talent tables exist only on some clients (Talent up to Mists,
 # TraitDefinition on retail); elsewhere their download fails, which is fine.
-TABLES=(SpellName SpellMisc SkillLine SkillLineAbility SpecializationSpells Talent TraitDefinition)
+TABLES=(SpellName SpellMisc SpellClassOptions SkillLine SkillLineAbility SpecializationSpells Talent TraitDefinition)
 
 latest=$(curl -s -A "$UA" "https://wago.tools/api/builds/latest")
 for product in ${PRODUCTS[@]}; do

@@ -5,12 +5,13 @@
 --
 -- A class spell: an ability on a skill line of category Class, a specialization's or a talent's
 -- spell, or on Classic Era a Season of Discovery rune's spell (named as an "Engrave <slot> - <rune>"
--- ability, IDs from 398000 up).
+-- ability, IDs from 398000 up). tools/spell-fixes.lua adds the ones no table names.
 --
--- Reads the newest build of each client in ../.spelldata (SkillLine, SkillLineAbility,
--- SpecializationSpells, Talent, TraitDefinition, SpellMisc and SpellName from wago.tools; ../.spelldata/fetch.sh gets a new one). Run from the
--- repository root after a
--- patch:
+-- The table lists the spells per class (from SpellClassOptions' class family, else the skill line's
+-- ClassMask), by name, each with its name as a comment, so it can be read through.
+--
+-- Reads the newest build of each client in ../.spelldata (tools/fetch-spelldata.sh gets them).
+-- Run from the repository root after a patch:
 --
 --   lua tools/spell-data.lua
 
@@ -69,6 +70,29 @@ local NOT_A_CLASS = {
 }
 -- The categories of a profession's lines: secondary skills (Cooking, Fishing) and professions.
 local PROFESSION_CATEGORIES = { [categories.secondary] = true, [categories.profession] = true }
+-- The classes in the game's order, each with its bit in a ClassMask and its family in
+-- SpellClassOptions (SpellClassSet). A spell of none goes under OTHER.
+local CLASSES = {
+    { name = "Warrior", mask = 1, family = 4 },
+    { name = "Paladin", mask = 2, family = 10 },
+    { name = "Hunter", mask = 4, family = 9 },
+    { name = "Rogue", mask = 8, family = 8 },
+    { name = "Priest", mask = 16, family = 6 },
+    { name = "Death Knight", mask = 32, family = 15 },
+    { name = "Shaman", mask = 64, family = 11 },
+    { name = "Mage", mask = 128, family = 3 },
+    { name = "Warlock", mask = 256, family = 5 },
+    { name = "Monk", mask = 512, family = 53 },
+    { name = "Druid", mask = 1024, family = 7 },
+    { name = "Demon Hunter", mask = 2048, family = 107 },
+    { name = "Evoker", mask = 4096, family = 224 },
+}
+local OTHER = #CLASSES + 1
+---@type table<number, number>, table<number, number>
+local classByMask, classByFamily = {}, {}
+for index, class in ipairs(CLASSES) do
+    classByMask[class.mask], classByFamily[class.family] = index, index
+end
 -- The other tables that teach class spells, with their spell ID columns.
 local TAUGHT_BY = {
     SpecializationSpells = { "SpellID" },
@@ -156,9 +180,10 @@ end
 
 ---The school of each class spell with a cast bar, from one build, and every spell's name.
 ---@param dir string the build's folder
+---@param fixes table<number, true|number> the product's own fixes (tools/spell-fixes.lua)
 ---@return table<number, number> schools
 ---@return table<number, string> names
-local function readSchools(dir)
+local function readSchools(dir, fixes)
     ---@type table<number, string>
     local names = {}
     for row in rows(dir .. "/SpellName.csv") do
@@ -198,6 +223,9 @@ local function readSchools(dir)
             end
         end
     end
+    for id in pairs(fixes) do
+        classSpells[id] = true
+    end
 
     ---@type table<number, number>
     local schools = {}
@@ -215,21 +243,66 @@ local function readSchools(dir)
             schools[row.SpellID] = row.SchoolMask
         end
     end
+    for id, fix in pairs(fixes) do
+        if type(fix) == "number" then schools[id] = fix end
+        -- A fix that did not make it: a wrong ID, or a spell without a cast bar.
+        if not schools[id] then print(("  fix %d (%s): no cast bar in this build"):format(id, names[id] or "?")) end
+    end
     return schools, names
 end
 
--- `--names`: each line ends in the spell's name as a comment, to read the table through.
-local withNames = arg[1] == "--names"
+---The class of each spell, as an index into CLASSES (OTHER for none): its family in
+---SpellClassOptions, else the class of a skill line ability's ClassMask, else of the line it is on
+---(the newer clients leave the ClassMask of many abilities at 0, but not all of a line's).
+---@param dir string the build's folder
+---@return table<number, number>
+local function readClasses(dir)
+    ---@type table<number, number>, table<number, number>, table<number, number>
+    local byFamily, byMask, lineClass = {}, {}, {}
+    for row in rows(dir .. "/SpellClassOptions.csv") do
+        byFamily[row.SpellID] = classByFamily[row.SpellClassSet]
+    end
+    ---@type {spell: number, line: number}[]
+    local unmarked = {}
+    for row in rows(dir .. "/SkillLineAbility.csv") do
+        local class = classByMask[row.ClassMask]
+        if class then
+            byMask[row.Spell], lineClass[row.SkillLine] = class, class
+        else
+            unmarked[#unmarked + 1] = { spell = row.Spell, line = row.SkillLine }
+        end
+    end
+    for _, row in ipairs(unmarked) do
+        byMask[row.spell] = byMask[row.spell] or lineClass[row.line]
+    end
+    return setmetatable({}, {
+        __index = function(_, id)
+            return byFamily[id] or byMask[id] or OTHER
+        end,
+    })
+end
+
+-- The fixes per product.
+---@type table<string, table<number, true|number>>
+local FIXES = dofile("tools/spell-fixes.lua")
 
 for _, client in ipairs(CLIENTS) do
     local build = newestBuild(SPELLDATA .. client.product)
-    local schools, names = readSchools(SPELLDATA .. client.product .. "/" .. build)
+    local dir = SPELLDATA .. client.product .. "/" .. build
+    local schools, names = readSchools(dir, FIXES[client.product] or {})
+    local classOf = readClasses(dir)
+    -- Per class in the game's order, then by name (a spell's ranks together), then by ID.
     ---@type number[]
     local ids = {}
     for id in pairs(schools) do
         ids[#ids + 1] = id
     end
-    table.sort(ids)
+    table.sort(ids, function(a, b)
+        if classOf[a] ~= classOf[b] then return classOf[a] < classOf[b] end
+        local nameA, nameB = names[a] or "", names[b] or ""
+        if nameA ~= nameB then return nameA < nameB end
+        return a < b
+    end)
 
     local out = assert(io.open(client.file, "wb"))
     out:write("-- Generated by tools/spell-data.lua from ", client.name, " ", build, " (wago.tools). Do not edit.\n")
@@ -239,10 +312,13 @@ for _, client in ipairs(CLIENTS) do
     out:write("local _, ns = ... ---@type string, SchoolCastbarNamespace\n")
     out:write("-- stylua: ignore\n")
     out:write("ns.data = {\n")
+    local section
     for _, id in ipairs(ids) do
-        out:write("[", id, "]=", schools[id], ",")
-        if withNames then out:write(" -- ", names[id] or "?") end
-        out:write("\n")
+        if classOf[id] ~= section then
+            section = classOf[id]
+            out:write("-- ", CLASSES[section] and CLASSES[section].name or "Other", "\n")
+        end
+        out:write("[", id, "]=", schools[id], ", -- ", names[id] or "?", "\n")
     end
     out:write("}\n")
     out:close()

@@ -85,13 +85,16 @@ The spell tables are generated. After a patch:
 ```
 bash tools/fetch-spelldata.sh    the newest spell data per client from wago.tools
 lua tools/spell-data.lua         Data\*.lua from it
-lua tools/spell-data.lua --names the same, each line ending in the spell's name, to read through
 ```
+
+Each table lists its spells per class (the class from the spell's family in
+`SpellClassOptions`, else from its skill line), by name, with the name as a comment
+on each line; what fits no class comes last, under Other.
 
 A class spell is one on a skill line of category Class (less Mounts, Companions,
 Engraving and the like; the pets' lines count), or taught by a specialization or a talent (`Talent` on the classic
 clients, `TraitDefinition` on retail), less professions' recipes; with a cast time
-or a channel.
+or a channel. A class spell none of these names goes in `tools/spell-fixes.lua`.
 
 The data goes to `../.spelldata/`, next to the repository, which the other addons in
 that folder share.
