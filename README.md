@@ -6,8 +6,9 @@ Frostfire Bolt or Shadowflame, fades from one school's colour to the next across
 the bar.
 
 - **The cast bars of the player, the target, the focus, the pet** (a warlock's
-  Imp casting Firebolt in Fire's colour) **and the bosses**, each to be switched
-  off; **the party's** too, off at first.
+  Imp casting Firebolt in Fire's colour), **the bosses and the arena opponents**,
+  each to be switched off; **the party's** too, off at first. ElvUI's raid frames
+  have no cast bar.
 - **A colour per school**, on the plugin's own page.
 - **ElvUI's colours stay** for a failed or interrupted cast, for a cast that
   cannot be interrupted, and for a spell whose school nothing knows.
@@ -53,7 +54,7 @@ loads late) is coloured as soon as it arrives.
   ElvUI's runs first: at login on every frame in `E.oUF.objects` (the party buttons
   have no fixed names), and through a hook on `UF.Configure_Castbar` on a frame
   built later. Which bars it paints goes by the frame's `unitframeType` (`player`,
-  `target`, `focus`, `pet`, `boss`, `party`).
+  `target`, `focus`, `pet`, `boss`, `arena`, `party`).
   It listens to `COMBAT_LOG_EVENT_UNFILTERED` (not on `E.Modern`) and
   `SPELL_TEXT_UPDATE`.
 - `Paint.lua` colours a bar. One school goes through ElvUI's own

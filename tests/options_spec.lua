@@ -42,6 +42,7 @@ describe("the general tab", function()
         local general = page(client).args.general
         assert.is_true(call(general, "get", "pet"))
         assert.is_true(call(general, "get", "boss"))
+        assert.is_true(call(general, "get", "arena"))
         assert.is_false(call(general, "get", "party"))
         call(general, "set", "party", true)
         assert.is_true(client.E.db.schoolCastbar.units.party)

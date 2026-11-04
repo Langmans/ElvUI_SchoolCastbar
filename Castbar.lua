@@ -1,5 +1,5 @@
 -- The plugin's ElvUI module: it takes over nothing, but paints after ElvUI on the cast bars of the
--- player, the target, the focus, the pet, the bosses and the party (Paint.lua).
+-- player, the target, the focus, the pet, the bosses, the arena opponents and the party (Paint.lua).
 --
 -- ElvUI sets its cast callbacks (PostCastStart and the rest) on each bar when it builds the frame,
 -- so the plugin wraps them on the bar itself: at login on every frame oUF spawned so far (the party
@@ -14,8 +14,17 @@ local UF = E:GetModule("UnitFrames")
 local S = ns.Schools
 
 -- The bars the plugin paints: ElvUI's unitframeType of their frame, in the options' order.
-ns.units = { player = "player", target = "target", focus = "focus", pet = "pet", boss = "boss", party = "party" }
-ns.unitOrder = { "player", "target", "focus", "pet", "boss", "party" }
+-- ElvUI's raid frames have no cast bar.
+ns.units = {
+    player = "player",
+    target = "target",
+    focus = "focus",
+    pet = "pet",
+    boss = "boss",
+    arena = "arena",
+    party = "party",
+}
+ns.unitOrder = { "player", "target", "focus", "pet", "boss", "arena", "party" }
 
 -- The spells cast this session, for the Spells tab: name to spell ID (false when hidden).
 ---@type table<string, number|false>
@@ -23,7 +32,7 @@ ns.seen = {}
 
 P.schoolCastbar = {
     -- The party's bars only when asked: five more bars in colour can be a lot.
-    units = { player = true, target = true, focus = true, pet = true, boss = true, party = false },
+    units = { player = true, target = true, focus = true, pet = true, boss = true, arena = true, party = false },
     gradient = true,
     tooltip = true,
     -- Picked to tell apart on a dark bar: Fire orange, Frost icy blue, Shadow purple and so on.
