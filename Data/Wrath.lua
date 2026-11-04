@@ -68,9 +68,6 @@ Set(NATURE, 1002) -- Eyes of the Beast
 Set(PHYSICAL, 1284199) -- Hawk Shot
 -- Kill Shot
 Set(PHYSICAL, 53351, 61005, 61006)
-Set(NATURE, 53426) -- Lick Your Wounds
--- Pin
-Set(PHYSICAL, 50245, 53544, 53545, 53546, 53547, 53548)
 Set(NATURE, 982) -- Revive Pet
 -- Scare Beast
 Set(NATURE, 1513, 14326, 14327)
@@ -240,8 +237,6 @@ Set(SHADOW, 710, 18647)
 -- Chaos Bolt
 Set(FIRE, 50796, 59170, 59171, 59172)
 Set(SHADOWFLAME, 1295386) -- Chaos Meteor
--- Consume Shadows
-Set(SHADOW, 17767, 17850, 17851, 17852, 17853, 17854, 27272, 47987, 47988)
 -- Create Firestone
 Set(FIRE, 6366, 17951, 17952, 17953, 27250, 60219, 60220)
 -- Create Healthstone
@@ -263,8 +258,6 @@ Set(SHADOW, 126) -- Eye of Kilrogg
 -- Fear
 Set(SHADOW, 5782, 6213, 6215)
 Set(PHYSICAL, 5784) -- Felsteed
--- Firebolt
-Set(FIRE, 3110, 7799, 7800, 7801, 7802, 11762, 11763, 27267, 47964)
 -- Haunt
 Set(SHADOW, 48181, 59161, 59163, 59164)
 -- Health Funnel
@@ -287,7 +280,6 @@ Set(SHADOW, 29893, 58887)
 Set(SHADOW, 698) -- Ritual of Summoning
 -- Searing Pain
 Set(FIRE, 5676, 17919, 17920, 17921, 17922, 17923, 27210, 30459, 47814, 47815)
-Set(SHADOW, 6358) -- Seduction
 -- Seed of Corruption
 Set(SHADOW, 27243, 47835, 47836)
 -- Shadow Bolt
@@ -331,5 +323,13 @@ Set(NATURE, 740, 8918, 9862, 9863, 26983, 48446, 48447)
 -- Wrath
 Set(NATURE, 5176, 5177, 5178, 5179, 5180, 6780, 8905, 9912, 26984, 26985, 48459, 48461)
 
--- Other
+-- Pets
+-- Consume Shadows
+Set(SHADOW, 17767, 17850, 17851, 17852, 17853, 17854, 27272, 47987, 47988)
+-- Firebolt
+Set(FIRE, 3110, 7799, 7800, 7801, 7802, 11762, 11763, 27267, 47964)
 Set(PHYSICAL, 47484) -- Huddle
+Set(NATURE, 53426) -- Lick Your Wounds
+-- Pin
+Set(PHYSICAL, 50245, 53544, 53545, 53546, 53547, 53548)
+Set(SHADOW, 6358) -- Seduction

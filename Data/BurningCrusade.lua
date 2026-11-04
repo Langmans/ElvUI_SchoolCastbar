@@ -219,8 +219,6 @@ Set(ARCANE, 3563) -- Teleport: Undercity
 -- Warlock
 -- Banish
 Set(SHADOW, 710, 18647)
--- Consume Shadows
-Set(SHADOW, 17767, 17850, 17851, 17852, 17853, 17854, 27272)
 -- Corruption
 Set(SHADOW, 172, 6222, 6223, 7648, 11671, 11672, 25311, 27216)
 -- Create Firestone
@@ -241,8 +239,6 @@ Set(SHADOW, 1120, 8288, 8289, 11675, 27217)
 Set(SHADOW, 126) -- Eye of Kilrogg
 -- Fear
 Set(SHADOW, 5782, 6213, 6215)
--- Firebolt
-Set(FIRE, 3110, 7799, 7800, 7801, 7802, 11762, 11763, 27267)
 -- Health Funnel
 Set(SHADOW, 755, 3698, 3699, 3700, 11693, 11694, 11695, 27259)
 -- Hellfire
@@ -262,7 +258,6 @@ Set(SHADOW, 29893) -- Ritual of Souls
 Set(SHADOW, 698) -- Ritual of Summoning
 -- Searing Pain
 Set(FIRE, 5676, 17919, 17920, 17921, 17922, 17923, 27210, 30459)
-Set(SHADOW, 6358) -- Seduction
 Set(SHADOW, 27243) -- Seed of Corruption
 -- Shadow Bolt
 Set(SHADOW, 686, 695, 705, 1088, 1106, 7641, 11659, 11660, 11661, 25307, 27209)
@@ -306,3 +301,10 @@ Set(ARCANE, 18960) -- Teleport: Moonglade
 Set(NATURE, 740, 8918, 9862, 9863, 26983)
 -- Wrath
 Set(NATURE, 5176, 5177, 5178, 5179, 5180, 6780, 8905, 9912, 26984, 26985)
+
+-- Pets
+-- Consume Shadows
+Set(SHADOW, 17767, 17850, 17851, 17852, 17853, 17854, 27272)
+-- Firebolt
+Set(FIRE, 3110, 7799, 7800, 7801, 7802, 11762, 11763, 27267)
+Set(SHADOW, 6358) -- Seduction

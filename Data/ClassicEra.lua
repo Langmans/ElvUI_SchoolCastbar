@@ -36,6 +36,7 @@ Set(PHYSICAL, 1464, 8820, 11604, 11605)
 
 -- Paladin
 Set(HOLY, 458856) -- Divine Light
+Set(HOLY, 437920) -- Divine Storm
 -- Flash of Light
 Set(HOLY, 19750, 19939, 19940, 19941, 19942, 19943)
 -- Hammer of Wrath
@@ -65,6 +66,8 @@ Set(PHYSICAL, 2641) -- Dismiss Pet
 -- Distracting Shot
 Set(ARCANE, 14274, 15629, 15630, 15631, 15632, 20736)
 Set(ARCANE, 6197) -- Eagle Eye
+-- Explosive Shot
+Set(FIRE, 409552, 409554, 1213269)
 -- Explosive Trap
 Set(FIRE, 409532, 409534, 409535)
 Set(NATURE, 1002) -- Eyes of the Beast
@@ -95,6 +98,7 @@ Set(ARCANE, 1510, 14294, 14295)
 -- Rogue
 Set(PHYSICAL, 439503) -- Atrophic Poison
 Set(PHYSICAL, 400009) -- Between the Eyes
+Set(PHYSICAL, 1228371) -- Blade Dance
 Set(PHYSICAL, 6510) -- Blinding Powder
 Set(PHYSICAL, 3420) -- Crippling Poison
 Set(PHYSICAL, 3421) -- Crippling Poison II
@@ -209,6 +213,7 @@ Set(FIRE, 2120, 2121, 8422, 8423, 10215, 10216)
 Set(FROST, 116, 205, 837, 7322, 8406, 8407, 8408, 10179, 10180, 10181, 25304)
 Set(FROSTFIRE, 401502) -- Frostfire Bolt
 Set(ARCANE, 412510) -- Mass Regeneration
+Set(PHYSICAL, 436695) -- Overheat
 -- Polymorph
 Set(ARCANE, 118, 12824, 12825, 12826, 28271, 28272)
 Set(ARCANE, 28270) -- Polymorph: Cow
@@ -235,8 +240,6 @@ Set(ARCANE, 3563) -- Teleport: Undercity
 -- Banish
 Set(SHADOW, 710, 18647)
 Set(CHAOS, 403629) -- Chaos Bolt
--- Consume Shadows
-Set(SHADOW, 17767, 17850, 17851, 17852, 17853, 17854)
 -- Corruption
 Set(SHADOW, 172, 6222, 6223, 7648, 11671, 11672, 25311)
 Set(FIRE, 17951) -- Create Firestone
@@ -266,8 +269,6 @@ Set(PHYSICAL, 445459) -- Explorer Imp
 Set(SHADOW, 126) -- Eye of Kilrogg
 -- Fear
 Set(SHADOW, 5782, 6213, 6215)
--- Firebolt
-Set(FIRE, 3110, 7799, 7800, 7801, 7802, 11762, 11763)
 -- Health Funnel
 Set(SHADOW, 755, 3698, 3699, 3700, 11693, 11694, 11695)
 -- Hellfire
@@ -276,6 +277,8 @@ Set(FIRE, 1949, 11683, 11684)
 Set(SHADOW, 5484, 17928)
 -- Immolate
 Set(FIRE, 348, 707, 1094, 2941, 11665, 11667, 11668, 25309)
+-- Incinerate
+Set(FIRE, 412758, 429838)
 Set(SHADOW, 1122) -- Inferno
 Set(SHADOW, 437169) -- Portal of Summoning
 -- Rain of Fire
@@ -285,9 +288,10 @@ Set(PHYSICAL, 18541) -- Ritual of Doom Effect
 Set(SHADOW, 698) -- Ritual of Summoning
 -- Searing Pain
 Set(FIRE, 5676, 17919, 17920, 17921, 17922, 17923)
-Set(SHADOW, 6358) -- Seduction
 -- Shadow Bolt
 Set(SHADOW, 686, 695, 705, 1088, 1106, 7641, 11659, 11660, 11661, 25307)
+-- Shadow Bolt Volley
+Set(SHADOW, 438350, 462590, 1220515)
 Set(SHADOWFLAME, 426320) -- Shadowflame
 -- Soul Fire
 Set(FIRE, 6353, 17924)
@@ -321,6 +325,8 @@ Set(PHYSICAL, 437138) -- Revive
 -- Soothe Animal
 Set(NATURE, 2908, 8955, 9901)
 -- Starfall
+Set(NATURE, 457844, 458684)
+-- Starfall
 Set(ARCANE, 429820, 449431)
 -- Starfire
 Set(ARCANE, 2912, 8949, 8950, 8951, 9875, 9876, 25298)
@@ -330,15 +336,9 @@ Set(NATURE, 740, 8918, 9862, 9863)
 -- Wrath
 Set(NATURE, 5176, 5177, 5178, 5179, 5180, 6780, 8905, 9912, 460671, 462580, 469143, 1213248)
 
--- Other
-Set(PHYSICAL, 1228371) -- Blade Dance
-Set(HOLY, 437920) -- Divine Storm
--- Explosive Shot
-Set(FIRE, 409552, 409554, 1213269)
--- Incinerate
-Set(FIRE, 412758, 429838)
-Set(PHYSICAL, 436695) -- Overheat
--- Shadow Bolt Volley
-Set(SHADOW, 438350, 462590, 1220515)
--- Starfall
-Set(NATURE, 457844, 458684)
+-- Pets
+-- Consume Shadows
+Set(SHADOW, 17767, 17850, 17851, 17852, 17853, 17854)
+-- Firebolt
+Set(FIRE, 3110, 7799, 7800, 7801, 7802, 11762, 11763)
+Set(SHADOW, 6358) -- Seduction

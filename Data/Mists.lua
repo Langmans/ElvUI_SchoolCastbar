@@ -55,13 +55,9 @@ Set(HOLY, 10326) -- Turn Evil
 -- Hunter
 Set(PHYSICAL, 19434) -- Aimed Shot
 Set(PHYSICAL, 120360) -- Barrage
-Set(NATURE, 93433) -- Burrow Attack
 Set(NATURE, 77767) -- Cobra Shot
 Set(PHYSICAL, 2641) -- Dismiss Pet
 Set(ARCANE, 6197) -- Eagle Eye
-Set(FROSTSTORM, 92380) -- Froststorm Breath
-Set(PHYSICAL, 90327) -- Lock Jaw
-Set(PHYSICAL, 50245) -- Pin
 Set(PHYSICAL, 109259) -- Powershot
 Set(PHYSICAL, 137798) -- Reflective Armor Plating
 Set(NATURE, 982) -- Revive Pet
@@ -198,7 +194,6 @@ Set(ARCANE, 88342, 88344)
 Set(ARCANE, 3563) -- Teleport: Undercity
 -- Teleport: Vale of Eternal Blossoms
 Set(ARCANE, 132621, 132627)
-Set(FROST, 31707) -- Waterbolt
 
 -- Warlock
 Set(SHADOW, 710) -- Banish
@@ -214,7 +209,6 @@ Set(SHADOW, 126) -- Eye of Kilrogg
 Set(SHADOW, 5782) -- Fear
 Set(FIRE, 115746) -- Felbolt
 Set(PHYSICAL, 5784) -- Felsteed
-Set(FIRE, 3110) -- Firebolt
 Set(SHADOW, 48181) -- Haunt
 Set(SHADOW, 755) -- Health Funnel
 Set(FIRE, 1949) -- Hellfire
@@ -223,7 +217,6 @@ Set(SHADOW, 103103) -- Malefic Grasp
 Set(FIRE, 5740) -- Rain of Fire
 Set(SHADOW, 698) -- Ritual of Summoning
 Set(FIRE, 115276) -- Sear Magic
-Set(SHADOW, 6358) -- Seduction
 -- Seed of Corruption
 Set(SHADOW, 27243, 114790)
 Set(SHADOW, 686) -- Shadow Bolt
@@ -278,10 +271,17 @@ Set(ARCANE, 18960) -- Teleport: Moonglade
 Set(NATURE, 740) -- Tranquility
 Set(NATURE, 5176) -- Wrath
 
--- Other
+-- Pets
+Set(NATURE, 93433) -- Burrow Attack
 Set(FIRE, 118350) -- Empower
 Set(FIRE, 117588) -- Fire Nova
+Set(FIRE, 3110) -- Firebolt
+Set(FROSTSTORM, 92380) -- Froststorm Breath
 Set(PHYSICAL, 91838) -- Huddle
 -- Immolate
 Set(FIRE, 348, 118297)
+Set(PHYSICAL, 90327) -- Lock Jaw
+Set(PHYSICAL, 50245) -- Pin
 Set(NATURE, 118347) -- Reinforce
+Set(SHADOW, 6358) -- Seduction
+Set(FROST, 31707) -- Waterbolt

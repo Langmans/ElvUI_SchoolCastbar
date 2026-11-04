@@ -72,15 +72,12 @@ Set(HOLY, 200652) -- Tyr's Deliverance
 Set(PHYSICAL, 19434) -- Aimed Shot
 Set(PHYSICAL, 120360) -- Barrage
 Set(PHYSICAL, 1261193) -- Boomstick
-Set(NATURE, 93433) -- Burrow Attack
 Set(PHYSICAL, 2641) -- Dismiss Pet
 Set(ARCANE, 6197) -- Eagle Eye
 Set(NATURE, 321297) -- Eyes of the Beast
 Set(PHYSICAL, 125050) -- Fetch
 Set(PHYSICAL, 127933) -- Fireworks
-Set(FROSTSTORM, 92380) -- Froststorm Breath
 Set(PHYSICAL, 203415) -- Fury of the Eagle
-Set(PHYSICAL, 50245) -- Pin
 Set(PHYSICAL, 257044) -- Rapid Fire
 Set(PHYSICAL, 982) -- Revive Pet
 Set(NATURE, 1513) -- Scare Beast
@@ -151,28 +148,22 @@ Set(PHYSICAL, 212552) -- Wraith Walk
 Set(NATURE, 2008) -- Ancestral Spirit
 Set(NATURE, 212048) -- Ancestral Vision
 Set(NATURE, 556) -- Astral Recall
-Set(NATURE, 157348) -- Call Lightning
 Set(SHADOW, 320674) -- Chain Harvest
 Set(NATURE, 1064) -- Chain Heal
 Set(NATURE, 188443) -- Chain Lightning
 Set(ELEMENTAL, 117014) -- Elemental Blast
 Set(NATURE, 328923) -- Fae Transfusion
 Set(NATURE, 6196) -- Far Sight
-Set(FIRE, 57984) -- Fire Blast
 Set(NATURE, 73920) -- Healing Rain
 Set(NATURE, 8004) -- Healing Surge
 Set(NATURE, 77472) -- Healing Wave
 -- Hex
 Set(NATURE, 51514, 210873, 211004, 211010, 211015, 269352, 277778, 277784, 309328)
--- Immolate
-Set(FIRE, 348, 118297)
 Set(FIRE, 51505) -- Lava Burst
 Set(NATURE, 188196) -- Lightning Bolt
-Set(NATURE, 157375) -- Stormfury
 -- Stormkeeper
 Set(NATURE, 191634, 205495, 320137, 383009)
 Set(NATURE, 197995) -- Wellspring
-Set(NATURE, 157331) -- Wind Gust
 
 -- Mage
 Set(ARCANE, 120146) -- Ancient Portal: Dalaran
@@ -262,8 +253,6 @@ Set(ARCANE, 395277) -- Teleport: Valdrakken
 -- Teleport: Vale of Eternal Blossoms
 Set(ARCANE, 132621, 132627)
 Set(ARCANE, 176242) -- Teleport: Warspear
-Set(FROST, 135029) -- Water Jet
-Set(FROST, 31707) -- Waterbolt
 
 -- Warlock
 Set(SHADOW, 710) -- Banish
@@ -273,14 +262,11 @@ Set(FIRE, 196447) -- Channel Demonfire
 Set(CHAOS, 116858) -- Chaos Bolt
 Set(SHADOW, 6201) -- Create Healthstone
 Set(SHADOW, 29893) -- Create Soulwell
-Set(SHADOW, 170995) -- Cripple
 Set(SHADOWFLAME, 1257052) -- Dark Harvest
-Set(SHADOW, 170996) -- Debilitate
 -- Decimating Bolt
 Set(SHADOW, 325289, 386696)
 Set(SHADOWFLAME, 264178) -- Demonbolt
 Set(SHADOW, 111771) -- Demonic Gateway
-Set(SHADOW, 85692) -- Doom Bolt
 Set(SHADOW, 234153) -- Drain Life
 Set(SHADOW, 198590) -- Drain Soul
 Set(PHYSICAL, 23161) -- Dreadsteed
@@ -288,7 +274,6 @@ Set(SHADOW, 126) -- Eye of Kilrogg
 Set(SHADOW, 5782) -- Fear
 Set(FIRE, 115746) -- Felbolt
 Set(PHYSICAL, 5784) -- Felsteed
-Set(FIRE, 3110) -- Firebolt
 Set(SHADOW, 48181) -- Haunt
 Set(SHADOW, 321792) -- Impending Catastrophe
 Set(FIRE, 29722) -- Incinerate
@@ -397,12 +382,29 @@ Set(ARCANE, 1291636) -- Temporal Barrier
 Set(ARCANE, 404977) -- Time Skip
 Set(FIRESTORM, 396286) -- Upheaval
 
+-- Pets
+Set(NATURE, 93433) -- Burrow Attack
+Set(NATURE, 157348) -- Call Lightning
+Set(SHADOW, 170995) -- Cripple
+Set(SHADOW, 170996) -- Debilitate
+Set(SHADOW, 85692) -- Doom Bolt
+Set(FIRE, 57984) -- Fire Blast
+Set(FIRE, 3110) -- Firebolt
+Set(FROSTSTORM, 92380) -- Froststorm Breath
+Set(PHYSICAL, 91838) -- Huddle
+-- Immolate
+Set(FIRE, 348, 118297)
+Set(PHYSICAL, 50245) -- Pin
+Set(SHADOW, 6358) -- Seduction
+Set(NATURE, 157375) -- Stormfury
+Set(FROST, 135029) -- Water Jet
+Set(FROST, 31707) -- Waterbolt
+Set(NATURE, 157331) -- Wind Gust
+
 -- Other
 Set(PHYSICAL, 432561) -- Flint and Tinder
 Set(FROST, 141425) -- Frostbolt Volley
-Set(PHYSICAL, 91838) -- Huddle
 Set(PHYSICAL, 376963) -- Lighting
 Set(PHYSICAL, 124801) -- Repair Cannon
 Set(HOLY, 20066) -- Repentance
-Set(SHADOW, 6358) -- Seduction
 Set(PHYSICAL, 1229376) -- Single-Button Assistant

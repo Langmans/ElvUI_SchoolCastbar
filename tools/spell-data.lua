@@ -71,7 +71,8 @@ local NOT_A_CLASS = {
 -- The categories of a profession's lines: secondary skills (Cooking, Fishing) and professions.
 local PROFESSION_CATEGORIES = { [categories.secondary] = true, [categories.profession] = true }
 -- The classes in the game's order, each with its bit in a ClassMask and its family in
--- SpellClassOptions (SpellClassSet). A spell of none goes under OTHER.
+-- SpellClassOptions (SpellClassSet). After them come PETS, every spell on a pet's skill line, and
+-- OTHER, a spell of no class found.
 local CLASSES = {
     { name = "Warrior", mask = 1, family = 4 },
     { name = "Paladin", mask = 2, family = 10 },
@@ -87,7 +88,17 @@ local CLASSES = {
     { name = "Demon Hunter", mask = 2048, family = 107 },
     { name = "Evoker", mask = 4096, family = 224 },
 }
-local OTHER = #CLASSES + 1
+local PETS, OTHER = #CLASSES + 1, #CLASSES + 2
+local SECTION_NAMES = { [PETS] = "Pets", [OTHER] = "Other" }
+-- A pet's skill line by its name: "Pet - Imp", "Pet- Wasp", "Second Pet - Hunter".
+local PET_LINE = "Pet"
+
+---The rune a Season of Discovery "Engrave <slot> - <rune>" ability puts on; nil for any other.
+---@param name string?
+---@return string?
+local function RuneOf(name)
+    return (name or ""):match("^Engrave [^-]+ %- (.+)$")
+end
 ---@type table<number, number>, table<number, number>
 local classByMask, classByFamily = {}, {}
 for index, class in ipairs(CLASSES) do
@@ -203,7 +214,7 @@ local function readSchools(dir, fixes)
     ---@type table<number, boolean>, table<string, boolean>, table<number, boolean>
     local classSpells, runes, recipes = {}, {}, {}
     for row in rows(dir .. "/SkillLineAbility.csv") do
-        local rune = row.ClassMask > 0 and (names[row.Spell] or ""):match("^Engrave [^-]+ %- (.+)$")
+        local rune = row.ClassMask > 0 and RuneOf(names[row.Spell])
         if rune then runes[rune] = true end
         if classLines[row.SkillLine] then classSpells[row.Spell] = true end
         if professionLines[row.SkillLine] then recipes[row.Spell] = true end
@@ -251,23 +262,36 @@ local function readSchools(dir, fixes)
     return schools, names
 end
 
----The class of each spell, as an index into CLASSES (OTHER for none): its family in
----SpellClassOptions, else the class of a skill line ability's ClassMask, else of the line it is on
----(the newer clients leave the ClassMask of many abilities at 0, but not all of a line's).
+---The section of each spell, as an index into CLASSES, or PETS or OTHER: PETS for a spell on a
+---pet's skill line; else its family in SpellClassOptions; else the class of a skill line ability's
+---ClassMask, else of the line it is on (the newer clients leave the ClassMask of many abilities at
+---0, but not all of a line's); else, for a Season of Discovery rune's spell, the class of the
+---Engrave ability that puts the rune on.
 ---@param dir string the build's folder
+---@param names table<number, string>
 ---@return table<number, number>
-local function readClasses(dir)
+local function readClasses(dir, names)
+    ---@type table<number, boolean>
+    local petLines = {}
+    for row in rows(dir .. "/SkillLine.csv") do
+        if tostring(row.DisplayName_lang):find(PET_LINE, 1, true) then petLines[row.ID] = true end
+    end
     ---@type table<number, number>, table<number, number>, table<number, number>
     local byFamily, byMask, lineClass = {}, {}, {}
     for row in rows(dir .. "/SpellClassOptions.csv") do
         byFamily[row.SpellID] = classByFamily[row.SpellClassSet]
     end
+    ---@type table<number, boolean>, table<string, number>
+    local pets, runeClass = {}, {}
     ---@type {spell: number, line: number}[]
     local unmarked = {}
     for row in rows(dir .. "/SkillLineAbility.csv") do
+        if petLines[row.SkillLine] then pets[row.Spell] = true end
         local class = classByMask[row.ClassMask]
         if class then
             byMask[row.Spell], lineClass[row.SkillLine] = class, class
+            local rune = RuneOf(names[row.Spell])
+            if rune then runeClass[rune] = class end
         else
             unmarked[#unmarked + 1] = { spell = row.Spell, line = row.SkillLine }
         end
@@ -277,7 +301,9 @@ local function readClasses(dir)
     end
     return setmetatable({}, {
         __index = function(_, id)
-            return byFamily[id] or byMask[id] or OTHER
+            if pets[id] then return PETS end
+            local rune = id >= FIRST_RUNE_SPELL and runeClass[names[id]]
+            return byFamily[id] or byMask[id] or rune or OTHER
         end,
     })
 end
@@ -365,7 +391,7 @@ for _, client in ipairs(CLIENTS) do
     local build = newestBuild(SPELLDATA .. client.product)
     local dir = SPELLDATA .. client.product .. "/" .. build
     local schools, names = readSchools(dir, FIXES[client.product] or {})
-    local classOf = readClasses(dir)
+    local classOf = readClasses(dir, names)
     -- One entry per spell: its ranks (the IDs of one name and one school) together.
     ---@type table<string, {class: number, name: string, mask: number, ids: number[]}>
     local byKey = {}
@@ -419,7 +445,7 @@ for _, client in ipairs(CLIENTS) do
     for _, spell in ipairs(spells) do
         if spell.class ~= section then
             section = spell.class
-            out:write("\n-- ", CLASSES[section] and CLASSES[section].name or "Other", "\n")
+            out:write("\n-- ", CLASSES[section] and CLASSES[section].name or SECTION_NAMES[section], "\n")
         end
         local call = ("Set(%s, %s)"):format(Constant(spell.mask), table.concat(spell.ids, ", "))
         -- One rank: the name after the call; several: above it.

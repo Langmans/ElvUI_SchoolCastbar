@@ -37,6 +37,7 @@ Set(PHYSICAL, 1464, 8820, 11604, 11605, 1240193)
 
 -- Paladin
 Set(HOLY, 458856) -- Divine Light
+Set(HOLY, 437920) -- Divine Storm
 -- Flash of Light
 Set(HOLY, 19750, 19939, 19940, 19941, 19942, 19943)
 -- Hammer of Wrath
@@ -66,14 +67,8 @@ Set(PHYSICAL, 2641) -- Dismiss Pet
 -- Distracting Shot
 Set(ARCANE, 14274, 15629, 15630, 15631, 15632, 20736)
 Set(ARCANE, 6197) -- Eagle Eye
+Set(FIRE, 1213269) -- Explosive Shot
 Set(NATURE, 1002) -- Eyes of the Beast
-Set(PHYSICAL, 1263099) -- Faster Attack I
-Set(PHYSICAL, 1263100) -- Faster Attack II
-Set(PHYSICAL, 1263102) -- Faster Attack III
-Set(PHYSICAL, 1263104) -- Faster Attack IV
-Set(PHYSICAL, 1263107) -- Faster Attack V
-Set(PHYSICAL, 1263109) -- Faster Attack VI
-Set(PHYSICAL, 1263110) -- Faster Attack VII
 -- Kill Shot
 Set(PHYSICAL, 409593, 1218240)
 -- Mend Pet
@@ -85,8 +80,6 @@ Set(PHYSICAL, 19503) -- Scatter Shot
 Set(NATURE, 3043) -- Scorpid Sting
 -- Serpent Sting
 Set(NATURE, 1978, 13549, 13550, 13551, 13552, 13553, 13554, 13555, 25295, 425728, 425729, 425730, 425732, 425733, 425734, 425735, 425736, 425737)
-Set(PHYSICAL, 1263113) -- Slower Attack II
-Set(PHYSICAL, 1263114) -- Slower Attack III
 -- Sniper Shot
 Set(PHYSICAL, 1310687, 1310785, 1310786)
 Set(PHYSICAL, 437123) -- Steady Shot
@@ -101,6 +94,7 @@ Set(ARCANE, 1510, 14294, 14295)
 
 -- Rogue
 Set(PHYSICAL, 400009) -- Between the Eyes
+Set(PHYSICAL, 1228371) -- Blade Dance
 Set(PHYSICAL, 1842) -- Disarm Trap
 
 -- Priest
@@ -158,6 +152,7 @@ Set(NATURE, 1064, 10622, 10623)
 -- Chain Lightning
 Set(NATURE, 421, 930, 2860, 10605)
 Set(NATURE, 6196) -- Far Sight
+Set(PHYSICAL, 1245338) -- Feral Spirit
 Set(NATURE, 2645) -- Ghost Wolf
 Set(NATURE, 415236) -- Healing Rain
 -- Healing Wave
@@ -198,6 +193,7 @@ Set(FROST, 116, 205, 837, 7322, 8406, 8407, 8408, 10179, 10180, 10181, 25304)
 -- Frostfire Bolt
 Set(FROSTFIRE, 401502, 1237312, 1237313)
 Set(ARCANE, 412510) -- Mass Regeneration
+Set(PHYSICAL, 436695) -- Overheat
 -- Polymorph
 Set(ARCANE, 118, 12824, 12825, 12826, 28271, 28272)
 Set(ARCANE, 28270) -- Polymorph: Cow
@@ -225,8 +221,6 @@ Set(ARCANE, 3563) -- Teleport: Undercity
 -- Banish
 Set(SHADOW, 710, 18647)
 Set(CHAOS, 403629) -- Chaos Bolt
--- Consume Shadows
-Set(SHADOW, 17767, 17850, 17851, 17852, 17853, 17854)
 -- Corruption
 Set(SHADOW, 172, 6222, 6223, 7648, 11671, 11672, 25311)
 -- Create Firestone
@@ -247,8 +241,8 @@ Set(PHYSICAL, 445459) -- Explorer Imp
 Set(SHADOW, 126) -- Eye of Kilrogg
 -- Fear
 Set(SHADOW, 5782, 6213, 6215)
--- Firebolt
-Set(FIRE, 3110, 7799, 7800, 7801, 7802, 11762, 11763)
+-- Haunt
+Set(SHADOW, 403501, 1269872, 1293693, 1293694)
 -- Health Funnel
 Set(SHADOW, 755, 3698, 3699, 3700, 11693, 11694, 11695)
 -- Hellfire
@@ -257,6 +251,8 @@ Set(FIRE, 1949, 11683, 11684)
 Set(SHADOW, 5484, 17928)
 -- Immolate
 Set(FIRE, 348, 707, 1094, 2941, 11665, 11667, 11668, 25309)
+-- Incinerate
+Set(FIRE, 412758, 429838, 1293812, 1293813)
 Set(SHADOW, 1122) -- Inferno
 Set(SHADOW, 437169) -- Portal of Summoning
 -- Rain of Fire
@@ -266,9 +262,10 @@ Set(PHYSICAL, 18541) -- Ritual of Doom Effect
 Set(SHADOW, 698) -- Ritual of Summoning
 -- Searing Pain
 Set(FIRE, 5676, 17919, 17920, 17921, 17922, 17923)
-Set(SHADOW, 6358) -- Seduction
 -- Shadow Bolt
 Set(SHADOW, 686, 695, 705, 1088, 1106, 7641, 11659, 11660, 11661, 25307)
+-- Shadow Bolt Volley
+Set(SHADOW, 438350, 462590, 1220515, 1280356)
 Set(SHADOWFLAME, 426320) -- Shadowflame
 -- Soul Fire
 Set(FIRE, 6353, 17924)
@@ -303,9 +300,13 @@ Set(PHYSICAL, 437138, 1237948, 1237949, 1237950, 1237951)
 -- Soothe Animal
 Set(NATURE, 2908, 8955, 9901)
 -- Starfall
+Set(NATURE, 457844, 458684)
+-- Starfall
 Set(ARCANE, 429820, 449431, 1271759, 1286114)
 -- Starfire
 Set(ARCANE, 2912, 8949, 8950, 8951, 9875, 9876, 25298)
+Set(ARCANE, 1280472) -- Starsurge
+Set(FIRE, 1280669) -- Sunfire
 Set(ARCANE, 18960) -- Teleport: Moonglade
 -- Tranquility
 Set(NATURE, 740, 8918, 9862, 9863)
@@ -314,25 +315,26 @@ Set(NATURE, 408120, 1238214, 1238215)
 -- Wrath
 Set(NATURE, 5176, 5177, 5178, 5179, 5180, 6780, 8905, 9912, 460671, 462580, 469143, 1213248, 1289530, 1316677)
 
+-- Pets
+-- Consume Shadows
+Set(SHADOW, 17767, 17850, 17851, 17852, 17853, 17854)
+Set(PHYSICAL, 1263099) -- Faster Attack I
+Set(PHYSICAL, 1263100) -- Faster Attack II
+Set(PHYSICAL, 1263102) -- Faster Attack III
+Set(PHYSICAL, 1263104) -- Faster Attack IV
+Set(PHYSICAL, 1263107) -- Faster Attack V
+Set(PHYSICAL, 1263109) -- Faster Attack VI
+Set(PHYSICAL, 1263110) -- Faster Attack VII
+-- Firebolt
+Set(FIRE, 3110, 7799, 7800, 7801, 7802, 11762, 11763)
+Set(SHADOW, 6358) -- Seduction
+Set(PHYSICAL, 1263113) -- Slower Attack II
+Set(PHYSICAL, 1263114) -- Slower Attack III
+Set(PHYSICAL, 1278934) -- Summoning
+
 -- Other
 Set(PHYSICAL, 1225509) -- Adaptability
-Set(PHYSICAL, 1228371) -- Blade Dance
 Set(PHYSICAL, 1225469) -- Dedicated Study
-Set(HOLY, 437920) -- Divine Storm
 Set(PHYSICAL, 1225470) -- Essence of Innovation
-Set(FIRE, 1213269) -- Explosive Shot
-Set(PHYSICAL, 1245338) -- Feral Spirit
--- Haunt
-Set(SHADOW, 403501, 1269872, 1293693, 1293694)
--- Incinerate
-Set(FIRE, 412758, 429838, 1293812, 1293813)
-Set(PHYSICAL, 436695) -- Overheat
 Set(PHYSICAL, 1225461) -- Salvaging - NYI
 Set(PHYSICAL, 1225494) -- Second Home
--- Shadow Bolt Volley
-Set(SHADOW, 438350, 462590, 1220515, 1280356)
--- Starfall
-Set(NATURE, 457844, 458684)
-Set(ARCANE, 1280472) -- Starsurge
-Set(PHYSICAL, 1278934) -- Summoning
-Set(FIRE, 1280669) -- Sunfire
