@@ -350,6 +350,8 @@ local MASK_NAMES = {
     [127] = "All",
 }
 local SINGLE_SCHOOLS = { 1, 2, 4, 8, 16, 32, 64 }
+-- A rank's Roman numeral at the end of its name: " II", " IV".
+local RANK_NUMERAL = " [IVX]+$"
 
 ---The schools of a mask, by name: "Fire + Frost".
 ---@param mask number
@@ -372,6 +374,18 @@ local function Constant(mask)
     return name:upper()
 end
 
+-- How wide a section's header runs, filled out with its line character.
+local HEADER_WIDTH = 100
+
+---A section's header comment: "-- Mage ====...", "-- Fire ----...".
+---@param title string
+---@param fill string one character
+---@return string
+local function Header(title, fill)
+    local line = "-- " .. title .. " "
+    return line .. fill:rep(HEADER_WIDTH - #line) .. "\n"
+end
+
 -- Each data file fills ns.data through this, one call per spell: its mask, then its spell IDs.
 local SETTER = [[
 local data = {}
@@ -392,7 +406,8 @@ for _, client in ipairs(CLIENTS) do
     local dir = SPELLDATA .. client.product .. "/" .. build
     local schools, names = readSchools(dir, FIXES[client.product] or {})
     local classOf = readClasses(dir, names)
-    -- One entry per spell: its ranks (the IDs of one name and one school) together.
+    -- One entry per spell: its ranks (the IDs of one name and one school) together. A rank named
+    -- with a Roman numeral ("Instant Poison II") goes with the name without it.
     ---@type table<string, {class: number, name: string, mask: number, ids: number[]}>
     local byKey = {}
     ---@type {class: number, name: string, mask: number, ids: number[]}[]
@@ -402,7 +417,7 @@ for _, client in ipairs(CLIENTS) do
     local count = 0
     for id, mask in pairs(schools) do
         count = count + 1
-        local name = names[id] or "?"
+        local name = (names[id] or "?"):gsub(RANK_NUMERAL, "")
         local key = name .. "\0" .. mask
         local spell = byKey[key]
         if not spell then
@@ -412,11 +427,12 @@ for _, client in ipairs(CLIENTS) do
         spell.ids[#spell.ids + 1] = id
         masks[mask] = true
     end
-    -- Per class in the game's order, then by name, then by school; each spell's IDs in order.
+    -- Per class in the game's order, then by school (its mask), then by name; each spell's IDs in
+    -- order.
     table.sort(spells, function(a, b)
         if a.class ~= b.class then return a.class < b.class end
-        if a.name ~= b.name then return a.name < b.name end
-        return a.mask < b.mask
+        if a.mask ~= b.mask then return a.mask < b.mask end
+        return a.name < b.name
     end)
     for _, spell in ipairs(spells) do
         table.sort(spell.ids)
@@ -441,19 +457,18 @@ for _, client in ipairs(CLIENTS) do
         out:write("local ", Constant(mask), " = ", mask, parts:find("+", 1, true) and " -- " .. parts or "", "\n")
     end
     out:write("\n", SETTER)
-    local section
+    local section, school
     for _, spell in ipairs(spells) do
         if spell.class ~= section then
-            section = spell.class
-            out:write("\n-- ", CLASSES[section] and CLASSES[section].name or SECTION_NAMES[section], "\n")
+            section, school = spell.class, nil
+            out:write("\n", Header(CLASSES[section] and CLASSES[section].name or SECTION_NAMES[section], "="))
+        end
+        if spell.mask ~= school then
+            school = spell.mask
+            out:write("\n", Header(MASK_NAMES[school] or Parts(school), "-"))
         end
         local call = ("Set(%s, %s)"):format(Constant(spell.mask), table.concat(spell.ids, ", "))
-        -- One rank: the name after the call; several: above it.
-        if #spell.ids > 1 then
-            out:write("-- ", spell.name, "\n", call, "\n")
-        else
-            out:write(call, " -- ", spell.name, "\n")
-        end
+        out:write("-- ", spell.name, "\n", call, "\n")
     end
     out:close()
     print(("%s: %d spell IDs in %d lines from %s %s"):format(client.file, count, #spells, client.name, build))

@@ -29,259 +29,530 @@ local function Set(mask, ...)
     end
 end
 
--- Warrior
-Set(PHYSICAL, 64382) -- Shattering Throw
+-- Warrior =========================================================================================
 
--- Paladin
-Set(HOLY, 450761) -- Absolution
-Set(HOLY, 115750) -- Blinding Light
-Set(HOLY, 2812) -- Denounce
-Set(HOLY, 82326) -- Divine Light
-Set(HOLY, 19750) -- Flash of Light
-Set(HOLY, 635) -- Holy Light
-Set(HOLY, 82327) -- Holy Radiance
-Set(HOLY, 7328) -- Redemption
-Set(HOLY, 20066) -- Repentance
-Set(HOLY, 23214) -- Summon Charger
-Set(HOLY, 73629) -- Summon Exarch's Elekk
-Set(HOLY, 73630) -- Summon Great Exarch's Elekk
-Set(HOLY, 69826) -- Summon Great Sunwalker Kodo
-Set(HOLY, 69820) -- Summon Sunwalker Kodo
-Set(HOLY, 34767) -- Summon Thalassian Charger
-Set(HOLY, 34769) -- Summon Thalassian Warhorse
-Set(HOLY, 13819) -- Summon Warhorse
-Set(HOLY, 10326) -- Turn Evil
+-- Physical ----------------------------------------------------------------------------------------
+-- Shattering Throw
+Set(PHYSICAL, 64382)
 
--- Hunter
-Set(PHYSICAL, 19434) -- Aimed Shot
-Set(PHYSICAL, 120360) -- Barrage
-Set(NATURE, 77767) -- Cobra Shot
-Set(PHYSICAL, 2641) -- Dismiss Pet
-Set(ARCANE, 6197) -- Eagle Eye
-Set(PHYSICAL, 109259) -- Powershot
-Set(PHYSICAL, 137798) -- Reflective Armor Plating
-Set(NATURE, 982) -- Revive Pet
-Set(NATURE, 1513) -- Scare Beast
-Set(PHYSICAL, 56641) -- Steady Shot
-Set(NATURE, 1515) -- Tame Beast
+-- Paladin =========================================================================================
 
--- Rogue
-Set(PHYSICAL, 3408) -- Crippling Poison
-Set(PHYSICAL, 2823) -- Deadly Poison
-Set(PHYSICAL, 1842) -- Disarm Trap
-Set(PHYSICAL, 108211) -- Leeching Poison
-Set(PHYSICAL, 5761) -- Mind-numbing Poison
-Set(PHYSICAL, 108215) -- Paralytic Poison
-Set(PHYSICAL, 1804) -- Pick Lock
+-- Holy --------------------------------------------------------------------------------------------
+-- Absolution
+Set(HOLY, 450761)
+-- Blinding Light
+Set(HOLY, 115750)
+-- Denounce
+Set(HOLY, 2812)
+-- Divine Light
+Set(HOLY, 82326)
+-- Flash of Light
+Set(HOLY, 19750)
+-- Holy Light
+Set(HOLY, 635)
+-- Holy Radiance
+Set(HOLY, 82327)
+-- Redemption
+Set(HOLY, 7328)
+-- Repentance
+Set(HOLY, 20066)
+-- Summon Charger
+Set(HOLY, 23214)
+-- Summon Exarch's Elekk
+Set(HOLY, 73629)
+-- Summon Great Exarch's Elekk
+Set(HOLY, 73630)
+-- Summon Great Sunwalker Kodo
+Set(HOLY, 69826)
+-- Summon Sunwalker Kodo
+Set(HOLY, 69820)
+-- Summon Thalassian Charger
+Set(HOLY, 34767)
+-- Summon Thalassian Warhorse
+Set(HOLY, 34769)
+-- Summon Warhorse
+Set(HOLY, 13819)
+-- Turn Evil
+Set(HOLY, 10326)
+
+-- Hunter ==========================================================================================
+
+-- Physical ----------------------------------------------------------------------------------------
+-- Aimed Shot
+Set(PHYSICAL, 19434)
+-- Barrage
+Set(PHYSICAL, 120360)
+-- Dismiss Pet
+Set(PHYSICAL, 2641)
+-- Powershot
+Set(PHYSICAL, 109259)
+-- Reflective Armor Plating
+Set(PHYSICAL, 137798)
+-- Steady Shot
+Set(PHYSICAL, 56641)
+
+-- Nature ------------------------------------------------------------------------------------------
+-- Cobra Shot
+Set(NATURE, 77767)
+-- Revive Pet
+Set(NATURE, 982)
+-- Scare Beast
+Set(NATURE, 1513)
+-- Tame Beast
+Set(NATURE, 1515)
+
+-- Arcane ------------------------------------------------------------------------------------------
+-- Eagle Eye
+Set(ARCANE, 6197)
+
+-- Rogue ===========================================================================================
+
+-- Physical ----------------------------------------------------------------------------------------
+-- Crippling Poison
+Set(PHYSICAL, 3408)
+-- Deadly Poison
+Set(PHYSICAL, 2823)
+-- Disarm Trap
+Set(PHYSICAL, 1842)
+-- Leeching Poison
+Set(PHYSICAL, 108211)
+-- Mind-numbing Poison
+Set(PHYSICAL, 5761)
+-- Paralytic Poison
+Set(PHYSICAL, 108215)
+-- Pick Lock
+Set(PHYSICAL, 1804)
 -- Throw
 Set(PHYSICAL, 121733, 122475)
-Set(PHYSICAL, 8679) -- Wound Poison
+-- Wound Poison
+Set(PHYSICAL, 8679)
 
--- Priest
-Set(HOLY, 32546) -- Binding Heal
-Set(HOLY, 64843) -- Divine Hymn
-Set(SHADOW, 605) -- Dominate Mind
-Set(HOLY, 2061) -- Flash Heal
-Set(HOLY, 2060) -- Greater Heal
-Set(HOLY, 2050) -- Heal
-Set(HOLY, 64901) -- Hymn of Hope
-Set(HOLY, 126135) -- Lightwell
-Set(HOLY, 32375) -- Mass Dispel
-Set(HOLY, 83968) -- Mass Resurrection
-Set(SHADOW, 8092) -- Mind Blast
-Set(SHADOW, 15407) -- Mind Flay
-Set(SHADOW, 48045) -- Mind Sear
-Set(SHADOWFROST, 73510) -- Mind Spike
-Set(SHADOW, 2096) -- Mind Vision
-Set(HOLY, 47540) -- Penance
-Set(HOLY, 596) -- Prayer of Healing
-Set(HOLY, 2006) -- Resurrection
-Set(HOLY, 9484) -- Shackle Undead
-Set(HOLY, 585) -- Smite
-Set(SHADOW, 34914) -- Vampiric Touch
+-- Priest ==========================================================================================
 
--- Death Knight
-Set(SHADOW, 42650) -- Army of the Dead
-Set(SHADOW, 111673) -- Control Undead
-Set(SHADOW, 50977) -- Death Gate
-Set(PHYSICAL, 53341) -- Rune of Cinderglacier
-Set(PHYSICAL, 53331) -- Rune of Lichbane
-Set(PHYSICAL, 53343) -- Rune of Razorice
-Set(PHYSICAL, 54447) -- Rune of Spellbreaking
-Set(PHYSICAL, 53342) -- Rune of Spellshattering
-Set(PHYSICAL, 54446) -- Rune of Swordbreaking
-Set(PHYSICAL, 53323) -- Rune of Swordshattering
-Set(PHYSICAL, 53344) -- Rune of the Fallen Crusader
-Set(PHYSICAL, 70164) -- Rune of the Nerubian Carapace
-Set(PHYSICAL, 62158) -- Rune of the Stoneskin Gargoyle
+-- Holy --------------------------------------------------------------------------------------------
+-- Binding Heal
+Set(HOLY, 32546)
+-- Divine Hymn
+Set(HOLY, 64843)
+-- Flash Heal
+Set(HOLY, 2061)
+-- Greater Heal
+Set(HOLY, 2060)
+-- Heal
+Set(HOLY, 2050)
+-- Hymn of Hope
+Set(HOLY, 64901)
+-- Lightwell
+Set(HOLY, 126135)
+-- Mass Dispel
+Set(HOLY, 32375)
+-- Mass Resurrection
+Set(HOLY, 83968)
+-- Penance
+Set(HOLY, 47540)
+-- Prayer of Healing
+Set(HOLY, 596)
+-- Resurrection
+Set(HOLY, 2006)
+-- Shackle Undead
+Set(HOLY, 9484)
+-- Smite
+Set(HOLY, 585)
 
--- Shaman
-Set(NATURE, 2008) -- Ancestral Spirit
-Set(NATURE, 450762) -- Ancestral Vision
-Set(NATURE, 556) -- Astral Recall
-Set(NATURE, 76780) -- Bind Elemental
-Set(NATURE, 1064) -- Chain Heal
-Set(NATURE, 421) -- Chain Lightning
-Set(NATURE, 61882) -- Earthquake
-Set(ELEMENTAL, 117014) -- Elemental Blast
-Set(NATURE, 6196) -- Far Sight
-Set(NATURE, 77472) -- Greater Healing Wave
-Set(NATURE, 73920) -- Healing Rain
-Set(NATURE, 8004) -- Healing Surge
-Set(NATURE, 331) -- Healing Wave
-Set(NATURE, 51514) -- Hex
-Set(FIRE, 51505) -- Lava Burst
-Set(NATURE, 403) -- Lightning Bolt
+-- Shadow ------------------------------------------------------------------------------------------
+-- Dominate Mind
+Set(SHADOW, 605)
+-- Mind Blast
+Set(SHADOW, 8092)
+-- Mind Flay
+Set(SHADOW, 15407)
+-- Mind Sear
+Set(SHADOW, 48045)
+-- Mind Vision
+Set(SHADOW, 2096)
+-- Vampiric Touch
+Set(SHADOW, 34914)
 
--- Mage
-Set(ARCANE, 120146) -- Ancient Portal: Dalaran
-Set(ARCANE, 120145) -- Ancient Teleport: Dalaran
-Set(ARCANE, 30451) -- Arcane Blast
+-- Shadowfrost -------------------------------------------------------------------------------------
+-- Mind Spike
+Set(SHADOWFROST, 73510)
+
+-- Death Knight ====================================================================================
+
+-- Physical ----------------------------------------------------------------------------------------
+-- Rune of Cinderglacier
+Set(PHYSICAL, 53341)
+-- Rune of Lichbane
+Set(PHYSICAL, 53331)
+-- Rune of Razorice
+Set(PHYSICAL, 53343)
+-- Rune of Spellbreaking
+Set(PHYSICAL, 54447)
+-- Rune of Spellshattering
+Set(PHYSICAL, 53342)
+-- Rune of Swordbreaking
+Set(PHYSICAL, 54446)
+-- Rune of Swordshattering
+Set(PHYSICAL, 53323)
+-- Rune of the Fallen Crusader
+Set(PHYSICAL, 53344)
+-- Rune of the Nerubian Carapace
+Set(PHYSICAL, 70164)
+-- Rune of the Stoneskin Gargoyle
+Set(PHYSICAL, 62158)
+
+-- Shadow ------------------------------------------------------------------------------------------
+-- Army of the Dead
+Set(SHADOW, 42650)
+-- Control Undead
+Set(SHADOW, 111673)
+-- Death Gate
+Set(SHADOW, 50977)
+
+-- Shaman ==========================================================================================
+
+-- Fire --------------------------------------------------------------------------------------------
+-- Lava Burst
+Set(FIRE, 51505)
+
+-- Nature ------------------------------------------------------------------------------------------
+-- Ancestral Spirit
+Set(NATURE, 2008)
+-- Ancestral Vision
+Set(NATURE, 450762)
+-- Astral Recall
+Set(NATURE, 556)
+-- Bind Elemental
+Set(NATURE, 76780)
+-- Chain Heal
+Set(NATURE, 1064)
+-- Chain Lightning
+Set(NATURE, 421)
+-- Earthquake
+Set(NATURE, 61882)
+-- Far Sight
+Set(NATURE, 6196)
+-- Greater Healing Wave
+Set(NATURE, 77472)
+-- Healing Rain
+Set(NATURE, 73920)
+-- Healing Surge
+Set(NATURE, 8004)
+-- Healing Wave
+Set(NATURE, 331)
+-- Hex
+Set(NATURE, 51514)
+-- Lightning Bolt
+Set(NATURE, 403)
+
+-- Elemental ---------------------------------------------------------------------------------------
+-- Elemental Blast
+Set(ELEMENTAL, 117014)
+
+-- Mage ============================================================================================
+
+-- Fire --------------------------------------------------------------------------------------------
+-- Fireball
+Set(FIRE, 133)
+-- Flamestrike
+Set(FIRE, 2120)
+-- Molten Armor
+Set(FIRE, 30482)
+-- Pyroblast
+Set(FIRE, 11366)
+-- Scorch
+Set(FIRE, 2948)
+
+-- Frost -------------------------------------------------------------------------------------------
+-- Blizzard
+Set(FROST, 10)
+-- Frost Armor
+Set(FROST, 7302)
+-- Frost Bomb
+Set(FROST, 112948)
+-- Frostbolt
+Set(FROST, 116)
+-- Frostjaw
+Set(FROST, 102051)
+-- Ring of Frost
+Set(FROST, 113724)
+-- Summon Water Elemental
+Set(FROST, 31687)
+
+-- Frostfire ---------------------------------------------------------------------------------------
+-- Frostfire Bolt
+Set(FROSTFIRE, 44614)
+
+-- Arcane ------------------------------------------------------------------------------------------
+-- Ancient Portal: Dalaran
+Set(ARCANE, 120146)
+-- Ancient Teleport: Dalaran
+Set(ARCANE, 120145)
+-- Arcane Blast
+Set(ARCANE, 30451)
 -- Arcane Missiles
 Set(ARCANE, 5143, 7268)
-Set(FROST, 10) -- Blizzard
-Set(ARCANE, 759) -- Conjure Mana Gem
-Set(ARCANE, 42955) -- Conjure Refreshment
-Set(ARCANE, 43987) -- Conjure Refreshment Table
-Set(ARCANE, 12051) -- Evocation
-Set(FIRE, 133) -- Fireball
-Set(FIRE, 2120) -- Flamestrike
-Set(FROST, 7302) -- Frost Armor
-Set(FROST, 112948) -- Frost Bomb
-Set(FROST, 116) -- Frostbolt
-Set(FROSTFIRE, 44614) -- Frostfire Bolt
-Set(FROST, 102051) -- Frostjaw
-Set(ARCANE, 6117) -- Mage Armor
-Set(FIRE, 30482) -- Molten Armor
+-- Conjure Mana Gem
+Set(ARCANE, 759)
+-- Conjure Refreshment
+Set(ARCANE, 42955)
+-- Conjure Refreshment Table
+Set(ARCANE, 43987)
+-- Evocation
+Set(ARCANE, 12051)
+-- Mage Armor
+Set(ARCANE, 6117)
 -- Polymorph
 Set(ARCANE, 118, 28271, 28272, 61025, 61305, 61721, 61780)
-Set(ARCANE, 53142) -- Portal: Dalaran
-Set(ARCANE, 11419) -- Portal: Darnassus
-Set(ARCANE, 32266) -- Portal: Exodar
-Set(ARCANE, 11416) -- Portal: Ironforge
-Set(ARCANE, 11417) -- Portal: Orgrimmar
+-- Portal: Dalaran
+Set(ARCANE, 53142)
+-- Portal: Darnassus
+Set(ARCANE, 11419)
+-- Portal: Exodar
+Set(ARCANE, 32266)
+-- Portal: Ironforge
+Set(ARCANE, 11416)
+-- Portal: Orgrimmar
+Set(ARCANE, 11417)
 -- Portal: Shattrath
 Set(ARCANE, 33691, 35717)
-Set(ARCANE, 32267) -- Portal: Silvermoon
-Set(ARCANE, 49361) -- Portal: Stonard
-Set(ARCANE, 10059) -- Portal: Stormwind
-Set(ARCANE, 49360) -- Portal: Theramore
-Set(ARCANE, 11420) -- Portal: Thunder Bluff
+-- Portal: Silvermoon
+Set(ARCANE, 32267)
+-- Portal: Stonard
+Set(ARCANE, 49361)
+-- Portal: Stormwind
+Set(ARCANE, 10059)
+-- Portal: Theramore
+Set(ARCANE, 49360)
+-- Portal: Thunder Bluff
+Set(ARCANE, 11420)
 -- Portal: Tol Barad
 Set(ARCANE, 88345, 88346)
-Set(ARCANE, 11418) -- Portal: Undercity
+-- Portal: Undercity
+Set(ARCANE, 11418)
 -- Portal: Vale of Eternal Blossoms
 Set(ARCANE, 132620, 132626)
-Set(FIRE, 11366) -- Pyroblast
-Set(FROST, 113724) -- Ring of Frost
-Set(ARCANE, 116011) -- Rune of Power
-Set(FIRE, 2948) -- Scorch
-Set(FROST, 31687) -- Summon Water Elemental
-Set(ARCANE, 53140) -- Teleport: Dalaran
-Set(ARCANE, 3565) -- Teleport: Darnassus
-Set(ARCANE, 32271) -- Teleport: Exodar
-Set(ARCANE, 3562) -- Teleport: Ironforge
-Set(ARCANE, 3567) -- Teleport: Orgrimmar
+-- Rune of Power
+Set(ARCANE, 116011)
+-- Teleport: Dalaran
+Set(ARCANE, 53140)
+-- Teleport: Darnassus
+Set(ARCANE, 3565)
+-- Teleport: Exodar
+Set(ARCANE, 32271)
+-- Teleport: Ironforge
+Set(ARCANE, 3562)
+-- Teleport: Orgrimmar
+Set(ARCANE, 3567)
 -- Teleport: Shattrath
 Set(ARCANE, 33690, 35715)
-Set(ARCANE, 32272) -- Teleport: Silvermoon
-Set(ARCANE, 49358) -- Teleport: Stonard
-Set(ARCANE, 3561) -- Teleport: Stormwind
-Set(ARCANE, 49359) -- Teleport: Theramore
-Set(ARCANE, 3566) -- Teleport: Thunder Bluff
+-- Teleport: Silvermoon
+Set(ARCANE, 32272)
+-- Teleport: Stonard
+Set(ARCANE, 49358)
+-- Teleport: Stormwind
+Set(ARCANE, 3561)
+-- Teleport: Theramore
+Set(ARCANE, 49359)
+-- Teleport: Thunder Bluff
+Set(ARCANE, 3566)
 -- Teleport: Tol Barad
 Set(ARCANE, 88342, 88344)
-Set(ARCANE, 3563) -- Teleport: Undercity
+-- Teleport: Undercity
+Set(ARCANE, 3563)
 -- Teleport: Vale of Eternal Blossoms
 Set(ARCANE, 132621, 132627)
 
--- Warlock
-Set(SHADOW, 710) -- Banish
-Set(SHADOW, 116858) -- Chaos Bolt
-Set(SHADOW, 6201) -- Create Healthstone
-Set(SHADOW, 29893) -- Create Soulwell
-Set(SHADOW, 48018) -- Demonic Circle: Summon
-Set(SHADOW, 111771) -- Demonic Gateway
-Set(SHADOW, 689) -- Drain Life
-Set(SHADOW, 1120) -- Drain Soul
-Set(PHYSICAL, 23161) -- Dreadsteed
-Set(SHADOW, 126) -- Eye of Kilrogg
-Set(SHADOW, 5782) -- Fear
-Set(FIRE, 115746) -- Felbolt
-Set(PHYSICAL, 5784) -- Felsteed
-Set(SHADOW, 48181) -- Haunt
-Set(SHADOW, 755) -- Health Funnel
-Set(FIRE, 1949) -- Hellfire
-Set(FIRE, 29722) -- Incinerate
-Set(SHADOW, 103103) -- Malefic Grasp
-Set(FIRE, 5740) -- Rain of Fire
-Set(SHADOW, 698) -- Ritual of Summoning
-Set(FIRE, 115276) -- Sear Magic
+-- Warlock =========================================================================================
+
+-- Physical ----------------------------------------------------------------------------------------
+-- Dreadsteed
+Set(PHYSICAL, 23161)
+-- Felsteed
+Set(PHYSICAL, 5784)
+
+-- Fire --------------------------------------------------------------------------------------------
+-- Felbolt
+Set(FIRE, 115746)
+-- Hellfire
+Set(FIRE, 1949)
+-- Incinerate
+Set(FIRE, 29722)
+-- Rain of Fire
+Set(FIRE, 5740)
+-- Sear Magic
+Set(FIRE, 115276)
+-- Soul Fire
+Set(FIRE, 6353)
+
+-- Shadow ------------------------------------------------------------------------------------------
+-- Banish
+Set(SHADOW, 710)
+-- Chaos Bolt
+Set(SHADOW, 116858)
+-- Create Healthstone
+Set(SHADOW, 6201)
+-- Create Soulwell
+Set(SHADOW, 29893)
+-- Demonic Circle: Summon
+Set(SHADOW, 48018)
+-- Demonic Gateway
+Set(SHADOW, 111771)
+-- Drain Life
+Set(SHADOW, 689)
+-- Drain Soul
+Set(SHADOW, 1120)
+-- Eye of Kilrogg
+Set(SHADOW, 126)
+-- Fear
+Set(SHADOW, 5782)
+-- Haunt
+Set(SHADOW, 48181)
+-- Health Funnel
+Set(SHADOW, 755)
+-- Malefic Grasp
+Set(SHADOW, 103103)
+-- Ritual of Summoning
+Set(SHADOW, 698)
 -- Seed of Corruption
 Set(SHADOW, 27243, 114790)
-Set(SHADOW, 686) -- Shadow Bolt
-Set(FIRE, 6353) -- Soul Fire
-Set(SHADOW, 20707) -- Soulstone
-Set(SHADOW, 1098) -- Subjugate Demon
-Set(SHADOW, 30146) -- Summon Felguard
-Set(SHADOW, 691) -- Summon Felhunter
-Set(SHADOW, 688) -- Summon Imp
-Set(SHADOW, 713) -- Summon Incubus
-Set(SHADOW, 712) -- Summon Succubus
-Set(SHADOW, 697) -- Summon Voidwalker
+-- Shadow Bolt
+Set(SHADOW, 686)
+-- Soulstone
+Set(SHADOW, 20707)
+-- Subjugate Demon
+Set(SHADOW, 1098)
+-- Summon Felguard
+Set(SHADOW, 30146)
+-- Summon Felhunter
+Set(SHADOW, 691)
+-- Summon Imp
+Set(SHADOW, 688)
+-- Summon Incubus
+Set(SHADOW, 713)
+-- Summon Succubus
+Set(SHADOW, 712)
+-- Summon Voidwalker
+Set(SHADOW, 697)
 -- Unstable Affliction
 Set(SHADOW, 30108, 131736)
 
--- Monk
-Set(NATURE, 123986) -- Chi Burst
-Set(NATURE, 117952) -- Crackling Jade Lightning
-Set(NATURE, 124682) -- Enveloping Mist
-Set(PHYSICAL, 113656) -- Fists of Fury
-Set(PHYSICAL, 115294) -- Mana Tea
-Set(NATURE, 1245934) -- Reawaken
-Set(NATURE, 115178) -- Resuscitate
-Set(NATURE, 115175) -- Soothing Mist
-Set(PHYSICAL, 116023) -- Sparring
-Set(PHYSICAL, 101546) -- Spinning Crane Kick
+-- Monk ============================================================================================
+
+-- Physical ----------------------------------------------------------------------------------------
+-- Fists of Fury
+Set(PHYSICAL, 113656)
+-- Mana Tea
+Set(PHYSICAL, 115294)
+-- Sparring
+Set(PHYSICAL, 116023)
+-- Spinning Crane Kick
+Set(PHYSICAL, 101546)
+-- Transcendence
+Set(PHYSICAL, 101643)
+-- Transcendence: Transfer
+Set(PHYSICAL, 119996)
+
+-- Nature ------------------------------------------------------------------------------------------
+-- Chi Burst
+Set(NATURE, 123986)
+-- Crackling Jade Lightning
+Set(NATURE, 117952)
+-- Enveloping Mist
+Set(NATURE, 124682)
+-- Reawaken
+Set(NATURE, 1245934)
+-- Resuscitate
+Set(NATURE, 115178)
+-- Soothing Mist
+Set(NATURE, 115175)
 -- Surging Mist
 Set(NATURE, 116694, 123273)
-Set(PHYSICAL, 101643) -- Transcendence
-Set(PHYSICAL, 119996) -- Transcendence: Transfer
-Set(NATURE, 115176) -- Zen Meditation
-Set(NATURE, 126892) -- Zen Pilgrimage
-Set(NATURE, 126895) -- Zen Pilgrimage: Return
+-- Zen Meditation
+Set(NATURE, 115176)
+-- Zen Pilgrimage
+Set(NATURE, 126892)
+-- Zen Pilgrimage: Return
+Set(NATURE, 126895)
 
--- Druid
-Set(SPELLSTORM, 127663) -- Astral Communion
-Set(ARCANE, 106996) -- Astral Storm
-Set(NATURE, 33786) -- Cyclone
-Set(NATURE, 339) -- Entangling Roots
-Set(NATURE, 5185) -- Healing Touch
-Set(NATURE, 2637) -- Hibernate
-Set(NATURE, 16914) -- Hurricane
-Set(NATURE, 50464) -- Nourish
-Set(NATURE, 20484) -- Rebirth
-Set(NATURE, 8936) -- Regrowth
-Set(NATURE, 450759) -- Revitalize
-Set(NATURE, 50769) -- Revive
-Set(ARCANE, 2912) -- Starfire
-Set(SPELLSTORM, 78674) -- Starsurge
-Set(NATURE, 110309) -- Symbiosis
-Set(ARCANE, 18960) -- Teleport: Moonglade
-Set(NATURE, 740) -- Tranquility
-Set(NATURE, 5176) -- Wrath
+-- Druid ===========================================================================================
 
--- Pets
-Set(NATURE, 93433) -- Burrow Attack
-Set(FIRE, 118350) -- Empower
-Set(FIRE, 117588) -- Fire Nova
-Set(FIRE, 3110) -- Firebolt
-Set(FROSTSTORM, 92380) -- Froststorm Breath
-Set(PHYSICAL, 91838) -- Huddle
+-- Nature ------------------------------------------------------------------------------------------
+-- Cyclone
+Set(NATURE, 33786)
+-- Entangling Roots
+Set(NATURE, 339)
+-- Healing Touch
+Set(NATURE, 5185)
+-- Hibernate
+Set(NATURE, 2637)
+-- Hurricane
+Set(NATURE, 16914)
+-- Nourish
+Set(NATURE, 50464)
+-- Rebirth
+Set(NATURE, 20484)
+-- Regrowth
+Set(NATURE, 8936)
+-- Revitalize
+Set(NATURE, 450759)
+-- Revive
+Set(NATURE, 50769)
+-- Symbiosis
+Set(NATURE, 110309)
+-- Tranquility
+Set(NATURE, 740)
+-- Wrath
+Set(NATURE, 5176)
+
+-- Arcane ------------------------------------------------------------------------------------------
+-- Astral Storm
+Set(ARCANE, 106996)
+-- Starfire
+Set(ARCANE, 2912)
+-- Teleport: Moonglade
+Set(ARCANE, 18960)
+
+-- Spellstorm --------------------------------------------------------------------------------------
+-- Astral Communion
+Set(SPELLSTORM, 127663)
+-- Starsurge
+Set(SPELLSTORM, 78674)
+
+-- Pets ============================================================================================
+
+-- Physical ----------------------------------------------------------------------------------------
+-- Huddle
+Set(PHYSICAL, 91838)
+-- Lock Jaw
+Set(PHYSICAL, 90327)
+-- Pin
+Set(PHYSICAL, 50245)
+
+-- Fire --------------------------------------------------------------------------------------------
+-- Empower
+Set(FIRE, 118350)
+-- Fire Nova
+Set(FIRE, 117588)
+-- Firebolt
+Set(FIRE, 3110)
 -- Immolate
 Set(FIRE, 348, 118297)
-Set(PHYSICAL, 90327) -- Lock Jaw
-Set(PHYSICAL, 50245) -- Pin
-Set(NATURE, 118347) -- Reinforce
-Set(SHADOW, 6358) -- Seduction
-Set(FROST, 31707) -- Waterbolt
+
+-- Nature ------------------------------------------------------------------------------------------
+-- Burrow Attack
+Set(NATURE, 93433)
+-- Reinforce
+Set(NATURE, 118347)
+
+-- Frost -------------------------------------------------------------------------------------------
+-- Waterbolt
+Set(FROST, 31707)
+
+-- Froststorm --------------------------------------------------------------------------------------
+-- Froststorm Breath
+Set(FROSTSTORM, 92380)
+
+-- Shadow ------------------------------------------------------------------------------------------
+-- Seduction
+Set(SHADOW, 6358)

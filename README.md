@@ -102,11 +102,12 @@ lua tools/spell-data.lua         Data\*.lua from it
 
 Each table lists its spells per class (the class from the spell's family in
 `SpellClassOptions`, else from its skill line, else for a Season of Discovery rune
-from its Engrave ability), by name; then Pets, every spell on a pet's skill line;
-what fits no class comes last, under Other. A spell is one line, `Set(FIRE, 133, 143, ...)`: its school as a
-named local (from `Enum.Damageclass`: `FIRE`, `FROSTFIRE`; a combination without a
-name of its own joins its schools, `FIRE_FROST_ARCANE`), then the IDs of all its
-ranks, with its name above (several ranks) or after it (one).
+from its Engrave ability), then per school, by name; then Pets, every spell on a
+pet's skill line; what fits no class comes last, under Other. A spell is one line,
+`Set(FIRE, 133, 143, ...)`, with its name above it: its school as a named local
+(from `Enum.Damageclass`: `FIRE`, `FROSTFIRE`; a combination without a name of its
+own joins its schools, `FIRE_FROST_ARCANE`), then the IDs of all its ranks, also
+those named with a Roman numeral ("Instant Poison II").
 
 A class spell is one on a skill line of category Class (less Mounts, Companions,
 Engraving and the like; the pets' lines count), or taught by a specialization or a talent (`Talent` on the classic
