@@ -1,0 +1,9 @@
+package-as: ElvUI_SchoolCastbar
+
+ignore:
+  - annotations
+  - coverage
+  - tests
+  - tools
+  - elvui_schoolcastbar-dev-1.rockspec
+  - stylua.toml

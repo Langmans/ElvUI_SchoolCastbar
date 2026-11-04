@@ -1,0 +1,21 @@
+## Interface: 11509, 16001, 20506, 38002, 50504, 120100, 120105
+## Title: |cff1784d1ElvUI|r |cffff8000School Castbar|r
+## Notes: Colours ElvUI's player, target and focus cast bars by spell school, with a gradient for spells of several schools.
+## Author: Langmans
+## Version: @project-version@
+## RequiredDeps: ElvUI
+## SavedVariables: ElvUI_SchoolCastbarDB
+## X-License: MIT
+## IconTexture: Interface\Icons\Spell_Fire_FlameBolt
+
+Locales\enUS.lua
+Data\ClassicEra.lua
+Data\BurningCrusade.lua
+Data\Wrath.lua
+Data\Mists.lua
+Data\Retail.lua
+Data\Forever.lua
+Schools.lua
+Paint.lua
+Castbar.lua
+Options.lua

@@ -1,0 +1,18 @@
+-- luacov settings, used by `busted --coverage` and by tests/check.lua for the report.
+-- Only the addon's own files count, not the tests. A file no test loads still shows up, at 0%,
+-- so it cannot slip past the 100% check.
+return {
+    statsfile = "coverage/luacov.stats.out",
+    reportfile = "coverage/lcov.info",
+    -- luacov matches the names without ".lua".
+    include = {
+        "^%./[%w]+$",
+        "^%./Locales/",
+        "^%./Data/",
+        "^[%w]+$",
+        "^Locales/",
+        "^Data/",
+    },
+    exclude = { "tests/", "annotations/", "tools/" },
+    includeuntestedfiles = { "Locales", "Data" },
+}
