@@ -2,650 +2,337 @@
 -- The school mask of each class spell with a cast bar, by spell ID; loaded on WoW: Forever only.
 if WOW_PROJECT_ID ~= WOW_PROJECT_CAMELOT then return end
 local _, ns = ... ---@type string, SchoolCastbarNamespace
--- stylua: ignore
-ns.data = {
+
+-- The school masks this table uses (Enum.Damageclass).
+local PHYSICAL = 1
+local HOLY = 2
+local FIRE = 4
+local NATURE = 8
+local FROST = 16
+local FROSTFIRE = 20 -- Fire + Frost
+local ELEMENTAL = 28 -- Fire + Nature + Frost
+local SHADOW = 32
+local SHADOWFLAME = 36 -- Fire + Shadow
+local SHADOWFROST = 48 -- Frost + Shadow
+local ARCANE = 64
+local SPELLFROST = 80 -- Frost + Arcane
+local FIRE_FROST_ARCANE = 84 -- Fire + Frost + Arcane
+local CHAOS = 124 -- Fire + Nature + Frost + Shadow + Arcane
+
+local data = {}
+ns.data = data
+
+---Gives each spell ID the school mask.
+---@param mask number
+---@param ... number spell IDs
+local function Set(mask, ...)
+    for i = 1, select("#", ...) do
+        data[select(i, ...)] = mask
+    end
+end
+
 -- Warrior
-[1464]=1, -- Slam
-[8820]=1, -- Slam
-[11604]=1, -- Slam
-[11605]=1, -- Slam
-[1240193]=1, -- Slam
+-- Slam
+Set(PHYSICAL, 1464, 8820, 11604, 11605, 1240193)
+
 -- Paladin
-[458856]=2, -- Divine Light
-[19750]=2, -- Flash of Light
-[19939]=2, -- Flash of Light
-[19940]=2, -- Flash of Light
-[19941]=2, -- Flash of Light
-[19942]=2, -- Flash of Light
-[19943]=2, -- Flash of Light
-[24239]=2, -- Hammer of Wrath
-[24274]=2, -- Hammer of Wrath
-[24275]=2, -- Hammer of Wrath
-[635]=2, -- Holy Light
-[639]=2, -- Holy Light
-[647]=2, -- Holy Light
-[1026]=2, -- Holy Light
-[1042]=2, -- Holy Light
-[3472]=2, -- Holy Light
-[10328]=2, -- Holy Light
-[10329]=2, -- Holy Light
-[19968]=2, -- Holy Light
-[19980]=2, -- Holy Light
-[19981]=2, -- Holy Light
-[19982]=2, -- Holy Light
-[25292]=2, -- Holy Light
-[1313348]=2, -- Holy Light
-[1313349]=2, -- Holy Light
-[1313350]=2, -- Holy Light
-[1313351]=2, -- Holy Light
-[1313352]=2, -- Holy Light
-[2812]=2, -- Holy Wrath
-[10318]=2, -- Holy Wrath
-[1310911]=2, -- Light's Vigil
-[1311590]=2, -- Light's Vigil
-[1311595]=2, -- Light's Vigil
-[7328]=2, -- Redemption
-[10322]=2, -- Redemption
-[10324]=2, -- Redemption
-[20772]=2, -- Redemption
-[20773]=2, -- Redemption
-[2878]=8, -- Turn Undead
-[5627]=8, -- Turn Undead
-[10326]=8, -- Turn Undead
+Set(HOLY, 458856) -- Divine Light
+-- Flash of Light
+Set(HOLY, 19750, 19939, 19940, 19941, 19942, 19943)
+-- Hammer of Wrath
+Set(HOLY, 24239, 24274, 24275)
+-- Holy Light
+Set(HOLY, 635, 639, 647, 1026, 1042, 3472, 10328, 10329, 19968, 19980, 19981, 19982, 25292, 1313348, 1313349, 1313350, 1313351, 1313352)
+-- Holy Wrath
+Set(HOLY, 2812, 10318)
+-- Light's Vigil
+Set(HOLY, 1310911, 1311590, 1311595)
+-- Redemption
+Set(HOLY, 7328, 10322, 10324, 20772, 20773)
+-- Turn Undead
+Set(NATURE, 2878, 5627, 10326)
+
 -- Hunter
-[19434]=1, -- Aimed Shot
-[20900]=1, -- Aimed Shot
-[20901]=1, -- Aimed Shot
-[20902]=1, -- Aimed Shot
-[20903]=1, -- Aimed Shot
-[20904]=1, -- Aimed Shot
-[3044]=64, -- Arcane Shot
-[14281]=64, -- Arcane Shot
-[14282]=64, -- Arcane Shot
-[14283]=64, -- Arcane Shot
-[14284]=64, -- Arcane Shot
-[14285]=64, -- Arcane Shot
-[14286]=64, -- Arcane Shot
-[14287]=64, -- Arcane Shot
-[409433]=8, -- Chimera Shot
-[409495]=8, -- Chimera Shot - Scorpid
-[409493]=8, -- Chimera Shot - Serpent
-[409494]=8, -- Chimera Shot - Viper
-[5116]=64, -- Concussive Shot
-[2641]=1, -- Dismiss Pet
-[14274]=64, -- Distracting Shot
-[15629]=64, -- Distracting Shot
-[15630]=64, -- Distracting Shot
-[15631]=64, -- Distracting Shot
-[15632]=64, -- Distracting Shot
-[20736]=64, -- Distracting Shot
-[6197]=64, -- Eagle Eye
-[1002]=8, -- Eyes of the Beast
-[1263099]=1, -- Faster Attack I
-[1263100]=1, -- Faster Attack II
-[1263102]=1, -- Faster Attack III
-[1263104]=1, -- Faster Attack IV
-[1263107]=1, -- Faster Attack V
-[1263109]=1, -- Faster Attack VI
-[1263110]=1, -- Faster Attack VII
-[409593]=1, -- Kill Shot
-[1218240]=1, -- Kill Shot
-[136]=8, -- Mend Pet
-[3111]=8, -- Mend Pet
-[3661]=8, -- Mend Pet
-[3662]=8, -- Mend Pet
-[13542]=8, -- Mend Pet
-[13543]=8, -- Mend Pet
-[13544]=8, -- Mend Pet
-[982]=8, -- Revive Pet
-[1513]=8, -- Scare Beast
-[14326]=8, -- Scare Beast
-[14327]=8, -- Scare Beast
-[19503]=1, -- Scatter Shot
-[3043]=8, -- Scorpid Sting
-[1978]=8, -- Serpent Sting
-[13549]=8, -- Serpent Sting
-[13550]=8, -- Serpent Sting
-[13551]=8, -- Serpent Sting
-[13552]=8, -- Serpent Sting
-[13553]=8, -- Serpent Sting
-[13554]=8, -- Serpent Sting
-[13555]=8, -- Serpent Sting
-[25295]=8, -- Serpent Sting
-[425728]=8, -- Serpent Sting
-[425729]=8, -- Serpent Sting
-[425730]=8, -- Serpent Sting
-[425732]=8, -- Serpent Sting
-[425733]=8, -- Serpent Sting
-[425734]=8, -- Serpent Sting
-[425735]=8, -- Serpent Sting
-[425736]=8, -- Serpent Sting
-[425737]=8, -- Serpent Sting
-[1263113]=1, -- Slower Attack II
-[1263114]=1, -- Slower Attack III
-[1310687]=1, -- Sniper Shot
-[1310785]=1, -- Sniper Shot
-[1310786]=1, -- Sniper Shot
-[437123]=1, -- Steady Shot
-[1293241]=1, -- Summon Hawk
-[1293525]=1, -- Summon Hawk
-[1293526]=1, -- Summon Hawk
-[1293527]=1, -- Summon Hawk
-[1515]=8, -- Tame Beast
-[19801]=8, -- Tranquilizing Shot
-[3034]=8, -- Viper Sting
-[14279]=8, -- Viper Sting
-[14280]=8, -- Viper Sting
-[1510]=64, -- Volley
-[14294]=64, -- Volley
-[14295]=64, -- Volley
+-- Aimed Shot
+Set(PHYSICAL, 19434, 20900, 20901, 20902, 20903, 20904)
+-- Arcane Shot
+Set(ARCANE, 3044, 14281, 14282, 14283, 14284, 14285, 14286, 14287)
+Set(NATURE, 409433) -- Chimera Shot
+Set(NATURE, 409495) -- Chimera Shot - Scorpid
+Set(NATURE, 409493) -- Chimera Shot - Serpent
+Set(NATURE, 409494) -- Chimera Shot - Viper
+Set(ARCANE, 5116) -- Concussive Shot
+Set(PHYSICAL, 2641) -- Dismiss Pet
+-- Distracting Shot
+Set(ARCANE, 14274, 15629, 15630, 15631, 15632, 20736)
+Set(ARCANE, 6197) -- Eagle Eye
+Set(NATURE, 1002) -- Eyes of the Beast
+Set(PHYSICAL, 1263099) -- Faster Attack I
+Set(PHYSICAL, 1263100) -- Faster Attack II
+Set(PHYSICAL, 1263102) -- Faster Attack III
+Set(PHYSICAL, 1263104) -- Faster Attack IV
+Set(PHYSICAL, 1263107) -- Faster Attack V
+Set(PHYSICAL, 1263109) -- Faster Attack VI
+Set(PHYSICAL, 1263110) -- Faster Attack VII
+-- Kill Shot
+Set(PHYSICAL, 409593, 1218240)
+-- Mend Pet
+Set(NATURE, 136, 3111, 3661, 3662, 13542, 13543, 13544)
+Set(NATURE, 982) -- Revive Pet
+-- Scare Beast
+Set(NATURE, 1513, 14326, 14327)
+Set(PHYSICAL, 19503) -- Scatter Shot
+Set(NATURE, 3043) -- Scorpid Sting
+-- Serpent Sting
+Set(NATURE, 1978, 13549, 13550, 13551, 13552, 13553, 13554, 13555, 25295, 425728, 425729, 425730, 425732, 425733, 425734, 425735, 425736, 425737)
+Set(PHYSICAL, 1263113) -- Slower Attack II
+Set(PHYSICAL, 1263114) -- Slower Attack III
+-- Sniper Shot
+Set(PHYSICAL, 1310687, 1310785, 1310786)
+Set(PHYSICAL, 437123) -- Steady Shot
+-- Summon Hawk
+Set(PHYSICAL, 1293241, 1293525, 1293526, 1293527)
+Set(NATURE, 1515) -- Tame Beast
+Set(NATURE, 19801) -- Tranquilizing Shot
+-- Viper Sting
+Set(NATURE, 3034, 14279, 14280)
+-- Volley
+Set(ARCANE, 1510, 14294, 14295)
+
 -- Rogue
-[400009]=1, -- Between the Eyes
-[1842]=1, -- Disarm Trap
+Set(PHYSICAL, 400009) -- Between the Eyes
+Set(PHYSICAL, 1842) -- Disarm Trap
+
 -- Priest
-[401937]=2, -- Binding Heal
-[1240770]=2, -- Binding Heal
-[1240771]=2, -- Binding Heal
-[1240772]=2, -- Binding Heal
-[1240773]=2, -- Binding Heal
-[1240774]=2, -- Binding Heal
-[1277455]=2, -- Confounding Flash
-[2061]=2, -- Flash Heal
-[9472]=2, -- Flash Heal
-[9473]=2, -- Flash Heal
-[9474]=2, -- Flash Heal
-[10915]=2, -- Flash Heal
-[10916]=2, -- Flash Heal
-[10917]=2, -- Flash Heal
-[2060]=2, -- Greater Heal
-[10963]=2, -- Greater Heal
-[10964]=2, -- Greater Heal
-[10965]=2, -- Greater Heal
-[25314]=2, -- Greater Heal
-[2054]=2, -- Heal
-[2055]=2, -- Heal
-[6063]=2, -- Heal
-[6064]=2, -- Heal
-[14914]=2, -- Holy Fire
-[15261]=2, -- Holy Fire
-[15262]=2, -- Holy Fire
-[15263]=2, -- Holy Fire
-[15264]=2, -- Holy Fire
-[15265]=2, -- Holy Fire
-[15266]=2, -- Holy Fire
-[15267]=2, -- Holy Fire
-[2050]=2, -- Lesser Heal
-[2052]=2, -- Lesser Heal
-[2053]=2, -- Lesser Heal
-[724]=2, -- Lightwell
-[27870]=2, -- Lightwell
-[27871]=2, -- Lightwell
-[8129]=32, -- Mana Burn
-[8131]=32, -- Mana Burn
-[10874]=32, -- Mana Burn
-[10875]=32, -- Mana Burn
-[10876]=32, -- Mana Burn
-[8092]=32, -- Mind Blast
-[8102]=32, -- Mind Blast
-[8103]=32, -- Mind Blast
-[8104]=32, -- Mind Blast
-[8105]=32, -- Mind Blast
-[8106]=32, -- Mind Blast
-[10945]=32, -- Mind Blast
-[10946]=32, -- Mind Blast
-[10947]=32, -- Mind Blast
-[605]=32, -- Mind Control
-[10911]=32, -- Mind Control
-[10912]=32, -- Mind Control
-[15407]=32, -- Mind Flay
-[17311]=32, -- Mind Flay
-[17312]=32, -- Mind Flay
-[17313]=32, -- Mind Flay
-[17314]=32, -- Mind Flay
-[18807]=32, -- Mind Flay
-[413259]=32, -- Mind Sear
-[431655]=48, -- Mind Spike
-[2096]=32, -- Mind Vision
-[10909]=32, -- Mind Vision
-[402174]=2, -- Penance
-[402261]=2, -- Penance
-[402277]=2, -- Penance
-[1240720]=2, -- Penance
-[1240721]=2, -- Penance
-[1240732]=2, -- Penance
-[1240733]=2, -- Penance
-[1240734]=2, -- Penance
-[1240736]=2, -- Penance
-[1316992]=2, -- Penance
-[1316994]=2, -- Penance
-[1316995]=2, -- Penance
-[596]=2, -- Prayer of Healing
-[996]=2, -- Prayer of Healing
-[10960]=2, -- Prayer of Healing
-[10961]=2, -- Prayer of Healing
-[25316]=2, -- Prayer of Healing
-[2006]=2, -- Resurrection
-[2010]=2, -- Resurrection
-[10880]=2, -- Resurrection
-[10881]=2, -- Resurrection
-[20770]=2, -- Resurrection
-[9484]=2, -- Shackle Undead
-[9485]=2, -- Shackle Undead
-[10955]=2, -- Shackle Undead
-[585]=2, -- Smite
-[591]=2, -- Smite
-[598]=2, -- Smite
-[984]=2, -- Smite
-[1004]=2, -- Smite
-[6060]=2, -- Smite
-[10933]=2, -- Smite
-[10934]=2, -- Smite
-[10797]=64, -- Starshards
-[19296]=64, -- Starshards
-[19299]=64, -- Starshards
-[19302]=64, -- Starshards
-[19303]=64, -- Starshards
-[19304]=64, -- Starshards
-[19305]=64, -- Starshards
-[402668]=32, -- Vampiric Touch
-[431681]=32, -- Void Zone
+-- Binding Heal
+Set(HOLY, 401937, 1240770, 1240771, 1240772, 1240773, 1240774)
+Set(HOLY, 1277455) -- Confounding Flash
+-- Flash Heal
+Set(HOLY, 2061, 9472, 9473, 9474, 10915, 10916, 10917)
+-- Greater Heal
+Set(HOLY, 2060, 10963, 10964, 10965, 25314)
+-- Heal
+Set(HOLY, 2054, 2055, 6063, 6064)
+-- Holy Fire
+Set(HOLY, 14914, 15261, 15262, 15263, 15264, 15265, 15266, 15267)
+-- Lesser Heal
+Set(HOLY, 2050, 2052, 2053)
+-- Lightwell
+Set(HOLY, 724, 27870, 27871)
+-- Mana Burn
+Set(SHADOW, 8129, 8131, 10874, 10875, 10876)
+-- Mind Blast
+Set(SHADOW, 8092, 8102, 8103, 8104, 8105, 8106, 10945, 10946, 10947)
+-- Mind Control
+Set(SHADOW, 605, 10911, 10912)
+-- Mind Flay
+Set(SHADOW, 15407, 17311, 17312, 17313, 17314, 18807)
+Set(SHADOW, 413259) -- Mind Sear
+Set(SHADOWFROST, 431655) -- Mind Spike
+-- Mind Vision
+Set(SHADOW, 2096, 10909)
+-- Penance
+Set(HOLY, 402174, 402261, 402277, 1240720, 1240721, 1240732, 1240733, 1240734, 1240736, 1316992, 1316994, 1316995)
+-- Prayer of Healing
+Set(HOLY, 596, 996, 10960, 10961, 25316)
+-- Resurrection
+Set(HOLY, 2006, 2010, 10880, 10881, 20770)
+-- Shackle Undead
+Set(HOLY, 9484, 9485, 10955)
+-- Smite
+Set(HOLY, 585, 591, 598, 984, 1004, 6060, 10933, 10934)
+-- Starshards
+Set(ARCANE, 10797, 19296, 19299, 19302, 19303, 19304, 19305)
+Set(SHADOW, 402668) -- Vampiric Touch
+Set(SHADOW, 431681) -- Void Zone
+
 -- Shaman
-[2008]=8, -- Ancestral Spirit
-[20609]=8, -- Ancestral Spirit
-[20610]=8, -- Ancestral Spirit
-[20776]=8, -- Ancestral Spirit
-[20777]=8, -- Ancestral Spirit
-[556]=8, -- Astral Recall
-[66843]=28, -- Call of the Ancestors
-[66842]=28, -- Call of the Elements
-[66844]=28, -- Call of the Spirits
-[1064]=8, -- Chain Heal
-[10622]=8, -- Chain Heal
-[10623]=8, -- Chain Heal
-[421]=8, -- Chain Lightning
-[930]=8, -- Chain Lightning
-[2860]=8, -- Chain Lightning
-[10605]=8, -- Chain Lightning
-[6196]=8, -- Far Sight
-[2645]=8, -- Ghost Wolf
-[415236]=8, -- Healing Rain
-[331]=8, -- Healing Wave
-[332]=8, -- Healing Wave
-[547]=8, -- Healing Wave
-[913]=8, -- Healing Wave
-[939]=8, -- Healing Wave
-[959]=8, -- Healing Wave
-[8005]=8, -- Healing Wave
-[10395]=8, -- Healing Wave
-[10396]=8, -- Healing Wave
-[25357]=8, -- Healing Wave
-[408490]=4, -- Lava Burst
-[1238299]=4, -- Lava Burst
-[1238300]=4, -- Lava Burst
-[1326047]=4, -- Lava Burst
-[8004]=8, -- Lesser Healing Wave
-[8008]=8, -- Lesser Healing Wave
-[8010]=8, -- Lesser Healing Wave
-[10466]=8, -- Lesser Healing Wave
-[10467]=8, -- Lesser Healing Wave
-[10468]=8, -- Lesser Healing Wave
-[403]=8, -- Lightning Bolt
-[529]=8, -- Lightning Bolt
-[548]=8, -- Lightning Bolt
-[915]=8, -- Lightning Bolt
-[943]=8, -- Lightning Bolt
-[6041]=8, -- Lightning Bolt
-[10391]=8, -- Lightning Bolt
-[10392]=8, -- Lightning Bolt
-[15207]=8, -- Lightning Bolt
-[15208]=8, -- Lightning Bolt
-[408474]=8, -- Lightning Bolt
+-- Ancestral Spirit
+Set(NATURE, 2008, 20609, 20610, 20776, 20777)
+Set(NATURE, 556) -- Astral Recall
+Set(ELEMENTAL, 66843) -- Call of the Ancestors
+Set(ELEMENTAL, 66842) -- Call of the Elements
+Set(ELEMENTAL, 66844) -- Call of the Spirits
+-- Chain Heal
+Set(NATURE, 1064, 10622, 10623)
+-- Chain Lightning
+Set(NATURE, 421, 930, 2860, 10605)
+Set(NATURE, 6196) -- Far Sight
+Set(NATURE, 2645) -- Ghost Wolf
+Set(NATURE, 415236) -- Healing Rain
+-- Healing Wave
+Set(NATURE, 331, 332, 547, 913, 939, 959, 8005, 10395, 10396, 25357)
+-- Lava Burst
+Set(FIRE, 408490, 434523, 469320, 1238299, 1238300, 1326047)
+-- Lesser Healing Wave
+Set(NATURE, 8004, 8008, 8010, 10466, 10467, 10468)
+-- Lightning Bolt
+Set(NATURE, 403, 529, 548, 915, 943, 6041, 10391, 10392, 15207, 15208, 408474)
+
 -- Mage
-[400574]=64, -- Arcane Blast
-[1239696]=64, -- Arcane Blast
-[1239697]=64, -- Arcane Blast
-[1239699]=64, -- Arcane Blast
-[1239700]=64, -- Arcane Blast
-[5143]=64, -- Arcane Missiles
-[5144]=64, -- Arcane Missiles
-[5145]=64, -- Arcane Missiles
-[8416]=64, -- Arcane Missiles
-[8417]=64, -- Arcane Missiles
-[10211]=64, -- Arcane Missiles
-[10212]=64, -- Arcane Missiles
-[25345]=64, -- Arcane Missiles
-[1326079]=64, -- Arcane Wrath
-[1326080]=64, -- Arcane Wrath
-[1326081]=64, -- Arcane Wrath
-[1326082]=64, -- Arcane Wrath
-[428878]=84, -- Balefire Bolt
-[10]=16, -- Blizzard
-[6141]=16, -- Blizzard
-[8427]=16, -- Blizzard
-[10185]=16, -- Blizzard
-[10186]=16, -- Blizzard
-[10187]=16, -- Blizzard
-[436516]=84, -- Chronostatic Preservation
-[587]=64, -- Conjure Food
-[597]=64, -- Conjure Food
-[990]=64, -- Conjure Food
-[6129]=64, -- Conjure Food
-[10144]=64, -- Conjure Food
-[10145]=64, -- Conjure Food
-[28612]=64, -- Conjure Food
-[759]=64, -- Conjure Mana Agate
-[10053]=64, -- Conjure Mana Citrine
-[3552]=64, -- Conjure Mana Jade
-[10054]=64, -- Conjure Mana Ruby
-[5504]=64, -- Conjure Water
-[5505]=64, -- Conjure Water
-[5506]=64, -- Conjure Water
-[6127]=64, -- Conjure Water
-[10138]=64, -- Conjure Water
-[10139]=64, -- Conjure Water
-[10140]=64, -- Conjure Water
-[468766]=64, -- Conjure Water
-[12051]=64, -- Evocation
-[133]=4, -- Fireball
-[143]=4, -- Fireball
-[145]=4, -- Fireball
-[3140]=4, -- Fireball
-[8400]=4, -- Fireball
-[8401]=4, -- Fireball
-[8402]=4, -- Fireball
-[10148]=4, -- Fireball
-[10149]=4, -- Fireball
-[10150]=4, -- Fireball
-[10151]=4, -- Fireball
-[25306]=4, -- Fireball
-[2120]=4, -- Flamestrike
-[2121]=4, -- Flamestrike
-[8422]=4, -- Flamestrike
-[8423]=4, -- Flamestrike
-[10215]=4, -- Flamestrike
-[10216]=4, -- Flamestrike
-[116]=16, -- Frostbolt
-[205]=16, -- Frostbolt
-[837]=16, -- Frostbolt
-[7322]=16, -- Frostbolt
-[8406]=16, -- Frostbolt
-[8407]=16, -- Frostbolt
-[8408]=16, -- Frostbolt
-[10179]=16, -- Frostbolt
-[10180]=16, -- Frostbolt
-[10181]=16, -- Frostbolt
-[25304]=16, -- Frostbolt
-[401502]=20, -- Frostfire Bolt
-[1237312]=20, -- Frostfire Bolt
-[1237313]=20, -- Frostfire Bolt
-[412510]=64, -- Mass Regeneration
-[118]=64, -- Polymorph
-[12824]=64, -- Polymorph
-[12825]=64, -- Polymorph
-[12826]=64, -- Polymorph
-[28271]=64, -- Polymorph
-[28272]=64, -- Polymorph
-[28270]=64, -- Polymorph: Cow
-[11419]=64, -- Portal: Darnassus
-[11416]=64, -- Portal: Ironforge
-[11417]=64, -- Portal: Orgrimmar
-[10059]=64, -- Portal: Stormwind
-[11420]=64, -- Portal: Thunder Bluff
-[11418]=64, -- Portal: Undercity
-[11366]=4, -- Pyroblast
-[12505]=4, -- Pyroblast
-[12522]=4, -- Pyroblast
-[12523]=4, -- Pyroblast
-[12524]=4, -- Pyroblast
-[12525]=4, -- Pyroblast
-[12526]=4, -- Pyroblast
-[18809]=4, -- Pyroblast
-[401417]=64, -- Regeneration
-[2948]=4, -- Scorch
-[8444]=4, -- Scorch
-[8445]=4, -- Scorch
-[8446]=4, -- Scorch
-[10205]=4, -- Scorch
-[10206]=4, -- Scorch
-[10207]=4, -- Scorch
-[412532]=80, -- Spellfrost Bolt
-[1297659]=64, -- Teleport: Dalaran
-[3565]=64, -- Teleport: Darnassus
-[3562]=64, -- Teleport: Ironforge
-[3567]=64, -- Teleport: Orgrimmar
-[3561]=64, -- Teleport: Stormwind
-[3566]=64, -- Teleport: Thunder Bluff
-[3563]=64, -- Teleport: Undercity
+-- Arcane Blast
+Set(ARCANE, 400574, 1239696, 1239697, 1239699, 1239700)
+-- Arcane Missiles
+Set(ARCANE, 5143, 5144, 5145, 8416, 8417, 10211, 10212, 25345)
+-- Arcane Wrath
+Set(ARCANE, 1326079, 1326080, 1326081, 1326082)
+Set(FIRE_FROST_ARCANE, 428878) -- Balefire Bolt
+-- Blizzard
+Set(FROST, 10, 6141, 8427, 10185, 10186, 10187)
+Set(FIRE_FROST_ARCANE, 436516) -- Chronostatic Preservation
+-- Conjure Food
+Set(ARCANE, 587, 597, 990, 6129, 10144, 10145, 28612)
+Set(ARCANE, 759) -- Conjure Mana Agate
+Set(ARCANE, 10053) -- Conjure Mana Citrine
+Set(ARCANE, 3552) -- Conjure Mana Jade
+Set(ARCANE, 10054) -- Conjure Mana Ruby
+-- Conjure Water
+Set(ARCANE, 5504, 5505, 5506, 6127, 10138, 10139, 10140, 468766)
+Set(ARCANE, 12051) -- Evocation
+-- Fireball
+Set(FIRE, 133, 143, 145, 3140, 8400, 8401, 8402, 10148, 10149, 10150, 10151, 25306)
+-- Flamestrike
+Set(FIRE, 2120, 2121, 8422, 8423, 10215, 10216)
+-- Frostbolt
+Set(FROST, 116, 205, 837, 7322, 8406, 8407, 8408, 10179, 10180, 10181, 25304)
+-- Frostfire Bolt
+Set(FROSTFIRE, 401502, 1237312, 1237313)
+Set(ARCANE, 412510) -- Mass Regeneration
+-- Polymorph
+Set(ARCANE, 118, 12824, 12825, 12826, 28271, 28272)
+Set(ARCANE, 28270) -- Polymorph: Cow
+Set(ARCANE, 11419) -- Portal: Darnassus
+Set(ARCANE, 11416) -- Portal: Ironforge
+Set(ARCANE, 11417) -- Portal: Orgrimmar
+Set(ARCANE, 10059) -- Portal: Stormwind
+Set(ARCANE, 11420) -- Portal: Thunder Bluff
+Set(ARCANE, 11418) -- Portal: Undercity
+-- Pyroblast
+Set(FIRE, 11366, 12505, 12522, 12523, 12524, 12525, 12526, 18809)
+Set(ARCANE, 401417) -- Regeneration
+-- Scorch
+Set(FIRE, 2948, 8444, 8445, 8446, 10205, 10206, 10207)
+Set(SPELLFROST, 412532) -- Spellfrost Bolt
+Set(ARCANE, 1297659) -- Teleport: Dalaran
+Set(ARCANE, 3565) -- Teleport: Darnassus
+Set(ARCANE, 3562) -- Teleport: Ironforge
+Set(ARCANE, 3567) -- Teleport: Orgrimmar
+Set(ARCANE, 3561) -- Teleport: Stormwind
+Set(ARCANE, 3566) -- Teleport: Thunder Bluff
+Set(ARCANE, 3563) -- Teleport: Undercity
+
 -- Warlock
-[710]=32, -- Banish
-[18647]=32, -- Banish
-[403629]=124, -- Chaos Bolt
-[17767]=32, -- Consume Shadows
-[17850]=32, -- Consume Shadows
-[17851]=32, -- Consume Shadows
-[17852]=32, -- Consume Shadows
-[17853]=32, -- Consume Shadows
-[17854]=32, -- Consume Shadows
-[172]=32, -- Corruption
-[6222]=32, -- Corruption
-[6223]=32, -- Corruption
-[7648]=32, -- Corruption
-[11671]=32, -- Corruption
-[11672]=32, -- Corruption
-[25311]=32, -- Corruption
-[6366]=4, -- Create Firestone
-[17951]=4, -- Create Firestone
-[17952]=4, -- Create Firestone
-[17953]=4, -- Create Firestone
-[5699]=32, -- Create Healthstone
-[6201]=32, -- Create Healthstone
-[6202]=32, -- Create Healthstone
-[11729]=32, -- Create Healthstone
-[11730]=32, -- Create Healthstone
-[693]=32, -- Create Soulstone
-[20752]=32, -- Create Soulstone
-[20755]=32, -- Create Soulstone
-[20756]=32, -- Create Soulstone
-[20757]=32, -- Create Soulstone
-[2362]=32, -- Create Spellstone
-[17727]=32, -- Create Spellstone
-[17728]=32, -- Create Spellstone
-[689]=32, -- Drain Life
-[699]=32, -- Drain Life
-[709]=32, -- Drain Life
-[7651]=32, -- Drain Life
-[11699]=32, -- Drain Life
-[11700]=32, -- Drain Life
-[5138]=32, -- Drain Mana
-[6226]=32, -- Drain Mana
-[11703]=32, -- Drain Mana
-[11704]=32, -- Drain Mana
-[1120]=32, -- Drain Soul
-[8288]=32, -- Drain Soul
-[8289]=32, -- Drain Soul
-[11675]=32, -- Drain Soul
-[445459]=1, -- Explorer Imp
-[126]=32, -- Eye of Kilrogg
-[5782]=32, -- Fear
-[6213]=32, -- Fear
-[6215]=32, -- Fear
-[3110]=4, -- Firebolt
-[7799]=4, -- Firebolt
-[7800]=4, -- Firebolt
-[7801]=4, -- Firebolt
-[7802]=4, -- Firebolt
-[11762]=4, -- Firebolt
-[11763]=4, -- Firebolt
-[403501]=32, -- Haunt
-[1293693]=32, -- Haunt
-[1293694]=32, -- Haunt
-[755]=32, -- Health Funnel
-[3698]=32, -- Health Funnel
-[3699]=32, -- Health Funnel
-[3700]=32, -- Health Funnel
-[11693]=32, -- Health Funnel
-[11694]=32, -- Health Funnel
-[11695]=32, -- Health Funnel
-[1949]=4, -- Hellfire
-[11683]=4, -- Hellfire
-[11684]=4, -- Hellfire
-[5484]=32, -- Howl of Terror
-[17928]=32, -- Howl of Terror
-[348]=4, -- Immolate
-[707]=4, -- Immolate
-[1094]=4, -- Immolate
-[2941]=4, -- Immolate
-[11665]=4, -- Immolate
-[11667]=4, -- Immolate
-[11668]=4, -- Immolate
-[25309]=4, -- Immolate
-[412758]=4, -- Incinerate
-[1293812]=4, -- Incinerate
-[1293813]=4, -- Incinerate
-[1122]=32, -- Inferno
-[437169]=32, -- Portal of Summoning
-[5740]=4, -- Rain of Fire
-[6219]=4, -- Rain of Fire
-[11677]=4, -- Rain of Fire
-[11678]=4, -- Rain of Fire
-[18540]=32, -- Ritual of Doom
-[18541]=1, -- Ritual of Doom Effect
-[698]=32, -- Ritual of Summoning
-[5676]=4, -- Searing Pain
-[17919]=4, -- Searing Pain
-[17920]=4, -- Searing Pain
-[17921]=4, -- Searing Pain
-[17922]=4, -- Searing Pain
-[17923]=4, -- Searing Pain
-[6358]=32, -- Seduction
-[686]=32, -- Shadow Bolt
-[695]=32, -- Shadow Bolt
-[705]=32, -- Shadow Bolt
-[1088]=32, -- Shadow Bolt
-[1106]=32, -- Shadow Bolt
-[7641]=32, -- Shadow Bolt
-[11659]=32, -- Shadow Bolt
-[11660]=32, -- Shadow Bolt
-[11661]=32, -- Shadow Bolt
-[25307]=32, -- Shadow Bolt
-[426320]=36, -- Shadowflame
-[6353]=4, -- Soul Fire
-[17924]=4, -- Soul Fire
-[1098]=32, -- Subjugate Demon
-[11725]=32, -- Subjugate Demon
-[11726]=32, -- Subjugate Demon
-[427733]=32, -- Summon Felguard
-[691]=32, -- Summon Felhunter
-[688]=32, -- Summon Imp
-[713]=32, -- Summon Incubus
-[712]=32, -- Summon Succubus
-[697]=32, -- Summon Voidwalker
-[427717]=32, -- Unstable Affliction
-[1242971]=32, -- Unstable Affliction
-[1242972]=32, -- Unstable Affliction
-[1316697]=32, -- Wrack
+-- Banish
+Set(SHADOW, 710, 18647)
+Set(CHAOS, 403629) -- Chaos Bolt
+-- Consume Shadows
+Set(SHADOW, 17767, 17850, 17851, 17852, 17853, 17854)
+-- Corruption
+Set(SHADOW, 172, 6222, 6223, 7648, 11671, 11672, 25311)
+-- Create Firestone
+Set(FIRE, 6366, 17951, 17952, 17953)
+-- Create Healthstone
+Set(SHADOW, 5699, 6201, 6202, 11729, 11730)
+-- Create Soulstone
+Set(SHADOW, 693, 20752, 20755, 20756, 20757)
+-- Create Spellstone
+Set(SHADOW, 2362, 17727, 17728)
+-- Drain Life
+Set(SHADOW, 689, 699, 709, 7651, 11699, 11700)
+-- Drain Mana
+Set(SHADOW, 5138, 6226, 11703, 11704)
+-- Drain Soul
+Set(SHADOW, 1120, 8288, 8289, 11675)
+Set(PHYSICAL, 445459) -- Explorer Imp
+Set(SHADOW, 126) -- Eye of Kilrogg
+-- Fear
+Set(SHADOW, 5782, 6213, 6215)
+-- Firebolt
+Set(FIRE, 3110, 7799, 7800, 7801, 7802, 11762, 11763)
+-- Health Funnel
+Set(SHADOW, 755, 3698, 3699, 3700, 11693, 11694, 11695)
+-- Hellfire
+Set(FIRE, 1949, 11683, 11684)
+-- Howl of Terror
+Set(SHADOW, 5484, 17928)
+-- Immolate
+Set(FIRE, 348, 707, 1094, 2941, 11665, 11667, 11668, 25309)
+Set(SHADOW, 1122) -- Inferno
+Set(SHADOW, 437169) -- Portal of Summoning
+-- Rain of Fire
+Set(FIRE, 5740, 6219, 11677, 11678)
+Set(SHADOW, 18540) -- Ritual of Doom
+Set(PHYSICAL, 18541) -- Ritual of Doom Effect
+Set(SHADOW, 698) -- Ritual of Summoning
+-- Searing Pain
+Set(FIRE, 5676, 17919, 17920, 17921, 17922, 17923)
+Set(SHADOW, 6358) -- Seduction
+-- Shadow Bolt
+Set(SHADOW, 686, 695, 705, 1088, 1106, 7641, 11659, 11660, 11661, 25307)
+Set(SHADOWFLAME, 426320) -- Shadowflame
+-- Soul Fire
+Set(FIRE, 6353, 17924)
+-- Subjugate Demon
+Set(SHADOW, 1098, 11725, 11726)
+Set(SHADOW, 427733) -- Summon Felguard
+Set(SHADOW, 691) -- Summon Felhunter
+Set(SHADOW, 688) -- Summon Imp
+Set(SHADOW, 713) -- Summon Incubus
+Set(SHADOW, 712) -- Summon Succubus
+Set(SHADOW, 697) -- Summon Voidwalker
+-- Unstable Affliction
+Set(SHADOW, 427717, 1242971, 1242972)
+Set(SHADOW, 1316697) -- Wrack
+
 -- Druid
-[339]=8, -- Entangling Roots
-[1062]=8, -- Entangling Roots
-[5195]=8, -- Entangling Roots
-[5196]=8, -- Entangling Roots
-[9852]=8, -- Entangling Roots
-[9853]=8, -- Entangling Roots
-[5185]=8, -- Healing Touch
-[5186]=8, -- Healing Touch
-[5187]=8, -- Healing Touch
-[5188]=8, -- Healing Touch
-[5189]=8, -- Healing Touch
-[6778]=8, -- Healing Touch
-[8903]=8, -- Healing Touch
-[9758]=8, -- Healing Touch
-[9888]=8, -- Healing Touch
-[9889]=8, -- Healing Touch
-[25297]=8, -- Healing Touch
-[2637]=8, -- Hibernate
-[18657]=8, -- Hibernate
-[18658]=8, -- Hibernate
-[16914]=8, -- Hurricane
-[17401]=8, -- Hurricane
-[17402]=8, -- Hurricane
-[408247]=8, -- Nourish
-[20484]=8, -- Rebirth
-[20739]=8, -- Rebirth
-[20742]=8, -- Rebirth
-[20747]=8, -- Rebirth
-[20748]=8, -- Rebirth
-[8936]=8, -- Regrowth
-[8938]=8, -- Regrowth
-[8939]=8, -- Regrowth
-[8940]=8, -- Regrowth
-[8941]=8, -- Regrowth
-[9750]=8, -- Regrowth
-[9856]=8, -- Regrowth
-[9857]=8, -- Regrowth
-[9858]=8, -- Regrowth
-[437138]=1, -- Revive
-[1237948]=1, -- Revive
-[1237949]=1, -- Revive
-[1237950]=1, -- Revive
-[1237951]=1, -- Revive
-[2908]=8, -- Soothe Animal
-[8955]=8, -- Soothe Animal
-[9901]=8, -- Soothe Animal
-[429820]=64, -- Starfall
-[449431]=64, -- Starfall
-[2912]=64, -- Starfire
-[8949]=64, -- Starfire
-[8950]=64, -- Starfire
-[8951]=64, -- Starfire
-[9875]=64, -- Starfire
-[9876]=64, -- Starfire
-[25298]=64, -- Starfire
-[18960]=64, -- Teleport: Moonglade
-[740]=8, -- Tranquility
-[8918]=8, -- Tranquility
-[9862]=8, -- Tranquility
-[9863]=8, -- Tranquility
-[408120]=8, -- Wild Growth
-[1238214]=8, -- Wild Growth
-[1238215]=8, -- Wild Growth
-[5176]=8, -- Wrath
-[5177]=8, -- Wrath
-[5178]=8, -- Wrath
-[5179]=8, -- Wrath
-[5180]=8, -- Wrath
-[6780]=8, -- Wrath
-[8905]=8, -- Wrath
-[9912]=8, -- Wrath
+-- Entangling Roots
+Set(NATURE, 339, 1062, 5195, 5196, 9852, 9853)
+-- Healing Touch
+Set(NATURE, 5185, 5186, 5187, 5188, 5189, 6778, 8903, 9758, 9888, 9889, 25297)
+-- Hibernate
+Set(NATURE, 2637, 18657, 18658)
+-- Hurricane
+Set(NATURE, 16914, 17401, 17402)
+Set(NATURE, 408247) -- Nourish
+-- Rebirth
+Set(NATURE, 20484, 20739, 20742, 20747, 20748)
+-- Regrowth
+Set(NATURE, 8936, 8938, 8939, 8940, 8941, 9750, 9856, 9857, 9858)
+-- Revive
+Set(PHYSICAL, 437138, 1237948, 1237949, 1237950, 1237951)
+-- Soothe Animal
+Set(NATURE, 2908, 8955, 9901)
+-- Starfall
+Set(ARCANE, 429820, 449431, 1271759, 1286114)
+-- Starfire
+Set(ARCANE, 2912, 8949, 8950, 8951, 9875, 9876, 25298)
+Set(ARCANE, 18960) -- Teleport: Moonglade
+-- Tranquility
+Set(NATURE, 740, 8918, 9862, 9863)
+-- Wild Growth
+Set(NATURE, 408120, 1238214, 1238215)
+-- Wrath
+Set(NATURE, 5176, 5177, 5178, 5179, 5180, 6780, 8905, 9912, 460671, 462580, 469143, 1213248, 1289530, 1316677)
+
 -- Other
-[1225509]=1, -- Adaptability
-[1228371]=1, -- Blade Dance
-[1225469]=1, -- Dedicated Study
-[437920]=2, -- Divine Storm
-[1225470]=1, -- Essence of Innovation
-[1213269]=4, -- Explosive Shot
-[1245338]=1, -- Feral Spirit
-[1269872]=32, -- Haunt
-[429838]=4, -- Incinerate
-[434523]=4, -- Lava Burst
-[469320]=4, -- Lava Burst
-[436695]=1, -- Overheat
-[1225461]=1, -- Salvaging - NYI
-[1225494]=1, -- Second Home
-[438350]=32, -- Shadow Bolt Volley
-[462590]=32, -- Shadow Bolt Volley
-[1220515]=32, -- Shadow Bolt Volley
-[1280356]=32, -- Shadow Bolt Volley
-[457844]=8, -- Starfall
-[458684]=8, -- Starfall
-[1271759]=64, -- Starfall
-[1286114]=64, -- Starfall
-[1280472]=64, -- Starsurge
-[1278934]=1, -- Summoning
-[1280669]=4, -- Sunfire
-[460671]=8, -- Wrath
-[462580]=8, -- Wrath
-[469143]=8, -- Wrath
-[1213248]=8, -- Wrath
-[1289530]=8, -- Wrath
-[1316677]=8, -- Wrath
-}
+Set(PHYSICAL, 1225509) -- Adaptability
+Set(PHYSICAL, 1228371) -- Blade Dance
+Set(PHYSICAL, 1225469) -- Dedicated Study
+Set(HOLY, 437920) -- Divine Storm
+Set(PHYSICAL, 1225470) -- Essence of Innovation
+Set(FIRE, 1213269) -- Explosive Shot
+Set(PHYSICAL, 1245338) -- Feral Spirit
+-- Haunt
+Set(SHADOW, 403501, 1269872, 1293693, 1293694)
+-- Incinerate
+Set(FIRE, 412758, 429838, 1293812, 1293813)
+Set(PHYSICAL, 436695) -- Overheat
+Set(PHYSICAL, 1225461) -- Salvaging - NYI
+Set(PHYSICAL, 1225494) -- Second Home
+-- Shadow Bolt Volley
+Set(SHADOW, 438350, 462590, 1220515, 1280356)
+-- Starfall
+Set(NATURE, 457844, 458684)
+Set(ARCANE, 1280472) -- Starsurge
+Set(PHYSICAL, 1278934) -- Summoning
+Set(FIRE, 1280669) -- Sunfire

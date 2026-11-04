@@ -2,256 +2,286 @@
 -- The school mask of each class spell with a cast bar, by spell ID; loaded on Mists of Pandaria Classic only.
 if WOW_PROJECT_ID ~= WOW_PROJECT_MISTS_CLASSIC then return end
 local _, ns = ... ---@type string, SchoolCastbarNamespace
--- stylua: ignore
-ns.data = {
+
+-- The school masks this table uses (Enum.Damageclass).
+local PHYSICAL = 1
+local HOLY = 2
+local FIRE = 4
+local NATURE = 8
+local FROST = 16
+local FROSTFIRE = 20 -- Fire + Frost
+local FROSTSTORM = 24 -- Nature + Frost
+local ELEMENTAL = 28 -- Fire + Nature + Frost
+local SHADOW = 32
+local SHADOWFROST = 48 -- Frost + Shadow
+local ARCANE = 64
+local SPELLSTORM = 72 -- Nature + Arcane
+
+local data = {}
+ns.data = data
+
+---Gives each spell ID the school mask.
+---@param mask number
+---@param ... number spell IDs
+local function Set(mask, ...)
+    for i = 1, select("#", ...) do
+        data[select(i, ...)] = mask
+    end
+end
+
 -- Warrior
-[64382]=1, -- Shattering Throw
-[122475]=1, -- Throw
+Set(PHYSICAL, 64382) -- Shattering Throw
+
 -- Paladin
-[450761]=2, -- Absolution
-[115750]=2, -- Blinding Light
-[2812]=2, -- Denounce
-[82326]=2, -- Divine Light
-[19750]=2, -- Flash of Light
-[635]=2, -- Holy Light
-[82327]=2, -- Holy Radiance
-[7328]=2, -- Redemption
-[20066]=2, -- Repentance
-[23214]=2, -- Summon Charger
-[73629]=2, -- Summon Exarch's Elekk
-[73630]=2, -- Summon Great Exarch's Elekk
-[69826]=2, -- Summon Great Sunwalker Kodo
-[69820]=2, -- Summon Sunwalker Kodo
-[34767]=2, -- Summon Thalassian Charger
-[34769]=2, -- Summon Thalassian Warhorse
-[13819]=2, -- Summon Warhorse
-[10326]=2, -- Turn Evil
+Set(HOLY, 450761) -- Absolution
+Set(HOLY, 115750) -- Blinding Light
+Set(HOLY, 2812) -- Denounce
+Set(HOLY, 82326) -- Divine Light
+Set(HOLY, 19750) -- Flash of Light
+Set(HOLY, 635) -- Holy Light
+Set(HOLY, 82327) -- Holy Radiance
+Set(HOLY, 7328) -- Redemption
+Set(HOLY, 20066) -- Repentance
+Set(HOLY, 23214) -- Summon Charger
+Set(HOLY, 73629) -- Summon Exarch's Elekk
+Set(HOLY, 73630) -- Summon Great Exarch's Elekk
+Set(HOLY, 69826) -- Summon Great Sunwalker Kodo
+Set(HOLY, 69820) -- Summon Sunwalker Kodo
+Set(HOLY, 34767) -- Summon Thalassian Charger
+Set(HOLY, 34769) -- Summon Thalassian Warhorse
+Set(HOLY, 13819) -- Summon Warhorse
+Set(HOLY, 10326) -- Turn Evil
+
 -- Hunter
-[19434]=1, -- Aimed Shot
-[120360]=1, -- Barrage
-[93433]=8, -- Burrow Attack
-[77767]=8, -- Cobra Shot
-[2641]=1, -- Dismiss Pet
-[6197]=64, -- Eagle Eye
-[92380]=24, -- Froststorm Breath
-[90327]=1, -- Lock Jaw
-[50245]=1, -- Pin
-[109259]=1, -- Powershot
-[137798]=1, -- Reflective Armor Plating
-[982]=8, -- Revive Pet
-[1513]=8, -- Scare Beast
-[56641]=1, -- Steady Shot
-[1515]=8, -- Tame Beast
+Set(PHYSICAL, 19434) -- Aimed Shot
+Set(PHYSICAL, 120360) -- Barrage
+Set(NATURE, 93433) -- Burrow Attack
+Set(NATURE, 77767) -- Cobra Shot
+Set(PHYSICAL, 2641) -- Dismiss Pet
+Set(ARCANE, 6197) -- Eagle Eye
+Set(FROSTSTORM, 92380) -- Froststorm Breath
+Set(PHYSICAL, 90327) -- Lock Jaw
+Set(PHYSICAL, 50245) -- Pin
+Set(PHYSICAL, 109259) -- Powershot
+Set(PHYSICAL, 137798) -- Reflective Armor Plating
+Set(NATURE, 982) -- Revive Pet
+Set(NATURE, 1513) -- Scare Beast
+Set(PHYSICAL, 56641) -- Steady Shot
+Set(NATURE, 1515) -- Tame Beast
+
 -- Rogue
-[3408]=1, -- Crippling Poison
-[2823]=1, -- Deadly Poison
-[1842]=1, -- Disarm Trap
-[108211]=1, -- Leeching Poison
-[5761]=1, -- Mind-numbing Poison
-[108215]=1, -- Paralytic Poison
-[1804]=1, -- Pick Lock
-[121733]=1, -- Throw
-[8679]=1, -- Wound Poison
+Set(PHYSICAL, 3408) -- Crippling Poison
+Set(PHYSICAL, 2823) -- Deadly Poison
+Set(PHYSICAL, 1842) -- Disarm Trap
+Set(PHYSICAL, 108211) -- Leeching Poison
+Set(PHYSICAL, 5761) -- Mind-numbing Poison
+Set(PHYSICAL, 108215) -- Paralytic Poison
+Set(PHYSICAL, 1804) -- Pick Lock
+-- Throw
+Set(PHYSICAL, 121733, 122475)
+Set(PHYSICAL, 8679) -- Wound Poison
+
 -- Priest
-[32546]=2, -- Binding Heal
-[64843]=2, -- Divine Hymn
-[605]=32, -- Dominate Mind
-[2061]=2, -- Flash Heal
-[2060]=2, -- Greater Heal
-[2050]=2, -- Heal
-[64901]=2, -- Hymn of Hope
-[126135]=2, -- Lightwell
-[32375]=2, -- Mass Dispel
-[83968]=2, -- Mass Resurrection
-[8092]=32, -- Mind Blast
-[15407]=32, -- Mind Flay
-[48045]=32, -- Mind Sear
-[73510]=48, -- Mind Spike
-[2096]=32, -- Mind Vision
-[47540]=2, -- Penance
-[596]=2, -- Prayer of Healing
-[2006]=2, -- Resurrection
-[9484]=2, -- Shackle Undead
-[585]=2, -- Smite
-[34914]=32, -- Vampiric Touch
+Set(HOLY, 32546) -- Binding Heal
+Set(HOLY, 64843) -- Divine Hymn
+Set(SHADOW, 605) -- Dominate Mind
+Set(HOLY, 2061) -- Flash Heal
+Set(HOLY, 2060) -- Greater Heal
+Set(HOLY, 2050) -- Heal
+Set(HOLY, 64901) -- Hymn of Hope
+Set(HOLY, 126135) -- Lightwell
+Set(HOLY, 32375) -- Mass Dispel
+Set(HOLY, 83968) -- Mass Resurrection
+Set(SHADOW, 8092) -- Mind Blast
+Set(SHADOW, 15407) -- Mind Flay
+Set(SHADOW, 48045) -- Mind Sear
+Set(SHADOWFROST, 73510) -- Mind Spike
+Set(SHADOW, 2096) -- Mind Vision
+Set(HOLY, 47540) -- Penance
+Set(HOLY, 596) -- Prayer of Healing
+Set(HOLY, 2006) -- Resurrection
+Set(HOLY, 9484) -- Shackle Undead
+Set(HOLY, 585) -- Smite
+Set(SHADOW, 34914) -- Vampiric Touch
+
 -- Death Knight
-[42650]=32, -- Army of the Dead
-[111673]=32, -- Control Undead
-[50977]=32, -- Death Gate
-[53341]=1, -- Rune of Cinderglacier
-[53331]=1, -- Rune of Lichbane
-[53343]=1, -- Rune of Razorice
-[54447]=1, -- Rune of Spellbreaking
-[53342]=1, -- Rune of Spellshattering
-[54446]=1, -- Rune of Swordbreaking
-[53323]=1, -- Rune of Swordshattering
-[53344]=1, -- Rune of the Fallen Crusader
-[70164]=1, -- Rune of the Nerubian Carapace
-[62158]=1, -- Rune of the Stoneskin Gargoyle
+Set(SHADOW, 42650) -- Army of the Dead
+Set(SHADOW, 111673) -- Control Undead
+Set(SHADOW, 50977) -- Death Gate
+Set(PHYSICAL, 53341) -- Rune of Cinderglacier
+Set(PHYSICAL, 53331) -- Rune of Lichbane
+Set(PHYSICAL, 53343) -- Rune of Razorice
+Set(PHYSICAL, 54447) -- Rune of Spellbreaking
+Set(PHYSICAL, 53342) -- Rune of Spellshattering
+Set(PHYSICAL, 54446) -- Rune of Swordbreaking
+Set(PHYSICAL, 53323) -- Rune of Swordshattering
+Set(PHYSICAL, 53344) -- Rune of the Fallen Crusader
+Set(PHYSICAL, 70164) -- Rune of the Nerubian Carapace
+Set(PHYSICAL, 62158) -- Rune of the Stoneskin Gargoyle
+
 -- Shaman
-[2008]=8, -- Ancestral Spirit
-[450762]=8, -- Ancestral Vision
-[556]=8, -- Astral Recall
-[76780]=8, -- Bind Elemental
-[1064]=8, -- Chain Heal
-[421]=8, -- Chain Lightning
-[61882]=8, -- Earthquake
-[117014]=28, -- Elemental Blast
-[6196]=8, -- Far Sight
-[77472]=8, -- Greater Healing Wave
-[73920]=8, -- Healing Rain
-[8004]=8, -- Healing Surge
-[331]=8, -- Healing Wave
-[51514]=8, -- Hex
-[51505]=4, -- Lava Burst
-[403]=8, -- Lightning Bolt
+Set(NATURE, 2008) -- Ancestral Spirit
+Set(NATURE, 450762) -- Ancestral Vision
+Set(NATURE, 556) -- Astral Recall
+Set(NATURE, 76780) -- Bind Elemental
+Set(NATURE, 1064) -- Chain Heal
+Set(NATURE, 421) -- Chain Lightning
+Set(NATURE, 61882) -- Earthquake
+Set(ELEMENTAL, 117014) -- Elemental Blast
+Set(NATURE, 6196) -- Far Sight
+Set(NATURE, 77472) -- Greater Healing Wave
+Set(NATURE, 73920) -- Healing Rain
+Set(NATURE, 8004) -- Healing Surge
+Set(NATURE, 331) -- Healing Wave
+Set(NATURE, 51514) -- Hex
+Set(FIRE, 51505) -- Lava Burst
+Set(NATURE, 403) -- Lightning Bolt
+
 -- Mage
-[120146]=64, -- Ancient Portal: Dalaran
-[120145]=64, -- Ancient Teleport: Dalaran
-[30451]=64, -- Arcane Blast
-[5143]=64, -- Arcane Missiles
-[7268]=64, -- Arcane Missiles
-[10]=16, -- Blizzard
-[759]=64, -- Conjure Mana Gem
-[42955]=64, -- Conjure Refreshment
-[43987]=64, -- Conjure Refreshment Table
-[12051]=64, -- Evocation
-[133]=4, -- Fireball
-[2120]=4, -- Flamestrike
-[7302]=16, -- Frost Armor
-[112948]=16, -- Frost Bomb
-[116]=16, -- Frostbolt
-[44614]=20, -- Frostfire Bolt
-[102051]=16, -- Frostjaw
-[6117]=64, -- Mage Armor
-[30482]=4, -- Molten Armor
-[118]=64, -- Polymorph
-[28271]=64, -- Polymorph
-[28272]=64, -- Polymorph
-[61025]=64, -- Polymorph
-[61305]=64, -- Polymorph
-[61721]=64, -- Polymorph
-[61780]=64, -- Polymorph
-[53142]=64, -- Portal: Dalaran
-[11419]=64, -- Portal: Darnassus
-[32266]=64, -- Portal: Exodar
-[11416]=64, -- Portal: Ironforge
-[11417]=64, -- Portal: Orgrimmar
-[33691]=64, -- Portal: Shattrath
-[35717]=64, -- Portal: Shattrath
-[32267]=64, -- Portal: Silvermoon
-[49361]=64, -- Portal: Stonard
-[10059]=64, -- Portal: Stormwind
-[49360]=64, -- Portal: Theramore
-[11420]=64, -- Portal: Thunder Bluff
-[88345]=64, -- Portal: Tol Barad
-[88346]=64, -- Portal: Tol Barad
-[11418]=64, -- Portal: Undercity
-[132620]=64, -- Portal: Vale of Eternal Blossoms
-[132626]=64, -- Portal: Vale of Eternal Blossoms
-[11366]=4, -- Pyroblast
-[113724]=16, -- Ring of Frost
-[116011]=64, -- Rune of Power
-[2948]=4, -- Scorch
-[31687]=16, -- Summon Water Elemental
-[53140]=64, -- Teleport: Dalaran
-[3565]=64, -- Teleport: Darnassus
-[32271]=64, -- Teleport: Exodar
-[3562]=64, -- Teleport: Ironforge
-[3567]=64, -- Teleport: Orgrimmar
-[33690]=64, -- Teleport: Shattrath
-[35715]=64, -- Teleport: Shattrath
-[32272]=64, -- Teleport: Silvermoon
-[49358]=64, -- Teleport: Stonard
-[3561]=64, -- Teleport: Stormwind
-[49359]=64, -- Teleport: Theramore
-[3566]=64, -- Teleport: Thunder Bluff
-[88342]=64, -- Teleport: Tol Barad
-[88344]=64, -- Teleport: Tol Barad
-[3563]=64, -- Teleport: Undercity
-[132621]=64, -- Teleport: Vale of Eternal Blossoms
-[132627]=64, -- Teleport: Vale of Eternal Blossoms
-[31707]=16, -- Waterbolt
+Set(ARCANE, 120146) -- Ancient Portal: Dalaran
+Set(ARCANE, 120145) -- Ancient Teleport: Dalaran
+Set(ARCANE, 30451) -- Arcane Blast
+-- Arcane Missiles
+Set(ARCANE, 5143, 7268)
+Set(FROST, 10) -- Blizzard
+Set(ARCANE, 759) -- Conjure Mana Gem
+Set(ARCANE, 42955) -- Conjure Refreshment
+Set(ARCANE, 43987) -- Conjure Refreshment Table
+Set(ARCANE, 12051) -- Evocation
+Set(FIRE, 133) -- Fireball
+Set(FIRE, 2120) -- Flamestrike
+Set(FROST, 7302) -- Frost Armor
+Set(FROST, 112948) -- Frost Bomb
+Set(FROST, 116) -- Frostbolt
+Set(FROSTFIRE, 44614) -- Frostfire Bolt
+Set(FROST, 102051) -- Frostjaw
+Set(ARCANE, 6117) -- Mage Armor
+Set(FIRE, 30482) -- Molten Armor
+-- Polymorph
+Set(ARCANE, 118, 28271, 28272, 61025, 61305, 61721, 61780)
+Set(ARCANE, 53142) -- Portal: Dalaran
+Set(ARCANE, 11419) -- Portal: Darnassus
+Set(ARCANE, 32266) -- Portal: Exodar
+Set(ARCANE, 11416) -- Portal: Ironforge
+Set(ARCANE, 11417) -- Portal: Orgrimmar
+-- Portal: Shattrath
+Set(ARCANE, 33691, 35717)
+Set(ARCANE, 32267) -- Portal: Silvermoon
+Set(ARCANE, 49361) -- Portal: Stonard
+Set(ARCANE, 10059) -- Portal: Stormwind
+Set(ARCANE, 49360) -- Portal: Theramore
+Set(ARCANE, 11420) -- Portal: Thunder Bluff
+-- Portal: Tol Barad
+Set(ARCANE, 88345, 88346)
+Set(ARCANE, 11418) -- Portal: Undercity
+-- Portal: Vale of Eternal Blossoms
+Set(ARCANE, 132620, 132626)
+Set(FIRE, 11366) -- Pyroblast
+Set(FROST, 113724) -- Ring of Frost
+Set(ARCANE, 116011) -- Rune of Power
+Set(FIRE, 2948) -- Scorch
+Set(FROST, 31687) -- Summon Water Elemental
+Set(ARCANE, 53140) -- Teleport: Dalaran
+Set(ARCANE, 3565) -- Teleport: Darnassus
+Set(ARCANE, 32271) -- Teleport: Exodar
+Set(ARCANE, 3562) -- Teleport: Ironforge
+Set(ARCANE, 3567) -- Teleport: Orgrimmar
+-- Teleport: Shattrath
+Set(ARCANE, 33690, 35715)
+Set(ARCANE, 32272) -- Teleport: Silvermoon
+Set(ARCANE, 49358) -- Teleport: Stonard
+Set(ARCANE, 3561) -- Teleport: Stormwind
+Set(ARCANE, 49359) -- Teleport: Theramore
+Set(ARCANE, 3566) -- Teleport: Thunder Bluff
+-- Teleport: Tol Barad
+Set(ARCANE, 88342, 88344)
+Set(ARCANE, 3563) -- Teleport: Undercity
+-- Teleport: Vale of Eternal Blossoms
+Set(ARCANE, 132621, 132627)
+Set(FROST, 31707) -- Waterbolt
+
 -- Warlock
-[710]=32, -- Banish
-[116858]=32, -- Chaos Bolt
-[6201]=32, -- Create Healthstone
-[29893]=32, -- Create Soulwell
-[48018]=32, -- Demonic Circle: Summon
-[111771]=32, -- Demonic Gateway
-[689]=32, -- Drain Life
-[1120]=32, -- Drain Soul
-[23161]=1, -- Dreadsteed
-[126]=32, -- Eye of Kilrogg
-[5782]=32, -- Fear
-[115746]=4, -- Felbolt
-[5784]=1, -- Felsteed
-[3110]=4, -- Firebolt
-[48181]=32, -- Haunt
-[755]=32, -- Health Funnel
-[1949]=4, -- Hellfire
-[348]=4, -- Immolate
-[29722]=4, -- Incinerate
-[103103]=32, -- Malefic Grasp
-[5740]=4, -- Rain of Fire
-[698]=32, -- Ritual of Summoning
-[115276]=4, -- Sear Magic
-[6358]=32, -- Seduction
-[27243]=32, -- Seed of Corruption
-[114790]=32, -- Seed of Corruption
-[686]=32, -- Shadow Bolt
-[6353]=4, -- Soul Fire
-[20707]=32, -- Soulstone
-[1098]=32, -- Subjugate Demon
-[30146]=32, -- Summon Felguard
-[691]=32, -- Summon Felhunter
-[688]=32, -- Summon Imp
-[713]=32, -- Summon Incubus
-[712]=32, -- Summon Succubus
-[697]=32, -- Summon Voidwalker
-[30108]=32, -- Unstable Affliction
-[131736]=32, -- Unstable Affliction
+Set(SHADOW, 710) -- Banish
+Set(SHADOW, 116858) -- Chaos Bolt
+Set(SHADOW, 6201) -- Create Healthstone
+Set(SHADOW, 29893) -- Create Soulwell
+Set(SHADOW, 48018) -- Demonic Circle: Summon
+Set(SHADOW, 111771) -- Demonic Gateway
+Set(SHADOW, 689) -- Drain Life
+Set(SHADOW, 1120) -- Drain Soul
+Set(PHYSICAL, 23161) -- Dreadsteed
+Set(SHADOW, 126) -- Eye of Kilrogg
+Set(SHADOW, 5782) -- Fear
+Set(FIRE, 115746) -- Felbolt
+Set(PHYSICAL, 5784) -- Felsteed
+Set(FIRE, 3110) -- Firebolt
+Set(SHADOW, 48181) -- Haunt
+Set(SHADOW, 755) -- Health Funnel
+Set(FIRE, 1949) -- Hellfire
+Set(FIRE, 29722) -- Incinerate
+Set(SHADOW, 103103) -- Malefic Grasp
+Set(FIRE, 5740) -- Rain of Fire
+Set(SHADOW, 698) -- Ritual of Summoning
+Set(FIRE, 115276) -- Sear Magic
+Set(SHADOW, 6358) -- Seduction
+-- Seed of Corruption
+Set(SHADOW, 27243, 114790)
+Set(SHADOW, 686) -- Shadow Bolt
+Set(FIRE, 6353) -- Soul Fire
+Set(SHADOW, 20707) -- Soulstone
+Set(SHADOW, 1098) -- Subjugate Demon
+Set(SHADOW, 30146) -- Summon Felguard
+Set(SHADOW, 691) -- Summon Felhunter
+Set(SHADOW, 688) -- Summon Imp
+Set(SHADOW, 713) -- Summon Incubus
+Set(SHADOW, 712) -- Summon Succubus
+Set(SHADOW, 697) -- Summon Voidwalker
+-- Unstable Affliction
+Set(SHADOW, 30108, 131736)
+
 -- Monk
-[123986]=8, -- Chi Burst
-[117952]=8, -- Crackling Jade Lightning
-[124682]=8, -- Enveloping Mist
-[113656]=1, -- Fists of Fury
-[115294]=1, -- Mana Tea
-[1245934]=8, -- Reawaken
-[115178]=8, -- Resuscitate
-[115175]=8, -- Soothing Mist
-[116023]=1, -- Sparring
-[101546]=1, -- Spinning Crane Kick
-[116694]=8, -- Surging Mist
-[123273]=8, -- Surging Mist
-[101643]=1, -- Transcendence
-[119996]=1, -- Transcendence: Transfer
-[115176]=8, -- Zen Meditation
-[126892]=8, -- Zen Pilgrimage
-[126895]=8, -- Zen Pilgrimage: Return
+Set(NATURE, 123986) -- Chi Burst
+Set(NATURE, 117952) -- Crackling Jade Lightning
+Set(NATURE, 124682) -- Enveloping Mist
+Set(PHYSICAL, 113656) -- Fists of Fury
+Set(PHYSICAL, 115294) -- Mana Tea
+Set(NATURE, 1245934) -- Reawaken
+Set(NATURE, 115178) -- Resuscitate
+Set(NATURE, 115175) -- Soothing Mist
+Set(PHYSICAL, 116023) -- Sparring
+Set(PHYSICAL, 101546) -- Spinning Crane Kick
+-- Surging Mist
+Set(NATURE, 116694, 123273)
+Set(PHYSICAL, 101643) -- Transcendence
+Set(PHYSICAL, 119996) -- Transcendence: Transfer
+Set(NATURE, 115176) -- Zen Meditation
+Set(NATURE, 126892) -- Zen Pilgrimage
+Set(NATURE, 126895) -- Zen Pilgrimage: Return
+
 -- Druid
-[127663]=72, -- Astral Communion
-[106996]=64, -- Astral Storm
-[33786]=8, -- Cyclone
-[339]=8, -- Entangling Roots
-[5185]=8, -- Healing Touch
-[2637]=8, -- Hibernate
-[16914]=8, -- Hurricane
-[50464]=8, -- Nourish
-[20484]=8, -- Rebirth
-[8936]=8, -- Regrowth
-[450759]=8, -- Revitalize
-[50769]=8, -- Revive
-[2912]=64, -- Starfire
-[78674]=72, -- Starsurge
-[110309]=8, -- Symbiosis
-[18960]=64, -- Teleport: Moonglade
-[740]=8, -- Tranquility
-[5176]=8, -- Wrath
+Set(SPELLSTORM, 127663) -- Astral Communion
+Set(ARCANE, 106996) -- Astral Storm
+Set(NATURE, 33786) -- Cyclone
+Set(NATURE, 339) -- Entangling Roots
+Set(NATURE, 5185) -- Healing Touch
+Set(NATURE, 2637) -- Hibernate
+Set(NATURE, 16914) -- Hurricane
+Set(NATURE, 50464) -- Nourish
+Set(NATURE, 20484) -- Rebirth
+Set(NATURE, 8936) -- Regrowth
+Set(NATURE, 450759) -- Revitalize
+Set(NATURE, 50769) -- Revive
+Set(ARCANE, 2912) -- Starfire
+Set(SPELLSTORM, 78674) -- Starsurge
+Set(NATURE, 110309) -- Symbiosis
+Set(ARCANE, 18960) -- Teleport: Moonglade
+Set(NATURE, 740) -- Tranquility
+Set(NATURE, 5176) -- Wrath
+
 -- Other
-[118350]=4, -- Empower
-[117588]=4, -- Fire Nova
-[91838]=1, -- Huddle
-[118297]=4, -- Immolate
-[118347]=8, -- Reinforce
-}
+Set(FIRE, 118350) -- Empower
+Set(FIRE, 117588) -- Fire Nova
+Set(PHYSICAL, 91838) -- Huddle
+-- Immolate
+Set(FIRE, 348, 118297)
+Set(NATURE, 118347) -- Reinforce
