@@ -62,62 +62,24 @@ Set(HOLY, 13819)
 -- Hunter ==========================================================================================
 
 -- Physical ----------------------------------------------------------------------------------------
--- Aimed Shot
-Set(PHYSICAL, 19434, 20900, 20901, 20902, 20903, 20904, 27065, 49049, 49050)
--- Auto Shot
-Set(PHYSICAL, 75)
 -- Dismiss Pet
 Set(PHYSICAL, 2641)
 -- Hawk Shot
 Set(PHYSICAL, 1284199)
--- Kill Shot
-Set(PHYSICAL, 53351, 61005, 61006)
--- Scatter Shot
-Set(PHYSICAL, 19503)
--- Silencing Shot
-Set(PHYSICAL, 34490)
 -- Steady Shot
 Set(PHYSICAL, 34120, 49051, 49052, 56641)
 
--- Fire --------------------------------------------------------------------------------------------
--- Explosive Shot
-Set(FIRE, 53301, 60051, 60052, 60053)
-
 -- Nature ------------------------------------------------------------------------------------------
--- Chimera Shot
-Set(NATURE, 53209)
 -- Eyes of the Beast
 Set(NATURE, 1002)
 -- Revive Pet
 Set(NATURE, 982)
 -- Scare Beast
 Set(NATURE, 1513, 14326, 14327)
--- Scorpid Sting
-Set(NATURE, 3043)
--- Serpent Sting
-Set(NATURE, 1978, 13549, 13550, 13551, 13552, 13553, 13554, 13555, 25295, 27016, 49000, 49001)
 -- Tame Beast
 Set(NATURE, 1515)
--- Tranquilizing Shot
-Set(NATURE, 19801)
--- Viper Sting
-Set(NATURE, 3034)
--- Wild Quiver Auto Shot
-Set(NATURE, 53254)
--- Wyvern Sting
-Set(NATURE, 19386, 24132, 24133, 27068, 49011, 49012)
-
--- Shadow ------------------------------------------------------------------------------------------
--- Black Arrow
-Set(SHADOW, 3674, 63668, 63669, 63670, 63671, 63672)
 
 -- Arcane ------------------------------------------------------------------------------------------
--- Arcane Shot
-Set(ARCANE, 3044, 14281, 14282, 14283, 14284, 14285, 14286, 14287, 27019, 49044, 49045)
--- Concussive Shot
-Set(ARCANE, 5116)
--- Distracting Shot
-Set(ARCANE, 20736)
 -- Eagle Eye
 Set(ARCANE, 6197)
 -- Volley
@@ -126,8 +88,6 @@ Set(ARCANE, 1510, 14294, 14295, 27022, 58431, 58434)
 -- Rogue ===========================================================================================
 
 -- Physical ----------------------------------------------------------------------------------------
--- Deadly Throw
-Set(PHYSICAL, 26679, 48673, 48674)
 -- Disarm Trap
 Set(PHYSICAL, 1842)
 -- Pick Lock

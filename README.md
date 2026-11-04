@@ -110,9 +110,11 @@ own joins its schools, `FIRE_FROST_ARCANE`), then the IDs of all its ranks, also
 those named with a Roman numeral ("Instant Poison II").
 
 A class spell is one on a skill line of category Class (less Mounts, Companions,
-Engraving and the like; the pets' lines count), or taught by a specialization or a talent (`Talent` on the classic
-clients, `TraitDefinition` on retail), less professions' recipes; with a cast time
-or a channel. A class spell none of these names goes in `tools/spell-fixes.lua`.
+Engraving and the like; the pets' lines count), or taught by a specialization or a
+talent (`Talent` on the classic clients, `TraitDefinition` on retail), less
+professions' recipes; with a cast time (its `SpellCastTimes` base above 0 ms: the
+instant ranged shots have a special -1000000 there) or a channel. A class spell
+none of these names goes in `tools/spell-fixes.lua`.
 
 The data goes to `../.spelldata/`, next to the repository, which the other addons in
 that folder share.

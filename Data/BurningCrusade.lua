@@ -61,10 +61,6 @@ Set(HOLY, 2878, 5627)
 Set(PHYSICAL, 19434, 20900, 20901, 20902, 20903, 20904, 27065)
 -- Dismiss Pet
 Set(PHYSICAL, 2641)
--- Scatter Shot
-Set(PHYSICAL, 19503)
--- Silencing Shot
-Set(PHYSICAL, 34490)
 -- Steady Shot
 Set(PHYSICAL, 34120)
 
@@ -75,26 +71,10 @@ Set(NATURE, 1002)
 Set(NATURE, 982)
 -- Scare Beast
 Set(NATURE, 1513, 14326, 14327)
--- Scorpid Sting
-Set(NATURE, 3043)
--- Serpent Sting
-Set(NATURE, 1978, 13549, 13550, 13551, 13552, 13553, 13554, 13555, 25295, 27016)
 -- Tame Beast
 Set(NATURE, 1515)
--- Tranquilizing Shot
-Set(NATURE, 19801)
--- Viper Sting
-Set(NATURE, 3034, 14279, 14280, 27018)
--- Wyvern Sting
-Set(NATURE, 19386, 24132, 24133, 27068)
 
 -- Arcane ------------------------------------------------------------------------------------------
--- Arcane Shot
-Set(ARCANE, 3044, 14281, 14282, 14283, 14284, 14285, 14286, 14287, 27019)
--- Concussive Shot
-Set(ARCANE, 5116)
--- Distracting Shot
-Set(ARCANE, 14274, 15629, 15630, 15631, 15632, 20736, 27020)
 -- Eagle Eye
 Set(ARCANE, 6197)
 -- Volley
@@ -109,8 +89,6 @@ Set(PHYSICAL, 26786)
 Set(PHYSICAL, 3420, 3421)
 -- Deadly Poison
 Set(PHYSICAL, 2835, 2837, 11357, 11358, 25347, 26969, 27282)
--- Deadly Throw
-Set(PHYSICAL, 26679)
 -- Disarm Trap
 Set(PHYSICAL, 1842)
 -- Instant Poison

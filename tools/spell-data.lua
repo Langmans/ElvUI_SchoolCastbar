@@ -46,8 +46,6 @@ local CLIENTS = {
     { product = "wow", file = "Data/Retail.lua", name = "Retail", project = "WOW_PROJECT_MAINLINE" },
     { product = "wowf", file = "Data/Forever.lua", name = "WoW: Forever", project = "WOW_PROJECT_CAMELOT" },
 }
--- SpellCastTimes ID 1 is "0 ms": an instant spell, no cast bar.
-local INSTANT = 1
 -- Attributes_1: SPELL_ATTR1_IS_CHANNELLED and SPELL_ATTR1_IS_SELF_CHANNELLED.
 local CHANNELED = { 0x4, 0x40 }
 local FIRST_RUNE_SPELL = 398000
@@ -238,6 +236,14 @@ local function readSchools(dir, fixes)
         classSpells[id] = true
     end
 
+    -- The cast times with a cast bar: a base above 0 ms. Several IDs are 0 ms, and some hold a
+    -- special negative value (-1000000 on Season of Discovery's thrown traps), none a real cast.
+    ---@type table<number, boolean>
+    local castTimes = {}
+    for row in rows(dir .. "/SpellCastTimes.csv") do
+        if row.Base > 0 then castTimes[row.ID] = true end
+    end
+
     ---@type table<number, number>
     local schools = {}
     for row in rows(dir .. "/SpellMisc.csv") do
@@ -248,7 +254,7 @@ local function readSchools(dir, fixes)
             classSpells[row.SpellID]
             and not recipes[row.SpellID]
             and row.SchoolMask > 0
-            and (row.CastingTimeIndex ~= INSTANT or channeled)
+            and (castTimes[row.CastingTimeIndex] or channeled)
             and row.DifficultyID == 0
         then
             schools[row.SpellID] = row.SchoolMask

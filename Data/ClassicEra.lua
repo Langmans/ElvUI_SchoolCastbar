@@ -69,30 +69,14 @@ Set(NATURE, 2878, 5627, 10326)
 Set(PHYSICAL, 19434, 20900, 20901, 20902, 20903, 20904)
 -- Dismiss Pet
 Set(PHYSICAL, 2641)
--- Kill Shot
-Set(PHYSICAL, 409593, 1218240)
--- Scatter Shot
-Set(PHYSICAL, 19503)
 -- Steady Shot
 Set(PHYSICAL, 437123)
 
 -- Fire --------------------------------------------------------------------------------------------
 -- Explosive Shot
-Set(FIRE, 409552, 409554, 1213269)
--- Explosive Trap
-Set(FIRE, 409532, 409534, 409535)
--- Immolation Trap
-Set(FIRE, 409521, 409524, 409526, 409528, 409530)
+Set(FIRE, 1213269)
 
 -- Nature ------------------------------------------------------------------------------------------
--- Chimera Shot
-Set(NATURE, 409433)
--- Chimera Shot - Scorpid
-Set(NATURE, 409495)
--- Chimera Shot - Serpent
-Set(NATURE, 409493)
--- Chimera Shot - Viper
-Set(NATURE, 409494)
 -- Eyes of the Beast
 Set(NATURE, 1002)
 -- Mend Pet
@@ -101,28 +85,10 @@ Set(NATURE, 136, 3111, 3661, 3662, 13542, 13543, 13544)
 Set(NATURE, 982)
 -- Scare Beast
 Set(NATURE, 1513, 14326, 14327)
--- Scorpid Sting
-Set(NATURE, 3043, 14275, 14276, 14277)
--- Serpent Sting
-Set(NATURE, 1978, 13549, 13550, 13551, 13552, 13553, 13554, 13555, 25295, 425728, 425729, 425730, 425732, 425733, 425734, 425735, 425736, 425737)
 -- Tame Beast
 Set(NATURE, 1515)
--- Tranquilizing Shot
-Set(NATURE, 19801)
--- Viper Sting
-Set(NATURE, 3034, 14279, 14280)
-
--- Frost -------------------------------------------------------------------------------------------
--- Freezing Trap
-Set(FROST, 409510, 409512, 409519)
 
 -- Arcane ------------------------------------------------------------------------------------------
--- Arcane Shot
-Set(ARCANE, 3044, 14281, 14282, 14283, 14284, 14285, 14286, 14287)
--- Concussive Shot
-Set(ARCANE, 5116)
--- Distracting Shot
-Set(ARCANE, 14274, 15629, 15630, 15631, 15632, 20736)
 -- Eagle Eye
 Set(ARCANE, 6197)
 -- Volley
@@ -133,8 +99,6 @@ Set(ARCANE, 1510, 14294, 14295)
 -- Physical ----------------------------------------------------------------------------------------
 -- Atrophic Poison
 Set(PHYSICAL, 439503)
--- Between the Eyes
-Set(PHYSICAL, 400009)
 -- Blade Dance
 Set(PHYSICAL, 1228371)
 -- Blinding Powder
