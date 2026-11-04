@@ -20,4 +20,5 @@ Schools.lua
 Paint.lua
 Castbar.lua
 Debug.lua
+SpellsTab.lua
 Options.lua

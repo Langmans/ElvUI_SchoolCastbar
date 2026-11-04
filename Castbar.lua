@@ -111,7 +111,20 @@ end
 function M:COMBAT_LOG_EVENT_UNFILTERED()
     if not GetCombatLogInfo then return end
     local _, subevent, _, _, _, _, _, _, _, _, _, _, name, school = GetCombatLogInfo()
-    if CAST_STARTS[subevent] and S.Learn(name, school) then Repaint("spellName", name) end
+    if CAST_STARTS[subevent] and S.Learn(name, school) then
+        Repaint("spellName", name)
+        ns.RefreshSpells()
+    end
+end
+
+---The spellbook changed: the Spells tab's list takes it in.
+function M:SPELLS_CHANGED()
+    ns.RefreshSpells()
+end
+
+---ElvUI's options window opened.
+function M:OptionsToggled()
+    ns.OptionsOpened()
 end
 
 ---The client has a spell's text now: a bar casting it may learn its school from it.
@@ -126,12 +139,14 @@ function M:Initialize()
     ns.ConnectDebug()
     LibStub("LibElvUIPlugin-1.0"):RegisterPlugin(addon, ns.InsertOptions)
     self:SecureHook(UF, "Configure_Castbar", "Attach")
+    self:SecureHook(E, "ToggleOptions", "OptionsToggled")
     for _, frame in ipairs(E.oUF.objects) do
         self:Attach(UF, frame)
     end
     -- Retail and WoW: Forever give addons no combat log.
     if GetCombatLogInfo and not E.Modern then self:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED") end
     self:RegisterEvent("SPELL_TEXT_UPDATE")
+    self:RegisterEvent("SPELLS_CHANGED")
 end
 
 E:RegisterModule(M:GetName())

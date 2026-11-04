@@ -176,6 +176,8 @@ function NewClient(opts)
                     MaskShadow = 32,
                     MaskArcane = 64,
                 },
+                SpellBookItemType = { Spell = 1, Flyout = 3 },
+                SpellBookSpellBank = { Player = 0, Pet = 1 },
             }
         or nil
 
@@ -221,11 +223,57 @@ function NewClient(opts)
         GetSpellDescription = function(id)
             return client.descriptions[id] or ""
         end,
-        GetSpellName = function(id)
-            return client.spellNames and client.spellNames[id]
+        ---By spell ID or name, as the client takes either; nil for a spell it does not know.
+        GetSpellInfo = function(spell)
+            for id, info in pairs(client.spells) do
+                if spell == id or spell == info.name then
+                    return { name = info.name, iconID = info.icon, castTime = info.castTime, spellID = id }
+                end
+            end
+            return nil
         end,
     }
-    client.spellNames = { [133] = "Fireball", [116] = "Frostbolt", [401502] = "Frostfire Bolt" }
+    -- The spells the client knows: name, icon and cast time (ms) by spell ID.
+    client.spells = {
+        [133] = { name = "Fireball", icon = 135812, castTime = 3500 },
+        [116] = { name = "Frostbolt", icon = 135846, castTime = 3000 },
+        [401502] = { name = "Frostfire Bolt", icon = 236217, castTime = 3000 },
+        [1459] = { name = "Arcane Intellect", icon = 135932, castTime = 0 },
+        [5143] = { name = "Arcane Missiles", icon = 136096, castTime = 0 },
+        [8690] = { name = "Hearthstone", icon = 134414, castTime = 10000 },
+    }
+
+    -- The spellbook: the spell IDs of client.spellbook. The classic clients list it by tab
+    -- (GetSpellTabInfo, GetSpellBookItemInfo), retail and WoW: Forever by skill line (C_SpellBook).
+    client.spellbook = opts.spellbook or {}
+    GetNumSpellTabs, GetSpellTabInfo, GetSpellBookItemInfo, BOOKTYPE_SPELL, C_SpellBook = nil, nil, nil, nil, nil
+    if kind == "forever" or kind == "retail" then
+        C_SpellBook = {
+            GetNumSpellBookSkillLines = function()
+                return 1
+            end,
+            GetSpellBookSkillLineInfo = function()
+                return { name = "General", itemIndexOffset = 0, numSpellBookItems = #client.spellbook }
+            end,
+            GetSpellBookItemInfo = function(slot, bank)
+                assert(bank == Enum.SpellBookSpellBank.Player, "the player's own spellbook")
+                local id = client.spellbook[slot]
+                return { itemType = Enum.SpellBookItemType.Spell, spellID = id, actionID = id }
+            end,
+        }
+    else
+        BOOKTYPE_SPELL = "spell"
+        function GetNumSpellTabs()
+            return 1
+        end
+        function GetSpellTabInfo()
+            return "General", 135932, 0, #client.spellbook
+        end
+        function GetSpellBookItemInfo(slot, book)
+            assert(book == BOOKTYPE_SPELL, "the player's own spellbook")
+            return "SPELL", client.spellbook[slot]
+        end
+    end
 
     -- The combat log: the classic clients read it through C_CombatLog; retail and WoW: Forever have
     -- none for addons.
@@ -270,6 +318,25 @@ function NewClient(opts)
     -- ElvUI: E with its modules and profile defaults (P), the UnitFrames module.
     local E, P = { Modern = modern, media = { blankTex = "blank" } }, {}
     E.Options = not opts.noOptions and { args = {} } or nil
+    -- ElvUI's copies of AceConfig: the registry redraws the options, the dialog opens a page.
+    E.Libs = {
+        AceConfigRegistry = {
+            NotifyChange = function(_, app)
+                record("NotifyChange", app)
+            end,
+        },
+        AceConfigDialog = {
+            -- The windows open now, by app; ElvUI's is "ElvUI".
+            OpenFrames = {},
+            SelectGroup = function(_, ...)
+                record("SelectGroup", ...)
+            end,
+        },
+    }
+    ---ElvUI's /ec: opens its options window.
+    function E:ToggleOptions()
+        self.Libs.AceConfigDialog.OpenFrames.ElvUI = {}
+    end
     local UF = {}
     client.UF, client.E = UF, E
 
@@ -446,10 +513,17 @@ function NewClient(opts)
         self.combatLog = { 0, subevent, false, "Player-1", "Me", 0, 0, "", "", 0, 0, 0, name, school }
         self:Fire("COMBAT_LOG_EVENT_UNFILTERED")
     end
-    ---Loads ElvUI_Options: LibElvUIPlugin runs the plugin's callback.
+    ---Loads ElvUI_Options: LibElvUIPlugin runs the plugin's callback, once.
     function client:LoadOptions()
-        if self.optionsCallback then self.optionsCallback() end
+        if self.optionsCallback and not self.optionsLoaded then
+            self.optionsLoaded = true
+            self.optionsCallback()
+        end
         return E.Options and E.Options.args.ElvUI_SchoolCastbar
+    end
+    ---Opens ElvUI's options window (/ec).
+    function client:OpenOptions()
+        E:ToggleOptions()
     end
     ---The textures the plugin made on a bar for the gradient, shown ones only.
     function client:Segments(bar)

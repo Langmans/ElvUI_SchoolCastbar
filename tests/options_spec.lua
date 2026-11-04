@@ -78,83 +78,202 @@ describe("the colours tab", function()
     end)
 end)
 
+-- The spell each page returned by entry is for.
+local pageSpell = setmetatable({}, { __mode = "k" })
+
+---A spell's page in the Spells tab's list; nil when it is not listed.
+local function entry(tab, name)
+    local spell = tab.args["spell:" .. name]
+    if spell then pageSpell[spell] = name end
+    return spell
+end
+
+---Calls an option on a spell's page as AceConfigDialog does: the path ends in the page and the option.
+local function on(spell, fn, key, ...)
+    local option = spell.args[key]
+    local handler = option[fn] or spell[fn]
+    return handler({ "ElvUI_SchoolCastbar", "spells", "spell:" .. pageSpell[spell], key }, ...)
+end
+
+---The names of the listed spells, in order.
+local function listed(tab)
+    local names = {}
+    for key in pairs(tab.args) do
+        local name = key:match("^spell:(.+)$")
+        if name then names[#names + 1] = name end
+    end
+    table.sort(names)
+    return names
+end
+
 describe("the spells tab", function()
-    it("lists the spells cast this session and those with a choice of their own", function()
+    it("is a list at the left, as ElvUI's tags and BattleCry's triggers", function()
         local client = NewClient({ client = "forever" })
-        client:Cast("player", "Fireball", FIREBALL)
-        client.ns.Schools.overrides.Heal = 2
-        local tab = page(client).args.spells
-        assert.same({ Fireball = "Fireball", Heal = "Heal" }, tab.args.spell.values())
+        assert.equal("tree", page(client).args.spells.childGroups)
     end)
 
-    it("picks a spell by name, or by ID", function()
-        local client = NewClient({ client = "forever" })
-        local tab = page(client).args.spells
-        tab.args.add.set({ "add" }, "401502")
-        assert.equal("Frostfire Bolt", tab.args.spell.get())
-        tab.args.add.set({ "add" }, "Mind Control")
-        assert.equal("Mind Control", tab.args.spell.get())
-        -- The box empties again for the next one.
-        assert.equal("", tab.args.add.get())
+    it("lists the player's own choices, the spellbook, the combat log and this session's casts", function()
+        local client = NewClient({ spellbook = { 133, 5143 } })
+        client.ns.Schools.overrides.Hearthstone = 127
+        client:CombatLog("SPELL_CAST_START", "Dark Bolt", 32)
+        client:Cast("target", "Mend Pet", 136)
+        assert.same(
+            { "Arcane Missiles", "Dark Bolt", "Fireball", "Hearthstone", "Mend Pet" },
+            listed(page(client).args.spells)
+        )
+    end)
+
+    it("leaves out a spellbook spell without a cast bar", function()
+        -- Arcane Intellect is instant; Arcane Missiles is a channel, which the data has.
+        local client = NewClient({ client = "forever", spellbook = { 1459, 5143 } })
+        assert.same({ "Arcane Missiles" }, listed(page(client).args.spells))
+    end)
+
+    it("reads the spellbook of the classic clients too", function()
+        local client = NewClient({ client = "era", spellbook = { 133 } })
+        assert.same({ "Fireball" }, listed(page(client).args.spells))
+    end)
+
+    it("shows each spell's icon before its name", function()
+        local client = NewClient({ client = "forever", spellbook = { 133 } })
+        local fireball = entry(page(client).args.spells, "Fireball")
+        assert.equal("|T135812:16:16|t Fireball", fireball.name())
+    end)
+
+    it("shows a question mark for a spell the client has no icon for", function()
+        local client = NewClient()
+        client:CombatLog("SPELL_CAST_START", "Dark Bolt", 32)
+        local bolt = entry(page(client).args.spells, "Dark Bolt")
+        assert.equal("|T134400:16:16|t Dark Bolt", bolt.name())
     end)
 
     it("ticks the schools the spell has now, and says where they come from", function()
-        local client = NewClient({ client = "forever" })
-        client:Cast("player", "Frostfire Bolt", FROSTFIRE)
-        local tab = page(client).args.spells
-        tab.args.spell.set({ "spell" }, "Frostfire Bolt")
-        assert.is_true(call(tab, "get", "fire"))
-        assert.is_true(call(tab, "get", "frost"))
-        assert.is_false(call(tab, "get", "shadow"))
-        assert.truthy(tab.args.source.name():find("spell data", 1, true))
+        local client = NewClient({ client = "forever", spellbook = { FROSTFIRE } })
+        local spell = entry(page(client).args.spells, "Frostfire Bolt")
+        assert.is_true(on(spell, "get", "fire"))
+        assert.is_true(on(spell, "get", "frost"))
+        assert.is_false(on(spell, "get", "shadow"))
+        assert.truthy(spell.args.source.name():find("spell data", 1, true))
     end)
 
     it("makes a tick the player's own choice, starting from what the spell had", function()
         local client = NewClient({ client = "forever" })
         local bar = client:Cast("player", "Frostfire Bolt", FROSTFIRE)
-        local tab = page(client).args.spells
-        tab.args.spell.set({ "spell" }, "Frostfire Bolt")
-        call(tab, "set", "frost", false)
+        local spell = entry(page(client).args.spells, "Frostfire Bolt")
+        on(spell, "set", "frost", false)
         assert.equal(4, client.ns.Schools.overrides["Frostfire Bolt"])
         assert.equal(0, #client:Segments(bar))
-        assert.truthy(tab.args.source.name():find("your own choice", 1, true))
+        assert.truthy(spell.args.source.name():find("your own choice", 1, true))
     end)
 
-    it("gives a spell of unknown school its first tick", function()
+    it("turns a spell off when every tick goes off, kept as the player's choice", function()
         local client = NewClient({ client = "forever" })
-        local tab = page(client).args.spells
-        tab.args.add.set({ "add" }, "Mind Control")
-        assert.truthy(tab.args.source.name():find("unknown", 1, true))
-        call(tab, "set", "shadow", true)
-        assert.equal(32, client.ns.Schools.overrides["Mind Control"])
+        local bar = client:Cast("player", "Fireball", FIREBALL)
+        local spell = entry(page(client).args.spells, "Fireball")
+        on(spell, "set", "fire", false)
+        assert.equal(0, client.ns.Schools.overrides.Fireball)
+        assert.is_false(on(spell, "get", "fire"))
+        assert.same({ ELVUI_COLOR[1], ELVUI_COLOR[2], ELVUI_COLOR[3], 1 }, bar.fill.color)
     end)
 
-    it("forgets the choice when every tick is off", function()
+    it("turns a spell off with its own tick, and on again with a school", function()
+        local client = NewClient({ client = "forever", spellbook = { FIREBALL } })
+        local spell = entry(page(client).args.spells, "Fireball")
+        assert.is_false(on(spell, "get", "off"))
+        on(spell, "set", "off", true)
+        assert.is_true(on(spell, "get", "off"))
+        assert.equal(0, client.ns.Schools.overrides.Fireball)
+        on(spell, "set", "frost", true)
+        assert.equal(16, client.ns.Schools.overrides.Fireball)
+        on(spell, "set", "off", false)
+        assert.is_nil(client.ns.Schools.overrides.Fireball)
+    end)
+
+    it("names a spell that is off in red", function()
+        local client = NewClient({ client = "forever", spellbook = { FIREBALL } })
+        client.ns.Schools.overrides.Fireball = 0
+        local spell = entry(page(client).args.spells, "Fireball")
+        assert.equal("|T135812:16:16|t |cffff3333Fireball|r", spell.name())
+        assert.truthy(spell.args.source.name():find("off", 1, true))
+    end)
+
+    it("is off in the colouring too: ElvUI's own colour", function()
         local client = NewClient({ client = "forever" })
-        client.ns.Schools.overrides.Heal = 2
-        local tab = page(client).args.spells
-        tab.args.spell.set({ "spell" }, "Heal")
-        call(tab, "set", "holy", false)
-        assert.is_nil(client.ns.Schools.overrides.Heal)
+        client.ns.Schools.overrides.Fireball = 0
+        assert.same({ nil, "override" }, { client.ns.Schools.Of(FIREBALL, "Fireball") })
     end)
 
-    it("removes the choice with the button, back to the spell's own school", function()
+    it("goes back to the spell's own schools with the button", function()
         local client = NewClient({ client = "forever" })
         client.ns.Schools.overrides["Frostfire Bolt"] = 16
-        local tab = page(client).args.spells
-        tab.args.spell.set({ "spell" }, "Frostfire Bolt")
-        assert.is_false(tab.args.remove.disabled())
-        tab.args.remove.func()
+        local spell = entry(page(client).args.spells, "Frostfire Bolt")
+        assert.is_false(spell.args.remove.disabled({}))
+        spell.args.remove.func({ "ElvUI_SchoolCastbar", "spells", "spell:Frostfire Bolt", "remove" })
         assert.is_nil(client.ns.Schools.overrides["Frostfire Bolt"])
-        assert.is_true(tab.args.remove.disabled())
+        assert.is_true(
+            spell.args.remove.disabled({ "ElvUI_SchoolCastbar", "spells", "spell:Frostfire Bolt", "remove" })
+        )
     end)
 
-    it("hides the ticks until a spell is picked", function()
+    it("adds a spell by name or ID and opens its page", function()
         local client = NewClient({ client = "forever" })
         local tab = page(client).args.spells
-        assert.is_true(tab.args.fire.hidden())
-        assert.equal("", tab.args.source.name())
-        tab.args.add.set({ "add" }, "Fireball")
-        assert.is_false(tab.args.fire.hidden())
+        tab.args.add.set({ "add" }, "401502")
+        assert.truthy(entry(page(client).args.spells, "Frostfire Bolt"))
+        tab.args.add.set({ "add" }, "Dominate Mind")
+        assert.truthy(entry(page(client).args.spells, "Dominate Mind"))
+        assert.same(
+            { { "ElvUI", "ElvUI_SchoolCastbar", "spells", "spell:Dominate Mind" } },
+            { client:called("SelectGroup")[2] }
+        )
+        -- The box empties again for the next one.
+        assert.equal("", tab.args.add.get())
+    end)
+
+    it("hides the spells whose name does not hold the filter", function()
+        local client = NewClient({ client = "forever", spellbook = { 133, 116 } })
+        local tab = page(client).args.spells
+        tab.args.filter.set({ "filter" }, "frost")
+        assert.equal("frost", tab.args.filter.get())
+        assert.is_true(entry(tab, "Fireball").hidden())
+        assert.is_false(entry(tab, "Frostbolt").hidden())
+    end)
+
+    it("takes in a spell cast while the options window is open, and redraws it", function()
+        local client = NewClient({ client = "forever" })
+        page(client)
+        client:OpenOptions()
+        client:Cast("player", "Fireball", FIREBALL)
+        assert.truthy(entry(page(client).args.spells, "Fireball"))
+        assert.truthy(#client:called("NotifyChange") > 0)
+    end)
+
+    it("takes in the spellbook again when it changes", function()
+        local client = NewClient({ client = "forever" })
+        page(client)
+        client:OpenOptions()
+        client.spellbook[1] = 133
+        client:Fire("SPELLS_CHANGED")
+        assert.truthy(entry(page(client).args.spells, "Fireball"))
+    end)
+
+    it("waits with a closed window until it opens again, building the list no more than once", function()
+        local client = NewClient({ client = "forever" })
+        page(client)
+        client:Cast("player", "Fireball", FIREBALL)
+        client:Cast("player", "Frostbolt", 116)
+        assert.falsy(entry(page(client).args.spells, "Fireball"))
+        assert.same({}, client:called("NotifyChange"))
+        client:OpenOptions()
+        assert.truthy(entry(page(client).args.spells, "Frostbolt"))
+        assert.equal(1, #client:called("NotifyChange"))
+        client:OpenOptions()
+        assert.equal(1, #client:called("NotifyChange"))
+    end)
+
+    it("builds the list from what is known when the options load", function()
+        local client = NewClient({ client = "forever" })
+        client:Cast("player", "Fireball", FIREBALL)
+        assert.truthy(entry(page(client).args.spells, "Fireball"))
     end)
 end)

@@ -44,13 +44,16 @@ L.frost = "Frost"
 L.shadow = "Shadow"
 L.arcane = "Arcane"
 
--- The Spells tab: picking a spell, its schools, where they come from (%s), removing the choice.
+-- The Spells tab: its text, the filter and the box to add a spell; on a spell's page where its
+-- schools come from (%s), the Off tick and the button that removes the player's choice.
 L.SPELLS = "Spells"
-L.SPELLS_DESC = "Choose the schools of a spell yourself, for one the plugin colours wrongly or not at all."
-L.ADD = "Spell name or ID"
-L.SPELL = "Spell"
-L.SPELL_DESC = "The spells cast this session, and those with schools of your own choice."
+L.SPELLS_DESC = "Choose the schools of a spell yourself, for one the plugin colours wrongly or not at all, or turn a spell off. The list holds your own choices, your spellbook's spells with a cast bar, what the combat log named and what was cast this session; a spell that is off is red."
+L.FILTER = "Filter"
+L.ADD = "Add a spell (name or ID)"
+L.OFF = "Off"
+L.OFF_DESC = "Leave this spell in ElvUI's own colour. Every school ticked off does the same."
 L.SOURCE = "Its schools now: %s."
+L.SOURCE_off = "off, your own choice"
 L.SOURCE_override = "your own choice"
 L.SOURCE_data = "the game's spell data"
 L.SOURCE_combatlog = "the combat log"

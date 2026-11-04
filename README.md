@@ -12,8 +12,11 @@ the bar.
 - **A colour per school**, on the plugin's own page.
 - **ElvUI's colours stay** for a failed or interrupted cast, for a cast that
   cannot be interrupted, and for a spell whose school nothing knows.
-- **Your own choice per spell**: tick a spell's schools on the Spells tab when the
-  plugin gets one wrong or does not know it.
+- **Your own choice per spell**: on the Spells tab, a list at the left of your own
+  choices, your spellbook's spells with a cast bar, what the combat log named and
+  what was cast this session, each with its icon. Tick a spell's schools when the
+  plugin gets one wrong or does not know it, or turn it off (ElvUI's colour; its
+  name turns red). A filter and a box to add any spell by name or ID sit above.
 
 Everything else about the bars (size, texture, ticks, latency, text, mover) stays
 ElvUI's own. Open `/ec` and pick School Castbar among the plugins in the side bar.
@@ -77,7 +80,15 @@ loads late) is coloured as soon as it arrives.
   (the default) or `detailed`, on the General tab.
 - `Options.lua` adds the page to ElvUI's options (`E.Options.args.ElvUI_SchoolCastbar`).
   The settings live in ElvUI's profile (`E.db.schoolCastbar`); your choices per
-  spell and what the combat log named are account-wide (`ElvUI_SchoolCastbarDB`).
+  spell and what the combat log named are account-wide (`ElvUI_SchoolCastbarDB`;
+  a spell turned off is kept as 0).
+- `SpellsTab.lua` is the Spells tab, an AceConfig tree. ElvUI's options are a
+  table built once, so the list is built again (and
+  `E.Libs.AceConfigRegistry:NotifyChange("ElvUI")` redraws it) when a spell comes
+  in, the spellbook changes (`SPELLS_CHANGED`) or a choice changes; while ElvUI's
+  window is shut, only when it opens next (a hook on `E:ToggleOptions`). The
+  spellbook comes from `C_SpellBook` on retail and WoW: Forever, from
+  `GetSpellTabInfo` / `GetSpellBookItemInfo` on the classic clients.
 
 ## Development
 

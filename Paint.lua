@@ -125,7 +125,10 @@ function ns.Paint(bar, again)
     local db = ns.db()
     local name, id = bar.spellName, bar.spellID
     -- Every cast seen goes in the Spells tab's list, also one of unknown school.
-    if name and not issecretvalue(name) then ns.seen[name] = not issecretvalue(id) and id or false end
+    if name and not issecretvalue(name) and ns.seen[name] == nil then
+        ns.seen[name] = not issecretvalue(id) and id or false
+        ns.RefreshSpells()
+    end
     local notInterruptible = bar.notInterruptible
     local mask = db.units[bar.__owner.unitframeType]
         and not (notInterruptible and not issecretvalue(notInterruptible))

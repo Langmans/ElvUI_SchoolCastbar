@@ -13,12 +13,19 @@ ElvUI = nil
 ---@class ElvUIEngine
 ---@field Modern boolean retail or WoW: Forever
 ---@field oUF {objects: SchoolCastbarFrame[]} ElvUI's oUF, with every frame it spawned
+---@field Libs ElvUILibs
 ---@field media {blankTex: string}
 ---@field db {schoolCastbar: SchoolCastbarSettings}
 ---@field Options? {args: table<string, table>}
 ---@field GetModule fun(self: ElvUIEngine, name: "UnitFrames"): ElvUIUnitFrames
 ---@field NewModule fun(self: ElvUIEngine, name: string, ...: string): SchoolCastbarModule
 ---@field RegisterModule fun(self: ElvUIEngine, name: string)
+
+---ElvUI's copies of AceConfig, as far as the plugin calls them: the registry redraws the options
+---window ("ElvUI"), the dialog opens a page in it.
+---@class ElvUILibs
+---@field AceConfigRegistry {NotifyChange: fun(self: table, app: string)}
+---@field AceConfigDialog {OpenFrames: table<string, table?>, SelectGroup: fun(self: table, app: string, ...: string)}
 
 ---@class ElvUIProfileDefaults
 ---@field schoolCastbar SchoolCastbarSettings
@@ -97,6 +104,9 @@ ElvUI = nil
 ---@field Clear fun(bar: SchoolCastbarBar)
 ---@field RepaintAll fun()
 ---@field InsertOptions fun()
+---@field SpellsTab fun(): table the Spells tab of the options (SpellsTab.lua)
+---@field RefreshSpells fun() builds the Spells tab's list again, at once or when ElvUI's window opens
+---@field OptionsOpened fun() ElvUI's options window opened: a stale list is built again
 ---@field debugLevels string[]
 ---@field ConnectDebug fun()
 ---@field HasDebugAddon fun(): boolean

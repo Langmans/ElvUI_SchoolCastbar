@@ -1,7 +1,7 @@
 -- A spell's school, as the client's school mask (one bit per school). The game has no call for it,
 -- so it comes from, first to last:
 --
--- - the player's own choice (the Spells tab), by spell name;
+-- - the player's own choice (the Spells tab), by spell name; a spell can be turned off there;
 -- - the client's spell table (Data\), by spell ID: the class spells with a cast bar;
 -- - the combat log, by spell name: on Classic Era each cast names its school there, and what it
 --   names is kept (WoW: Forever gives addons no combat log);
@@ -47,6 +47,8 @@ S.sources = { override = "override", data = "data", combatlog = "combatlog", too
 -- spell name. Set up by Load.
 ---@type table<string, number>
 S.overrides = {}
+-- The player's choice of no school for a spell: off, ElvUI's own colour.
+S.OFF = 0
 ---@type table<string, number>
 S.learned = {}
 
@@ -167,7 +169,7 @@ function S.Of(id, name)
     if issecretvalue(name) then name = nil end
     ---@type number?
     local mask = name and S.overrides[name] or nil
-    if mask then return mask, S.sources.override end
+    if mask then return mask ~= S.OFF and mask or nil, S.sources.override end
     mask = id and ns.data and ns.data[id] or nil
     if mask then return mask, S.sources.data end
     mask = name and S.learned[name] or nil
