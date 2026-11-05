@@ -45,6 +45,13 @@ describe("the client's spell table", function()
         assert.equal(16, client.ns.Schools.masks.frost)
     end)
 
+    it("works on a client without issecretvalue, which hides nothing", function()
+        local client = NewClient({ client = "wrath" })
+        local bar = client:Cast("player", "Fireball", FIREBALL)
+        assert.same({ 4, "data" }, { client.ns.Schools.Of(FIREBALL, "Fireball") })
+        assert.equal(1, bar.fill.color[4])
+    end)
+
     it("is not listened to on retail either", function()
         local client = NewClient({ client = "retail" })
         assert.is_nil(client.events.COMBAT_LOG_EVENT_UNFILTERED)

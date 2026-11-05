@@ -174,6 +174,38 @@ describe("ElvUI's own colour", function()
     end)
 end)
 
+-- WoW: Forever hides some cast values in combat (secret values). A tainted addon may not test or
+-- compare one, so each is checked with issecretvalue first. The stand-in SECRET is a table and can
+-- not raise that error itself; these specs keep the behaviour.
+describe("hidden cast values", function()
+    it("colour a cast whose interruptibility the client hides, as ElvUI reads it: interruptible", function()
+        local client = NewClient({ client = "forever" })
+        local bar = client.frames.target.Castbar
+        bar.notInterruptible = SECRET
+        client:Cast("target", "Fireball", FIREBALL)
+        assert.same(rgba(colors(client).fire), bar.fill.color)
+    end)
+
+    it("keep a bar with a hidden spell out of the Spells tab's list", function()
+        local client = NewClient({ client = "forever" })
+        client:Cast("target", SECRET, SECRET)
+        assert.is_nil(next(client.ns.seen))
+    end)
+
+    it("leave a bar casting a hidden spell alone when a spell's text loads", function()
+        local client = NewClient({ client = "forever" })
+        local bar = client:Cast("target", SECRET, SECRET)
+        bar.fill.color = nil
+        client:Fire("SPELL_TEXT_UPDATE", FIREBALL)
+        assert.is_nil(bar.fill.color)
+    end)
+
+    it("skip a description the client hides", function()
+        local client = NewClient({ client = "forever", descriptions = { [999001] = SECRET } })
+        assert.is_nil(client.ns.Schools.Of(999001, "Dark Bolt"))
+    end)
+end)
+
 describe("the bars", function()
     it("are the player's, the target's, the focus's and the pet's", function()
         local client = NewClient({ client = "forever" })

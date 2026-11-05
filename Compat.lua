@@ -15,6 +15,15 @@ ns.C = C
 C.SpellBookItemType = Enum and Enum.SpellBookItemType or { Spell = 1 }
 C.SpellBookSpellBank = Enum and Enum.SpellBookSpellBank or { Player = 0 }
 
+---Whether the client hides a value (secret values: WoW: Forever and retail in combat). Such a value
+---may not be tested or compared, only passed on. A client without the check hides nothing.
+---@param _ string|number|boolean|table|nil
+---@return boolean
+local function NeverSecret(_)
+    return false
+end
+C.IsSecret = issecretvalue or NeverSecret
+
 ---The client's C_SpellBook function `name`, nil without it.
 ---@param name string
 ---@return function?

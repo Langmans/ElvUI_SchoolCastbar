@@ -181,9 +181,10 @@ function NewClient(opts)
             }
         or nil
 
-    function issecretvalue(v)
+    -- Wrath Classic is left without it too, as a client that lacks the check.
+    issecretvalue = kind ~= "wrath" and function(v)
         return v == SECRET
-    end
+    end or nil
 
     -- The client's language and its word for damage (GlobalStrings' DAMAGE).
     local locale = opts.locale or "enUS"

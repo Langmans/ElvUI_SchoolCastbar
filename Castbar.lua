@@ -64,12 +64,14 @@ end
 ---@type SchoolCastbarBar[]
 local bars = {}
 
----Paints again each shown bar, or only those whose field key holds value.
+---Paints again each shown bar, or only those whose field key holds value. A field the client hides
+---(ns.C.IsSecret) may not be compared, and never matches.
 ---@param key "spellName"|"spellID"|nil
 ---@param value string|number|nil
 local function Repaint(key, value)
     for _, bar in ipairs(bars) do
-        if bar:IsShown() and (not key or bar[key] == value) then ns.Paint(bar, true) end
+        local field = key and bar[key]
+        if bar:IsShown() and (not key or (not ns.C.IsSecret(field) and field == value)) then ns.Paint(bar, true) end
     end
 end
 

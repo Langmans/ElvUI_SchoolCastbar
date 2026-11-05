@@ -141,7 +141,7 @@ local function Described(id, name)
     local known = described[id]
     if known ~= nil then return known or nil end
     local text = C_Spell.GetSpellDescription(id)
-    if not text or issecretvalue(text) or text == "" then return nil end
+    if ns.C.IsSecret(text) or not text or text == "" then return nil end
     local mask = FromText(text)
     described[id] = mask or false
     if mask then
@@ -160,13 +160,13 @@ local function Described(id, name)
 end
 
 ---A spell's school mask and where it came from; nil when nothing knows it.
----@param id number|nil the spell ID; a hidden one (issecretvalue) is skipped
+---@param id number|nil the spell ID; a hidden one (ns.C.IsSecret) is skipped
 ---@param name string|nil the spell's name; a hidden one is skipped
 ---@return number? mask
 ---@return string? source one of S.sources
 function S.Of(id, name)
-    if issecretvalue(id) then id = nil end
-    if issecretvalue(name) then name = nil end
+    if ns.C.IsSecret(id) then id = nil end
+    if ns.C.IsSecret(name) then name = nil end
     ---@type number?
     local mask = name and S.overrides[name] or nil
     if mask then return mask ~= S.OFF and mask or nil, S.sources.override end

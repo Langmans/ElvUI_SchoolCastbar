@@ -123,16 +123,20 @@ end
 ---put back where the plugin's no longer applies
 function ns.Paint(bar, again)
     local db = ns.db()
-    local name, id = bar.spellName, bar.spellID
+    -- A value the client hides (WoW: Forever in combat) may not even be tested: checked first,
+    -- and a hidden one counts as not there. A hidden interruptibility counts as interruptible, as
+    -- ElvUI reads it.
+    local IsSecret = ns.C.IsSecret
+    local name, id, notInterruptible = bar.spellName, bar.spellID, bar.notInterruptible
+    if IsSecret(name) then name = nil end
+    if IsSecret(id) then id = nil end
+    if IsSecret(notInterruptible) then notInterruptible = nil end
     -- Every cast seen goes in the Spells tab's list, also one of unknown school.
-    if name and not issecretvalue(name) and ns.seen[name] == nil then
-        ns.seen[name] = not issecretvalue(id) and id or false
+    if name and ns.seen[name] == nil then
+        ns.seen[name] = id or false
         ns.RefreshSpells()
     end
-    local notInterruptible = bar.notInterruptible
-    local mask = db.units[bar.__owner.unitframeType]
-        and not (notInterruptible and not issecretvalue(notInterruptible))
-        and S.Of(id, name)
+    local mask = db.units[bar.__owner.unitframeType] and not notInterruptible and S.Of(id, name)
     if not mask then
         if again then ElvUIColor(bar) end
         ns.Clear(bar)
